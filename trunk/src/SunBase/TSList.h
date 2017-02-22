@@ -1,8 +1,8 @@
-#ifndef _TLLIST_H_
-#define _TLLIST_H_
+﻿#ifndef _TSLIST_H_
+#define _TSLIST_H_
 
-#include "TLCommonTypeDef.h"
-namespace TLunaEngine{
+#include "TSCommonTypeDef.h"
+namespace TSun {
 
 	template<typename T>
 	class List

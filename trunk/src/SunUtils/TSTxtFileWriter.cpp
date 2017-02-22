@@ -1,4 +1,4 @@
-#include "TLTxtFileWriter.h"
+﻿#include "TLTxtFileWriter.h"
 #include <assert.h>
 #include <memory.h>
 #include <stdlib.h>

@@ -1,8 +1,8 @@
-#ifndef _TLPAIR_H_
-#define _TLPAIR_H_
+﻿#ifndef _TSPAIR_H_
+#define _TSPAIR_H_
 
-#include "TLCommonTypeDef.h"
-namespace TLunaEngine{
+#include "TSCommonTypeDef.h"
+namespace TSun {
 
 	template<typename TK,typename TV>
 	class Pair

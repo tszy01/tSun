@@ -1,8 +1,8 @@
-#ifndef _TLMUTEX_H_
-#define _TLMUTEX_H_
+﻿#ifndef _TSMUTEX_H_
+#define _TSMUTEX_H_
 #include <Windows.h>
-#include "TLCommonTypeDef.h"
-namespace TLunaEngine{
+#include "TSCommonTypeDef.h"
+namespace TSun {
 	class Mutex
 	{
 	public:

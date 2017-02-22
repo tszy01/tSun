@@ -1,4 +1,4 @@
-#ifndef _TLTXTFILEREADER_H_
+﻿#ifndef _TLTXTFILEREADER_H_
 #define _TLTXTFILEREADER_H_
 
 #include <stdio.h>

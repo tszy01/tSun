@@ -1,4 +1,4 @@
-#include "TLLangDict.h"
+﻿#include "TLLangDict.h"
 #include "TLUTF8FileReader.h"
 #include "TLUTF8FileWriter.h"
 

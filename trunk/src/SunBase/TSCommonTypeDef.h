@@ -1,7 +1,7 @@
-#ifndef _TLCOMMONTYPEDEF_H_
-#define _TLCOMMONTYPEDEF_H_
+﻿#ifndef _TSCOMMONTYPEDEF_H_
+#define _TSCOMMONTYPEDEF_H_
 
-namespace TLunaEngine{
+namespace TSun {
 
 #ifdef _WIN64
 	typedef float TF32;

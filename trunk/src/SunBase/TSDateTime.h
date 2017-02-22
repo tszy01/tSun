@@ -1,9 +1,9 @@
-#ifndef _TLDATETIME_H_
-#define _TLDATETIME_H_
+﻿#ifndef _TSDATETIME_H_
+#define _TSDATETIME_H_
 
-#include "TLString.h"
+#include "TSString.h"
 
-namespace TLunaEngine{
+namespace TSun {
 
 	// ---------- 日期时间类 -----------------
 	// 综合处理日期和时间

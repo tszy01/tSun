@@ -1,4 +1,4 @@
-#ifndef _TLCONSOLEINPUT_H_
+﻿#ifndef _TLCONSOLEINPUT_H_
 #define _TLCONSOLEINPUT_H_
 
 #include "TLString.h"

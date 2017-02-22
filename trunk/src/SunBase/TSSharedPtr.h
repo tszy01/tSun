@@ -1,4 +1,4 @@
-/*
+﻿/*
 -----------------------------------------------------------------------------
 This source file is part of OGRE
     (Object-oriented Graphics Rendering Engine)
@@ -25,14 +25,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef __TLSHAREDPTR_H__
-#define __TLSHAREDPTR_H__
+#ifndef __TSSHAREDPTR_H__
+#define __TSSHAREDPTR_H__
 
-#include "TLLock.h"
-#include "TLCommonFunc.h"
+#include "TSLock.h"
+#include "TSCommonFunc.h"
 #include <assert.h>
 
-namespace TLunaEngine {
+namespace TSun {
 
 	/// The method to use to free memory on destruction
 	enum SharedPtrFreeMethod
@@ -244,9 +244,9 @@ namespace TLunaEngine {
 
 		virtual TVOID swap(SharedPtr<T> &other) 
 		{
-			TLunaEngine::swap(pRep, other.pRep);
-			TLunaEngine::swap(pUseCount, other.pUseCount);
-			TLunaEngine::swap(useFreeMethod, other.useFreeMethod);
+			TSun::swap(pRep, other.pRep);
+			TSun::swap(pUseCount, other.pUseCount);
+			TSun::swap(useFreeMethod, other.useFreeMethod);
 			mMutex.SwapMutexHandle(other.mMutex);
 		}
 	};
@@ -263,7 +263,7 @@ namespace TLunaEngine {
 
 	template<class T, class U> inline TBOOL operator<(SharedPtr<T> const& a, SharedPtr<U> const& b)
 	{
-		return TLunaEngine::less((TVOID*)a.get(), (TVOID*)b.get());
+		return TSun::less((TVOID*)a.get(), (TVOID*)b.get());
 	}
 	/** @} */
 	/** @} */

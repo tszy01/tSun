@@ -1,4 +1,4 @@
-#include "TLUTF8FileReader.h"
+﻿#include "TLUTF8FileReader.h"
 #include <assert.h>
 #include <memory.h>
 #include <stdlib.h>

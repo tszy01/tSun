@@ -1,4 +1,4 @@
-#ifndef TLTIMER_H
+﻿#ifndef TLTIMER_H
 #define TLTIMER_H
 
 #include "TLCommonTypeDef.h"

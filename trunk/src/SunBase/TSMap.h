@@ -1,9 +1,9 @@
-#ifndef _TLMAP_H_
-#define _TLMAP_H_
+﻿#ifndef _TSMAP_H_
+#define _TSMAP_H_
 
-#include "TLCommonTypeDef.h"
-#include "TLPair.h"
-namespace TLunaEngine{
+#include "TSCommonTypeDef.h"
+#include "TSPair.h"
+namespace TSun {
 
 	template<typename TK,typename TV>
 	class Map

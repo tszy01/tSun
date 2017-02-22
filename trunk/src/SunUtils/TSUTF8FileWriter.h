@@ -1,4 +1,4 @@
-#ifndef _TLUTF8FILEWRITER_H_
+﻿#ifndef _TLUTF8FILEWRITER_H_
 #define _TLUTF8FILEWRITER_H_
 
 #include <stdio.h>

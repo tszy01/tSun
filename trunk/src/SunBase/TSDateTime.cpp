@@ -1,6 +1,6 @@
-#include "TLDateTime.h"
+﻿#include "TSDateTime.h"
 
-namespace TLunaEngine{
+namespace TSun {
 
 	DateTime::DateTime(TVOID) : m_Year(0),m_Month(1),m_Day(1)
 	{

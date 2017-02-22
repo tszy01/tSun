@@ -1,4 +1,4 @@
-#ifndef _TLCOLORVALUE_H_
+﻿#ifndef _TLCOLORVALUE_H_
 #define _TLCOLORVALUE_H_
 
 #include "TLCommonTypeDef.h"

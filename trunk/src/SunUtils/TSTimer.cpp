@@ -1,4 +1,4 @@
-#include "TLTimer.h"
+﻿#include "TLTimer.h"
 #include "TLFPU.h"
 #include <algorithm>
 

@@ -1,4 +1,4 @@
-#ifndef _TLMATHUTILS_H_
+﻿#ifndef _TLMATHUTILS_H_
 #define _TLMATHUTILS_H_
 
 #include "TLRay.h"

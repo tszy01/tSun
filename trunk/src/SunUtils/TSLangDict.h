@@ -1,4 +1,4 @@
-#ifndef _TLLANGDICT_H_
+﻿#ifndef _TLLANGDICT_H_
 #define _TLLANGDICT_H_
 
 #include "TLCommonTypeDef.h"

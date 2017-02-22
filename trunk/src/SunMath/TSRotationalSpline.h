@@ -1,4 +1,4 @@
-#ifndef _TLROTATIONALSPLINE_H_
+﻿#ifndef _TLROTATIONALSPLINE_H_
 #define _TLROTATIONALSPLINE_H_
 #include "TLQuaternion.h"
 #include "TLList.h"

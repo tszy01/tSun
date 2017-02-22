@@ -1,4 +1,4 @@
-#ifndef _TLDUALQUATERNION_H_
+﻿#ifndef _TLDUALQUATERNION_H_
 #define _TLDUALQUATERNION_H_
 #include "Quaternion.h"
 #include "TLVector3.h"

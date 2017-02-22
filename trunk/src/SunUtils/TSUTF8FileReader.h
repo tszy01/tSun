@@ -1,4 +1,4 @@
-#ifndef _TLUTF8FILEREADER_H_
+﻿#ifndef _TLUTF8FILEREADER_H_
 #define _TLUTF8FILEREADER_H_
 
 #include <stdio.h>

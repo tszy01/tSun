@@ -1,4 +1,4 @@
-#ifndef _TLVECTOR2_H_
+﻿#ifndef _TLVECTOR2_H_
 #define _TLVECTOR2_H_
 
 #include "TLFPU.h"

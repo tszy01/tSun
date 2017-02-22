@@ -1,7 +1,7 @@
-#ifndef _TLAUTOPTR_H_
-#define _TLAUTOPTR_H_
+﻿#ifndef _TSAUTOPTR_H_
+#define _TSAUTOPTR_H_
 
-namespace TLunaEngine{
+namespace TSun{
 
 	template<typename T>
 	class AutoPtr

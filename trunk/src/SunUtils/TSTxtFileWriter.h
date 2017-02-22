@@ -1,4 +1,4 @@
-#ifndef _TLTXTFILEWRITER_H_
+﻿#ifndef _TLTXTFILEWRITER_H_
 #define _TLTXTFILEWRITER_H_
 
 #include <stdio.h>

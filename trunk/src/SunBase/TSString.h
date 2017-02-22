@@ -1,9 +1,9 @@
-#ifndef _TLSTRING_H_
-#define _TLSTRING_H_
+﻿#ifndef _TSSTRING_H_
+#define _TSSTRING_H_
 
-#include "TLSharedPtr.h"
-#include "TLList.h"
-namespace TLunaEngine{
+#include "TSSharedPtr.h"
+#include "TSList.h"
+namespace TSun {
 
 	enum STRING_ENCODING_TYPE
 	{

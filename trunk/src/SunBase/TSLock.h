@@ -1,8 +1,8 @@
-#ifndef _TLLOCK_H_
-#define _TLLOCK_H_
-#include "TLMutex.h"
+﻿#ifndef _TSLOCK_H_
+#define _TSLOCK_H_
+#include "TSMutex.h"
 
-namespace TLunaEngine{
+namespace TSun {
 	class Lock
 	{
 	public:

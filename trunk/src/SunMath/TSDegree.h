@@ -1,4 +1,4 @@
-#ifndef _TLDEGREE_H_
+﻿#ifndef _TLDEGREE_H_
 #define _TLDEGREE_H_
 #include "TLCommonTypeDef.h"
 

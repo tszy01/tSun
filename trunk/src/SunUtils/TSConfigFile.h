@@ -1,4 +1,4 @@
-#ifndef _TLCONFIGFILE_H_
+﻿#ifndef _TLCONFIGFILE_H_
 #define _TLCONFIGFILE_H_
 
 // 文件处理类，用于处理以下类型文件

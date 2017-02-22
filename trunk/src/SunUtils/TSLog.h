@@ -1,4 +1,4 @@
-#ifndef _TLLOG_H_
+﻿#ifndef _TLLOG_H_
 #define _TLLOG_H_
 
 #include "TLString.h"

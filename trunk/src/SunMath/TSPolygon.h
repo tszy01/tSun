@@ -1,4 +1,4 @@
-#ifndef _TLPOLYGON_H_
+﻿#ifndef _TLPOLYGON_H_
 #define _TLPOLYGON_H_
 #include "TLVector3.h"
 #include <assert.h>

@@ -1,4 +1,4 @@
-#ifndef _TLCONSOLE_H_
+﻿#ifndef _TLCONSOLE_H_
 #define _TLCONSOLE_H_
 
 #include "TLSingleton.h"

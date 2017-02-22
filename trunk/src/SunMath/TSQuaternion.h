@@ -1,4 +1,4 @@
-#ifndef _TLQUATERNION_H_
+﻿#ifndef _TLQUATERNION_H_
 #define _TLQUATERNION_H_
 //#include "Matrix4x4.h"
 #include "TLFPU.h"

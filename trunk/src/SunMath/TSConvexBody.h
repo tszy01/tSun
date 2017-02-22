@@ -1,4 +1,4 @@
-#ifndef _TLCONVEXBODY_H_
+﻿#ifndef _TLCONVEXBODY_H_
 #define _TLCONVEXBODY_H_
 #include "TLPolygon.h"
 #include "TLPlane.h"

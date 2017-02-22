@@ -1,9 +1,9 @@
-#ifndef _TLCOMMONFUNC_H_
-#define _TLCOMMONFUNC_H_
+﻿#ifndef _TSCOMMONFUNC_H_
+#define _TSCOMMONFUNC_H_
 
-#include "TLCommonTypeDef.h"
+#include "TSCommonTypeDef.h"
 
-namespace TLunaEngine {
+namespace TSun {
 	template<typename T> void swap(T& l, T& r)
 	{
 		T tmp = l;

@@ -1,4 +1,4 @@
-#include "TLUTF8FileWriter.h"
+﻿#include "TLUTF8FileWriter.h"
 #include <assert.h>
 #include <memory.h>
 #include <stdlib.h>

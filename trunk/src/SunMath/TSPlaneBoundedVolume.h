@@ -1,4 +1,4 @@
-#ifndef _TLPLANEBOUNDEDVOLUME_H_
+﻿#ifndef _TLPLANEBOUNDEDVOLUME_H_
 #define _TLPLANEBOUNDEDVOLUME_H_
 #include "TLPlane.h"
 #include <assert.h>

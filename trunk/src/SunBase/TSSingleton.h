@@ -1,8 +1,8 @@
-#ifndef _TLSINGLETON_H_
-#define _TLSINGLETON_H_
+﻿#ifndef _TSSINGLETON_H_
+#define _TSSINGLETON_H_
 
-#include "TLCommonTypeDef.h"
-namespace TLunaEngine{
+#include "TSCommonTypeDef.h"
+namespace TSun {
 
 	template<class T>
 	class Singleton

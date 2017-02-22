@@ -1,4 +1,4 @@
-#ifndef _TLZIP_H_
+﻿#ifndef _TLZIP_H_
 #define _TLZIP_H_
 #include "TLMemFile.h"
 

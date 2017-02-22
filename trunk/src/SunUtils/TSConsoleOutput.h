@@ -1,4 +1,4 @@
-#ifndef _TLCONSOLEOUTPUT_H_
+﻿#ifndef _TLCONSOLEOUTPUT_H_
 #define _TLCONSOLEOUTPUT_H_
 
 #include <Windows.h>

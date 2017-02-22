@@ -1,4 +1,4 @@
-#include "TLLog.h"
+﻿#include "TLLog.h"
 #include "TLConfigFile.h"
 #include "TLConsole.h"
 #include <Windows.h>

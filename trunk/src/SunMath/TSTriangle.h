@@ -1,4 +1,4 @@
-#ifndef _TLTRIANGLE_H_
+﻿#ifndef _TLTRIANGLE_H_
 #define _TLTRIANGLE_H_
 #include "TLVector3.h"
 namespace TLunaEngine{

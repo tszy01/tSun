@@ -1,4 +1,4 @@
-#include "TLConfigFile.h"
+﻿#include "TLConfigFile.h"
 #include "TLString.h"
 
 #include <memory.h>

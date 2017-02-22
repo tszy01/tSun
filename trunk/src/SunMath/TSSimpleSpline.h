@@ -1,4 +1,4 @@
-#ifndef _TLSIMPLESPLINE_H_
+﻿#ifndef _TLSIMPLESPLINE_H_
 #define _TLSIMPLESPLINE_H_
 #include "TLVector3.h"
 #include "TLMatrix4x4.h"

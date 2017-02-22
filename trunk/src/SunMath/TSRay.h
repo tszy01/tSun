@@ -1,4 +1,4 @@
-#ifndef _TLRAY_H_
+﻿#ifndef _TLRAY_H_
 #define _TLRAY_H_
 #include "TLVector3.h"
 
