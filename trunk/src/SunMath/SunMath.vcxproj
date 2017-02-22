@@ -129,6 +129,37 @@
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TSAABBox.h" />
+    <ClInclude Include="TSColorValue.h" />
+    <ClInclude Include="TSConvexBody.h" />
+    <ClInclude Include="TSDegree.h" />
+    <ClInclude Include="TSDualQuaternion.h" />
+    <ClInclude Include="TSFPU.h" />
+    <ClInclude Include="TSLine.h" />
+    <ClInclude Include="TSMathUtils.h" />
+    <ClInclude Include="TSMatrix3x3.h" />
+    <ClInclude Include="TSMatrix4x4.h" />
+    <ClInclude Include="TSPlane.h" />
+    <ClInclude Include="TSPlaneBoundedVolume.h" />
+    <ClInclude Include="TSPolygon.h" />
+    <ClInclude Include="TSQuaternion.h" />
+    <ClInclude Include="TSRadian.h" />
+    <ClInclude Include="TSRay.h" />
+    <ClInclude Include="TSRotationalSpline.h" />
+    <ClInclude Include="TSSimpleSpline.h" />
+    <ClInclude Include="TSSphere.h" />
+    <ClInclude Include="TSTriangle.h" />
+    <ClInclude Include="TSVector2.h" />
+    <ClInclude Include="TSVector3.h" />
+    <ClInclude Include="TSVector4.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TSColorValue.cpp" />
+    <ClCompile Include="TSConvexBody.cpp" />
+    <ClCompile Include="TSDegree.cpp" />
+    <ClCompile Include="TSRadian.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

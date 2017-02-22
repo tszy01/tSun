@@ -129,6 +129,38 @@
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TSConfigFile.cpp" />
+    <ClCompile Include="TSConsole.cpp" />
+    <ClCompile Include="TSConsoleInput.cpp" />
+    <ClCompile Include="TSConsoleOutput.cpp" />
+    <ClCompile Include="TSLangDict.cpp" />
+    <ClCompile Include="TSLog.cpp" />
+    <ClCompile Include="TSLuaBase.cpp" />
+    <ClCompile Include="TSMemFile.cpp" />
+    <ClCompile Include="TSTimer.cpp" />
+    <ClCompile Include="TSTxtFileReader.cpp" />
+    <ClCompile Include="TSTxtFileWriter.cpp" />
+    <ClCompile Include="TSUTF8FileReader.cpp" />
+    <ClCompile Include="TSUTF8FileWriter.cpp" />
+    <ClCompile Include="TSZip.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TSConfigFile.h" />
+    <ClInclude Include="TSConsole.h" />
+    <ClInclude Include="TSConsoleInput.h" />
+    <ClInclude Include="TSConsoleOutput.h" />
+    <ClInclude Include="TSLangDict.h" />
+    <ClInclude Include="TSLog.h" />
+    <ClInclude Include="TSLuaBase.h" />
+    <ClInclude Include="TSMemFile.h" />
+    <ClInclude Include="TSTimer.h" />
+    <ClInclude Include="TSTxtFileReader.h" />
+    <ClInclude Include="TSTxtFileWriter.h" />
+    <ClInclude Include="TSUTF8FileReader.h" />
+    <ClInclude Include="TSUTF8FileWriter.h" />
+    <ClInclude Include="TSZip.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

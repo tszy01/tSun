@@ -129,6 +129,25 @@
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TSAutoPtr.h" />
+    <ClInclude Include="TSCommonFunc.h" />
+    <ClInclude Include="TSCommonTypeDef.h" />
+    <ClInclude Include="TSConfigDef.h" />
+    <ClInclude Include="TSDateTime.h" />
+    <ClInclude Include="TSList.h" />
+    <ClInclude Include="TSLock.h" />
+    <ClInclude Include="TSMap.h" />
+    <ClInclude Include="TSMutex.h" />
+    <ClInclude Include="TSPair.h" />
+    <ClInclude Include="TSSharedPtr.h" />
+    <ClInclude Include="TSSingleton.h" />
+    <ClInclude Include="TSString.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TSDateTime.cpp" />
+    <ClCompile Include="TSString.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

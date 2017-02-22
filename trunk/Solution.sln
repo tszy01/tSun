@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SunBase", "SunBase\SunBase.vcxproj", "{8785C02F-C8C9-43B8-B300-B64DF8032C88}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SunBase", "src\SunBase\SunBase.vcxproj", "{8785C02F-C8C9-43B8-B300-B64DF8032C88}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SunMath", "SunMath\SunMath.vcxproj", "{A32B6BB3-4A3B-415E-A035-B466C42AC498}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SunMath", "src\SunMath\SunMath.vcxproj", "{A32B6BB3-4A3B-415E-A035-B466C42AC498}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SunUtils", "SunUtils\SunUtils.vcxproj", "{2EB3990F-5710-4ACF-B5F8-B3D48F10CD73}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SunUtils", "src\SunUtils\SunUtils.vcxproj", "{2EB3990F-5710-4ACF-B5F8-B3D48F10CD73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SunFoundationClassLibrary", "SunFoundationClassLibrary", "{7B3B679B-DF60-43CE-BD95-1BEDCAC5D8A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dependent", "dependent", "{DC2AA840-0BE1-49D4-8A5E-0FEB7FB7A16A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua5.1_lib", "src\lua\mak.vs2008\lua5.1_lib.vcxproj", "{D7488B96-456A-1E46-8B0B-0F698E025694}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,8 +47,22 @@ Global
 		{2EB3990F-5710-4ACF-B5F8-B3D48F10CD73}.Release|x64.Build.0 = Release|x64
 		{2EB3990F-5710-4ACF-B5F8-B3D48F10CD73}.Release|x86.ActiveCfg = Release|Win32
 		{2EB3990F-5710-4ACF-B5F8-B3D48F10CD73}.Release|x86.Build.0 = Release|Win32
+		{D7488B96-456A-1E46-8B0B-0F698E025694}.Debug|x64.ActiveCfg = Debug|x64
+		{D7488B96-456A-1E46-8B0B-0F698E025694}.Debug|x64.Build.0 = Debug|x64
+		{D7488B96-456A-1E46-8B0B-0F698E025694}.Debug|x86.ActiveCfg = Debug|Win32
+		{D7488B96-456A-1E46-8B0B-0F698E025694}.Debug|x86.Build.0 = Debug|Win32
+		{D7488B96-456A-1E46-8B0B-0F698E025694}.Release|x64.ActiveCfg = Release|x64
+		{D7488B96-456A-1E46-8B0B-0F698E025694}.Release|x64.Build.0 = Release|x64
+		{D7488B96-456A-1E46-8B0B-0F698E025694}.Release|x86.ActiveCfg = Release|Win32
+		{D7488B96-456A-1E46-8B0B-0F698E025694}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8785C02F-C8C9-43B8-B300-B64DF8032C88} = {7B3B679B-DF60-43CE-BD95-1BEDCAC5D8A6}
+		{A32B6BB3-4A3B-415E-A035-B466C42AC498} = {7B3B679B-DF60-43CE-BD95-1BEDCAC5D8A6}
+		{2EB3990F-5710-4ACF-B5F8-B3D48F10CD73} = {7B3B679B-DF60-43CE-BD95-1BEDCAC5D8A6}
+		{D7488B96-456A-1E46-8B0B-0F698E025694} = {DC2AA840-0BE1-49D4-8A5E-0FEB7FB7A16A}
 	EndGlobalSection
 EndGlobal
