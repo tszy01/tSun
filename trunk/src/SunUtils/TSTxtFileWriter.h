@@ -1,9 +1,9 @@
-﻿#ifndef _TLTXTFILEWRITER_H_
-#define _TLTXTFILEWRITER_H_
+﻿#ifndef _TSTXTFILEWRITER_H_
+#define _TSTXTFILEWRITER_H_
 
 #include <stdio.h>
-#include "TLCommonTypeDef.h"
-namespace TLunaEngine{
+#include "TSCommonTypeDef.h"
+namespace TSun{
 
 	class TxtFileWriter
 	{

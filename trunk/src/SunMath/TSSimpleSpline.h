@@ -1,12 +1,12 @@
-﻿#ifndef _TLSIMPLESPLINE_H_
-#define _TLSIMPLESPLINE_H_
-#include "TLVector3.h"
-#include "TLMatrix4x4.h"
-#include "TLVector4.h"
-#include "TLList.h"
+﻿#ifndef _TSSIMPLESPLINE_H_
+#define _TSSIMPLESPLINE_H_
+#include "TSVector3.h"
+#include "TSMatrix4x4.h"
+#include "TSVector4.h"
+#include "TSList.h"
 #include <assert.h>
 
-namespace TLunaEngine
+namespace TSun
 {
 	// simple spline class from ogre
 	template<typename T>

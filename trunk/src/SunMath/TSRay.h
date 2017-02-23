@@ -1,10 +1,10 @@
-﻿#ifndef _TLRAY_H_
-#define _TLRAY_H_
-#include "TLVector3.h"
+﻿#ifndef _TSRAY_H_
+#define _TSRAY_H_
+#include "TSVector3.h"
 
 // 注意:这里的Ray只实现3D浮点的运算,便于3D计算使用
 
-namespace TLunaEngine{
+namespace TSun{
 
 	template<typename T>
 	class Ray

@@ -1,7 +1,7 @@
-﻿#include "TLConvexBody.h"
-#include "TLAABBox.h"
+﻿#include "TSConvexBody.h"
+#include "TSAABBox.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	template<typename T>
 	AABBox<T> ConvexBody<T>::getAABB( TVOID ) const

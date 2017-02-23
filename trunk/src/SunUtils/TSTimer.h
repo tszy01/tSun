@@ -1,12 +1,12 @@
-﻿#ifndef TLTIMER_H
-#define TLTIMER_H
+﻿#ifndef TSTIMER_H
+#define TSTIMER_H
 
-#include "TLCommonTypeDef.h"
+#include "TSCommonTypeDef.h"
 #include <Windows.h>
 #include <time.h>
-#include "TLString.h"
+#include "TSString.h"
 
-namespace TLunaEngine{
+namespace TSun{
 
 	class Timer
 	{

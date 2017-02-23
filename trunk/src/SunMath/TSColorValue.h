@@ -1,10 +1,10 @@
-﻿#ifndef _TLCOLORVALUE_H_
-#define _TLCOLORVALUE_H_
+﻿#ifndef _TSCOLORVALUE_H_
+#define _TSCOLORVALUE_H_
 
-#include "TLCommonTypeDef.h"
+#include "TSCommonTypeDef.h"
 #include <assert.h>
 
-namespace TLunaEngine
+namespace TSun
 {
 	// color value class from ogre
 

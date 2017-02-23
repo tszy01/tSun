@@ -1,8 +1,8 @@
-﻿#include "TLDegree.h"
-#include "TLRadian.h"
-#include "TLFPU.h"
+﻿#include "TSDegree.h"
+#include "TSRadian.h"
+#include "TSFPU.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	Degree::Degree ( const Radian& r ) : mDeg(r.valueDegrees())
 	{

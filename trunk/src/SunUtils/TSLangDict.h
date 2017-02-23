@@ -1,11 +1,11 @@
-﻿#ifndef _TLLANGDICT_H_
-#define _TLLANGDICT_H_
+﻿#ifndef _TSLANGDICT_H_
+#define _TSLANGDICT_H_
 
-#include "TLCommonTypeDef.h"
-#include "TLMap.h"
-#include "TLString.h"
+#include "TSCommonTypeDef.h"
+#include "TSMap.h"
+#include "TSString.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	// Language dictionary class
 	class LangDict

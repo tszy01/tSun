@@ -1,9 +1,9 @@
-﻿#include "TLMemFile.h"
+﻿#include "TSMemFile.h"
 
-#include "TLString.h"
+#include "TSString.h"
 #include <stdio.h>
 
-namespace TLunaEngine{
+namespace TSun{
 
 	MemFile::MemFile(TVOID)
 	{
@@ -59,7 +59,7 @@ namespace TLunaEngine{
 			return;
 		TCHAR szPath[1024]={0};
 		TCHAR szName[1024]={0};
-		TLunaEngine::String::CutFilePath(fullname,szName,szPath);
+		TSun::String::CutFilePath(fullname,szName,szPath);
 		SetPath(szPath);
 		SetName(szName);
 	}

@@ -1,13 +1,13 @@
-﻿#include "TLZip.h"
+﻿#include "TSZip.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
 #include "zlib.h"
 
-#include "TLString.h"
+#include "TSString.h"
 
-namespace TLunaEngine{
+namespace TSun{
 
 	TU32 Zip::m_FileNum=0;
 	TUByte* Zip::m_TempBuf=0;
@@ -94,7 +94,7 @@ namespace TLunaEngine{
 		if(!filename)
 			return 0;
 		TCHAR szNoPath[1024] = {0};
-		TLunaEngine::String::CutFilePath(filename,szNoPath);
+		TSun::String::CutFilePath(filename,szNoPath);
 		// 文件名部分
 		TU32 namelen = (TU32)strlen(szNoPath);
 		TSIZE lastsize = m_TempSize;

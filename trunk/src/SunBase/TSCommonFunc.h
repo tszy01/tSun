@@ -19,5 +19,13 @@ namespace TSun {
 		}
 		return TFALSE;
 	}
+
+	/** Determines whether the number is power-of-two or not.
+	@note 0 and 1 are tread as power of two.
+	*/
+	template<typename T> TBOOL isPO2(T n)
+	{
+		return (n & (n - 1)) == 0;
+	}
 }
 #endif

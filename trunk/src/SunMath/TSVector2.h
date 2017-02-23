@@ -1,13 +1,13 @@
-﻿#ifndef _TLVECTOR2_H_
-#define _TLVECTOR2_H_
+﻿#ifndef _TSVECTOR2_H_
+#define _TSVECTOR2_H_
 
-#include "TLFPU.h"
+#include "TSFPU.h"
 
 /**
 *	使用irrlicht的vector2d方法
 */
 
-namespace TLunaEngine{
+namespace TSun{
 
 	template<typename T>
 	class Vector2
@@ -76,7 +76,7 @@ namespace TLunaEngine{
 		\return True if the two vector are (almost) equal, else TFALSE. */
 		inline TBOOL equals(const Vector2<T>& other) const
 		{
-			return TLunaEngine::equals(X, other.X) && TLunaEngine::equals(Y, other.Y);
+			return TSun::equals(X, other.X) && TSun::equals(Y, other.Y);
 		}
 
 		inline TVOID set(T nx, T ny) {X=nx; Y=ny; }
@@ -144,7 +144,7 @@ namespace TLunaEngine{
 			T l = X*X + Y*Y;
 			if (l == (T)0.0f)
 				return *this;
-			l = (T)TLunaEngine::reciprocal_squareroot ( (TF32)l );
+			l = (T)TSun::reciprocal_squareroot ( (TF32)l );
 			X *= l;
 			Y *= l;
 			return *this;

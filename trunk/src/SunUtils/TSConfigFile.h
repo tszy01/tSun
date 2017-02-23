@@ -1,16 +1,16 @@
-﻿#ifndef _TLCONFIGFILE_H_
-#define _TLCONFIGFILE_H_
+﻿#ifndef _TSCONFIGFILE_H_
+#define _TSCONFIGFILE_H_
 
 // 文件处理类，用于处理以下类型文件
 // Name=Value
 // 不能空格，不能换行
 
 #include <stdio.h>
-#include "TLList.h"
+#include "TSList.h"
 
-#include "TLString.h"
+#include "TSString.h"
 
-namespace TLunaEngine{
+namespace TSun{
 
 	typedef struct _FILESTR
 	{

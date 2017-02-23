@@ -1,10 +1,10 @@
-﻿#include "TLTxtFileReader.h"
+﻿#include "TSTxtFileReader.h"
 #include <assert.h>
 #include <memory.h>
 #include <stdlib.h>
 #include <string>
 #include <tchar.h>
-namespace TLunaEngine{
+namespace TSun{
 
 	TxtFileReader::TxtFileReader(TVOID)
 	{

@@ -1,7 +1,7 @@
-﻿#ifndef _TLLINE_H_
-#define _TLLINE_H_
-#include "TLVector3.h"
-namespace TLunaEngine{
+﻿#ifndef _TSLINE_H_
+#define _TSLINE_H_
+#include "TSVector3.h"
+namespace TSun{
 
 	template<typename T>
 	class Line

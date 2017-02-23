@@ -1,10 +1,10 @@
-﻿#ifndef _TLDUALQUATERNION_H_
-#define _TLDUALQUATERNION_H_
-#include "Quaternion.h"
-#include "TLVector3.h"
+﻿#ifndef _TSDUALQUATERNION_H_
+#define _TSDUALQUATERNION_H_
+#include "TSQuaternion.h"
+#include "TSVector3.h"
 #include <assert.h>
 
-namespace TLunaEngine{
+namespace TSun{
 	// dual quaternion from ogre
 	template<typename T>
 	class DualQuaternion
@@ -97,8 +97,8 @@ namespace TLunaEngine{
 		/// Check whether this dual quaternion contains valid values
 		inline TBOOL isNaN() const
 		{
-			return TLunaEngine::isNaN(w) || TLunaEngine::isNaN(x) || TLunaEngine::isNaN(y) || TLunaEngine::isNaN(z) ||  
-				TLunaEngine::isNaN(dw) || TLunaEngine::isNaN(dx) || TLunaEngine::isNaN(dy) || TLunaEngine::isNaN(dz);
+			return TSun::isNaN(w) || TSun::isNaN(x) || TSun::isNaN(y) || TSun::isNaN(z) ||  
+				TSun::isNaN(dw) || TSun::isNaN(dx) || TSun::isNaN(dy) || TSun::isNaN(dz);
 		}
 
 		/// Construct a dual quaternion from a rotation described by a Quaternion and a translation described by a Vector3

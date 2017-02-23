@@ -1,9 +1,9 @@
-﻿#ifndef _TLUTF8FILEWRITER_H_
-#define _TLUTF8FILEWRITER_H_
+﻿#ifndef _TSUTF8FILEWRITER_H_
+#define _TSUTF8FILEWRITER_H_
 
 #include <stdio.h>
-#include "TLCommonTypeDef.h"
-namespace TLunaEngine{
+#include "TSCommonTypeDef.h"
+namespace TSun{
 
 	class UTF8FileWriter
 	{

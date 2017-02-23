@@ -1,9 +1,9 @@
-﻿#ifndef _TLQUATERNION_H_
-#define _TLQUATERNION_H_
-//#include "Matrix4x4.h"
-#include "TLFPU.h"
+﻿#ifndef _TSQUATERNION_H_
+#define _TSQUATERNION_H_
+//#include "TSMatrix4x4.h"
+#include "TSFPU.h"
 
-namespace TLunaEngine{
+namespace TSun{
 	template<typename T>
 	class Quaternion
 	{
@@ -277,7 +277,7 @@ namespace TLunaEngine{
 				return *this;
 
 			//n = 1.0f / sqrtf(n);
-			n = (T)TLunaEngine::reciprocal_squareroot ( (TF32)n );
+			n = (T)TSun::reciprocal_squareroot ( (TF32)n );
 			X *= n;
 			Y *= n;
 			Z *= n;
@@ -441,7 +441,7 @@ namespace TLunaEngine{
 		inline TVOID toAngleAxis (T &angle, Vector3<T>& axis) const
 		{
 			TF32 scale = sqrtf(X*X + Y*Y + Z*Z);
-			if (TLunaEngine::iszero(scale) || W > (T)1.0f || W < (T)-1.0f)
+			if (TSun::iszero(scale) || W > (T)1.0f || W < (T)-1.0f)
 			{
 				angle = (T)0.0f;
 				axis.X = (T)0.0f;
@@ -516,13 +516,13 @@ namespace TLunaEngine{
 			// exp(q) = cos(A)+sin(A)*(x*i+y*j+z*k).  If sin(A) is near zero,
 			// use exp(q) = cos(A)+A*(x*i+y*j+z*k) since A/sin(A) has limit 1.
 
-			TF32 fAngle = TLunaEngine::FastSqrt((TF32)(X*X+Y*Y+Z*Z));
+			TF32 fAngle = TSun::FastSqrt((TF32)(X*X+Y*Y+Z*Z));
 			TF32 fSin = sinf(fAngle);
 
 			Quaternion<T> kResult;
 			kResult.W = cosf(fAngle);
 
-			if ( TLunaEngine::abs_(fSin) >= (T)0.001f )
+			if ( TSun::abs_(fSin) >= (T)0.001f )
 			{
 				TF32 fCoeff = fSin/fAngle;
 				kResult.X = fCoeff*X;
@@ -548,11 +548,11 @@ namespace TLunaEngine{
 			Quaternion<T> kResult;
 			kResult.W = 0.0;
 
-			if ( TLunaEngine::abs_(W) < 1.0 )
+			if ( TSun::abs_(W) < 1.0 )
 			{
 				TF32 fAngle = acosf((TF32)w);
 				TF32 fSin = sinf(fAngle);
-				if ( TLunaEngine::abs_(fSin) >= (T)0.001f )
+				if ( TSun::abs_(fSin) >= (T)0.001f )
 				{
 					TF32 fCoeff = fAngle/fSin;
 					kResult.X = fCoeff*X;

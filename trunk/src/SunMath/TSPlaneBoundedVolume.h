@@ -1,11 +1,11 @@
-﻿#ifndef _TLPLANEBOUNDEDVOLUME_H_
-#define _TLPLANEBOUNDEDVOLUME_H_
-#include "TLPlane.h"
+﻿#ifndef _TSPLANEBOUNDEDVOLUME_H_
+#define _TSPLANEBOUNDEDVOLUME_H_
+#include "TSPlane.h"
 #include <assert.h>
-#include "TLList.h"
-#include "TLMap.h"
+#include "TSList.h"
+#include "TSMap.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	template<typename T>
 	class PlaneBoundedVolume

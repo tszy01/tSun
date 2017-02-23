@@ -1,9 +1,9 @@
-﻿#ifndef _TLUTF8FILEREADER_H_
-#define _TLUTF8FILEREADER_H_
+﻿#ifndef _TSUTF8FILEREADER_H_
+#define _TSUTF8FILEREADER_H_
 
 #include <stdio.h>
-#include "TLCommonTypeDef.h"
-namespace TLunaEngine{
+#include "TSCommonTypeDef.h"
+namespace TSun{
 
 	class UTF8FileReader
 	{

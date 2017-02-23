@@ -1,9 +1,7 @@
-﻿#include "TLTimer.h"
-#include "TLFPU.h"
+﻿#include "TSTimer.h"
 #include <algorithm>
 
-namespace TLunaEngine{
-
+namespace TSun{
 	//-------------------------------------------------------------------------
 	Timer::Timer()
 		: mTimerMask( 0 )
@@ -113,7 +111,7 @@ namespace TLunaEngine{
 		if (msecOff < -100 || msecOff > 100)
 		{
 			// We must keep the timer running forward :)
-			TS64 adjust = min_(msecOff * mFrequency.QuadPart / 1000, newTime - mLastTime);
+			TS64 adjust = min(msecOff * mFrequency.QuadPart / 1000, newTime - mLastTime);
 			mStartTime.QuadPart += adjust;
 			newTime -= adjust;
 
@@ -155,7 +153,7 @@ namespace TLunaEngine{
 		if (msecOff < -100 || msecOff > 100)
 		{
 			// We must keep the timer running forward :)
-			TS64 adjust = min_(msecOff * mFrequency.QuadPart / 1000, newTime - mLastTime);
+			TS64 adjust = min(msecOff * mFrequency.QuadPart / 1000, newTime - mLastTime);
 			mStartTime.QuadPart += adjust;
 			newTime -= adjust;
 		}

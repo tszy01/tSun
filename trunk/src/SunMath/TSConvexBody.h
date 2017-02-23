@@ -1,13 +1,13 @@
-﻿#ifndef _TLCONVEXBODY_H_
-#define _TLCONVEXBODY_H_
-#include "TLPolygon.h"
-#include "TLPlane.h"
+﻿#ifndef _TSCONVEXBODY_H_
+#define _TSCONVEXBODY_H_
+#include "TSPolygon.h"
+#include "TSPlane.h"
 #include <assert.h>
-#include "TLList.h"
-#include "TLMathUtils.h"
-#include "TLMap.h"
+#include "TSList.h"
+#include "TSMathUtils.h"
+#include "TSMap.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	// template class declaration
 	template<typename T>

@@ -1,7 +1,7 @@
-﻿#include "TLConsole.h"
-#include "TLConsoleOutput.h"
+﻿#include "TSConsole.h"
+#include "TSConsoleOutput.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	Console* Singleton<Console>::m_Ptr = 0;
 

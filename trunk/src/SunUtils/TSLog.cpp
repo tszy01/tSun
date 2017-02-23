@@ -1,12 +1,12 @@
-﻿#include "TLLog.h"
-#include "TLConfigFile.h"
-#include "TLConsole.h"
+﻿#include "TSLog.h"
+#include "TSConfigFile.h"
+#include "TSConsole.h"
 #include <Windows.h>
 
-namespace TLunaEngine{
+namespace TSun{
 
 	// 初始化静态成员
-	TLunaEngine::String* Log::m_filterArray = 0;
+	TSun::String* Log::m_filterArray = 0;
 	TS32 Log::m_filterCount = 0;
 	TCHAR Log::m_logPath[256] = {0};
 	TBOOL Log::m_bOpen = TFALSE;

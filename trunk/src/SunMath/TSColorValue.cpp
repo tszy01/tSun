@@ -1,7 +1,7 @@
-﻿#include "TLColorValue.h"
-#include "TLFPU.h"
+﻿#include "TSColorValue.h"
+#include "TSFPU.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	const ColorValue ColorValue::ZERO = ColorValue(0.0, 0.0, 0.0, 0.0);
 	const ColorValue ColorValue::Black = ColorValue(0.0, 0.0, 0.0);
@@ -259,10 +259,10 @@ namespace TLunaEngine
 			hue += (TS32)hue + 1;
 		}
 		// clamp saturation / brightness
-		saturation = TLunaEngine::min_<TF32>(saturation, (TF32)1.0);
-		saturation = TLunaEngine::max_<TF32>(saturation, (TF32)0.0);
-		brightness = TLunaEngine::min_<TF32>(brightness, (TF32)1.0);
-		brightness = TLunaEngine::max_<TF32>(brightness, (TF32)0.0);
+		saturation = TSun::min_<TF32>(saturation, (TF32)1.0);
+		saturation = TSun::max_<TF32>(saturation, (TF32)0.0);
+		brightness = TSun::min_<TF32>(brightness, (TF32)1.0);
+		brightness = TSun::max_<TF32>(brightness, (TF32)0.0);
 
 		if (brightness == 0.0f)
 		{
@@ -337,13 +337,13 @@ namespace TLunaEngine
 	TVOID ColorValue::getHSB(TF32* hue, TF32* saturation, TF32* brightness) const
 	{
 
-		TF32 vMin = TLunaEngine::min_<TF32>(r, TLunaEngine::min_<TF32>(g, b));
-		TF32 vMax = TLunaEngine::max_<TF32>(r, TLunaEngine::max_<TF32>(g, b));
+		TF32 vMin = TSun::min_<TF32>(r, TSun::min_<TF32>(g, b));
+		TF32 vMax = TSun::max_<TF32>(r, TSun::max_<TF32>(g, b));
 		TF32 delta = vMax - vMin;
 
 		*brightness = vMax;
 
-		if (TLunaEngine::equals(delta, 0.0f))
+		if (TSun::equals(delta, 0.0f))
 		{
 			// grey
 			*hue = 0;
@@ -358,11 +358,11 @@ namespace TLunaEngine
 			TF32 deltaG = (((vMax - g) / 6.0f) + (delta / 2.0f)) / delta;
 			TF32 deltaB = (((vMax - b) / 6.0f) + (delta / 2.0f)) / delta;
 
-			if (TLunaEngine::equals(r, vMax))
+			if (TSun::equals(r, vMax))
 				*hue = deltaB - deltaG;
-			else if (TLunaEngine::equals(g, vMax))
+			else if (TSun::equals(g, vMax))
 				*hue = 0.3333333f + deltaR - deltaB;
-			else if (TLunaEngine::equals(b, vMax))
+			else if (TSun::equals(b, vMax))
 				*hue = 0.6666667f + deltaG - deltaR;
 
 			if (*hue < 0.0f)

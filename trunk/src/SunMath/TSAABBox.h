@@ -1,8 +1,8 @@
-﻿#ifndef _TLAABBOX_H_
-#define _TLAABBOX_H_
-#include "TLVector3.h"
-#include "TLMatrix4x4.h"
-namespace TLunaEngine{
+﻿#ifndef _TSAABBOX_H_
+#define _TSAABBOX_H_
+#include "TSVector3.h"
+#include "TSMatrix4x4.h"
+namespace TSun{
 
 	template<typename T>
 	class AABBox

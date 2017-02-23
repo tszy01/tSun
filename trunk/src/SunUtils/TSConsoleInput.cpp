@@ -1,6 +1,6 @@
-﻿#include "TLConsoleInput.h"
+﻿#include "TSConsoleInput.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	ConsoleInput::ConsoleInput() : _insertPos(0), _maxLineWidth(20), _displayStartPos(0), _defaultCharWidth(5)
 	{

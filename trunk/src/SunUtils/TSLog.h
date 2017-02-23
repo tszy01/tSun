@@ -1,9 +1,9 @@
-﻿#ifndef _TLLOG_H_
-#define _TLLOG_H_
+﻿#ifndef _TSLOG_H_
+#define _TSLOG_H_
 
-#include "TLString.h"
+#include "TSString.h"
 
-namespace TLunaEngine{
+namespace TSun{
 
 	class Log
 	{

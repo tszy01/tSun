@@ -1,10 +1,10 @@
-﻿#ifndef _TLCONSOLE_H_
-#define _TLCONSOLE_H_
+﻿#ifndef _TSCONSOLE_H_
+#define _TSCONSOLE_H_
 
-#include "TLSingleton.h"
-#include "TLConsoleInput.h"
+#include "TSSingleton.h"
+#include "TSConsoleInput.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	class ConsoleOutput;
 

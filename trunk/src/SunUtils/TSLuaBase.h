@@ -1,5 +1,5 @@
-﻿#ifndef _TLLUABASE_H_
-#define _TLLUABASE_H_
+﻿#ifndef _TSLUABASE_H_
+#define _TSLUABASE_H_
 
 extern "C"{
 #include <lua.h>
@@ -9,9 +9,9 @@ extern "C"{
 
 #include <iostream> /*unlike most LUA examples I've found we will be using c++ */
 #include <string>
-#include "TLCommonTypeDef.h"
+#include "TSCommonTypeDef.h"
 
-namespace TLunaEngine{
+namespace TSun{
 
 	// Lua上层封装类,继承本类,处理特定的脚本
 	// 涉及到的lua基础库以及luabind库的函数,推荐直接使用库函数

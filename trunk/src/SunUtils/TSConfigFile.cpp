@@ -1,10 +1,10 @@
-﻿#include "TLConfigFile.h"
-#include "TLString.h"
+﻿#include "TSConfigFile.h"
+#include "TSString.h"
 
 #include <memory.h>
 #include <string.h>
 
-namespace TLunaEngine{
+namespace TSun{
 
 	ConfigFile::ConfigFile(TVOID) : m_stream(0),m_bOpen(TFALSE),m_openType(OPEN_NONE)
 	{

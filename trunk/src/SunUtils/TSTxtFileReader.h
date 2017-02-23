@@ -1,9 +1,9 @@
-﻿#ifndef _TLTXTFILEREADER_H_
-#define _TLTXTFILEREADER_H_
+﻿#ifndef _TSTXTFILEREADER_H_
+#define _TSTXTFILEREADER_H_
 
 #include <stdio.h>
-#include "TLCommonTypeDef.h"
-namespace TLunaEngine{
+#include "TSCommonTypeDef.h"
+namespace TSun{
 
 	class TxtFileReader
 	{

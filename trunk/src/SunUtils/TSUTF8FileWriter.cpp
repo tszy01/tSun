@@ -1,10 +1,10 @@
-﻿#include "TLUTF8FileWriter.h"
+﻿#include "TSUTF8FileWriter.h"
 #include <assert.h>
 #include <memory.h>
 #include <stdlib.h>
 #include <string>
 #include <tchar.h>
-namespace TLunaEngine{
+namespace TSun{
 
 	UTF8FileWriter::UTF8FileWriter(TVOID)
 	{

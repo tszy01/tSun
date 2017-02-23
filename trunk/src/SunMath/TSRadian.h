@@ -1,8 +1,8 @@
-﻿#ifndef _TLRADIAN_H_
-#define _TLRADIAN_H_
-#include "TLCommonTypeDef.h"
+﻿#ifndef _TSRADIAN_H_
+#define _TSRADIAN_H_
+#include "TSCommonTypeDef.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	class Degree;
 	// radian class from ogre

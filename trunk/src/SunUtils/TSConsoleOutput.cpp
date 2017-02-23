@@ -1,6 +1,6 @@
-﻿#include "TLConsoleOutput.h"
+﻿#include "TSConsoleOutput.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	ConsoleOutput::ConsoleOutput() : _assistant(TNULL), _maxDisplayHeight(10), _displayStartLineNo(0), _maxLineCount(1000), _maxLineWidth(20)
 	{

@@ -1,8 +1,8 @@
-﻿#ifndef _TLMEMFILE_H_
-#define _TLMEMFILE_H_
+﻿#ifndef _TSMEMFILE_H_
+#define _TSMEMFILE_H_
 
-#include "TLCommonTypeDef.h"
-namespace TLunaEngine{
+#include "TSCommonTypeDef.h"
+namespace TSun{
 
 	class MemFile
 	{

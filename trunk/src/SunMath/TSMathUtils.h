@@ -1,18 +1,18 @@
-﻿#ifndef _TLMATHUTILS_H_
-#define _TLMATHUTILS_H_
+﻿#ifndef _TSMATHUTILS_H_
+#define _TSMATHUTILS_H_
 
-#include "TLRay.h"
-#include "TLLine.h"
-#include "TLTriangle.h"
-#include "TLPlane.h"
-#include "TLAABBox.h"
-#include "TLSphere.h"
-#include "TLVector3.h"
-#include "TLVector2.h"
-#include "TLVector4.h"
-#include "TLQuaternion.h"
+#include "TSRay.h"
+#include "TSLine.h"
+#include "TSTriangle.h"
+#include "TSPlane.h"
+#include "TSAABBox.h"
+#include "TSSphere.h"
+#include "TSVector3.h"
+#include "TSVector2.h"
+#include "TSVector4.h"
+#include "TSQuaternion.h"
 
-namespace TLunaEngine{
+namespace TSun{
 
 	// 三角形与AABB的关系
 	//! Determines if the triangle is totally inside a bounding box.

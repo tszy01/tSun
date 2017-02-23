@@ -1,15 +1,15 @@
-﻿#ifndef _TLFPU_H_
-#define _TLFPU_H_
+﻿#ifndef _TSFPU_H_
+#define _TSFPU_H_
 
 
-#include "TLCommonTypeDef.h"
+#include "TSCommonTypeDef.h"
 #include <math.h>
 
 /**
 *	使用irrlicht的Math方法
 */
 
-namespace TLunaEngine{
+namespace TSun{
 
 	//! Enumeration for intersection relations of 3d objects
 	enum EIntersectionRelation3D
@@ -600,14 +600,7 @@ namespace TLunaEngine{
         ++n;
         return n;
     }
-    /** Determines whether the number is power-of-two or not.
-        @note 0 and 1 are tread as power of two.
-    */
-    template<typename T>
-    inline TBOOL isPO2(T n)
-    {
-        return (n & (n-1)) == 0;
-    }
+    
     /** Returns the number of bits a pattern must be shifted right by to
         remove right-hand zeros.
     */

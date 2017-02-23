@@ -1,6 +1,6 @@
-﻿#include "TLLuaBase.h"
+﻿#include "TSLuaBase.h"
 
-namespace TLunaEngine{
+namespace TSun{
 
 	LuaBase::LuaBase(TVOID) : m_state(0)
 	{

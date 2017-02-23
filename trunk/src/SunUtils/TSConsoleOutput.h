@@ -1,10 +1,10 @@
-﻿#ifndef _TLCONSOLEOUTPUT_H_
-#define _TLCONSOLEOUTPUT_H_
+﻿#ifndef _TSCONSOLEOUTPUT_H_
+#define _TSCONSOLEOUTPUT_H_
 
 #include <Windows.h>
-#include "TLString.h"
+#include "TSString.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	// console output listener
 	class ConsoleOutputListener

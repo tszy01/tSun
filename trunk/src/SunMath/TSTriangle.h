@@ -1,7 +1,7 @@
-﻿#ifndef _TLTRIANGLE_H_
-#define _TLTRIANGLE_H_
-#include "TLVector3.h"
-namespace TLunaEngine{
+﻿#ifndef _TSTRIANGLE_H_
+#define _TSTRIANGLE_H_
+#include "TSVector3.h"
+namespace TSun{
 
 	template<typename T>
 	class Triangle

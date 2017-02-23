@@ -1,11 +1,11 @@
-﻿#ifndef _TLMATRIX4X4_H_
-#define _TLMATRIX4X4_H_
-#include "TLVector3.h"
-#include "TLVector2.h"
-#include "TLVector4.h"
-#include "TLQuaternion.h"
-#include "TLMatrix3x3.h"
-namespace TLunaEngine{
+﻿#ifndef _TSMATRIX4X4_H_
+#define _TSMATRIX4X4_H_
+#include "TSVector3.h"
+#include "TSVector2.h"
+#include "TSVector4.h"
+#include "TSQuaternion.h"
+#include "TSMatrix3x3.h"
+namespace TSun{
 
 	template<typename T>
 	class Matrix4x4
@@ -181,15 +181,15 @@ namespace TLunaEngine{
 
 			// Deal with the 0 rotation case first
 			// Prior to Irrlicht 1.6, we always returned this value.
-			if(TLunaEngine::iszero(M[0][1]) && TLunaEngine::iszero(M[0][2]) &&
-				TLunaEngine::iszero(M[1][0]) && TLunaEngine::iszero(M[1][2]) &&
-				TLunaEngine::iszero(M[2][0]) && TLunaEngine::iszero(M[2][1]))
+			if(TSun::iszero(M[0][1]) && TSun::iszero(M[0][2]) &&
+				TSun::iszero(M[1][0]) && TSun::iszero(M[1][2]) &&
+				TSun::iszero(M[2][0]) && TSun::iszero(M[2][1]))
 				return Vector3<T>(M[0][0], M[1][1], M[2][2]);
 
 			// We have to do the full calculation.
-			return Vector3<T>((T)TLunaEngine::Fastsqrt(M[0][0] * M[0][0] + M[0][1] * M[0][1] + M[0][2] * M[0][2]),
-								(T)TLunaEngine::Fastsqrt(M[1][0] * M[1][0] + M[1][1] * M[1][1] + M[1][2] * M[1][2]),
-								(T)TLunaEngine::Fastsqrt(M[2][0] * M[2][0] + M[2][1] * M[2][1] + M[2][2] * M[2][2]));
+			return Vector3<T>((T)TSun::Fastsqrt(M[0][0] * M[0][0] + M[0][1] * M[0][1] + M[0][2] * M[0][2]),
+								(T)TSun::Fastsqrt(M[1][0] * M[1][0] + M[1][1] * M[1][1] + M[1][2] * M[1][2]),
+								(T)TSun::Fastsqrt(M[2][0] * M[2][0] + M[2][1] * M[2][1] + M[2][2] * M[2][2]));
 		}
 		// get rotation data
 		inline Quaternion<T> GetRotation()
@@ -376,10 +376,10 @@ namespace TLunaEngine{
 				(M[0][1] * M[1][3] - M[0][3] * M[1][1]) * (M[2][0] * M[3][2] - M[2][2] * M[3][0]) +
 				(M[0][2] * M[1][3] - M[0][3] * M[1][2]) * (M[2][0] * M[3][1] - M[2][1] * M[3][0]);
 
-			if(TLunaEngine::iszero(d))
+			if(TSun::iszero(d))
 				return out;
 
-			d = TLunaEngine::reciprocal(d);
+			d = TSun::reciprocal(d);
 
 			out[0][0] = (T)( d * (M[1][1] * (M[2][2] * M[3][3] - M[2][3] * M[3][2]) +
 					M[1][2] * (M[2][3] * M[3][1] - M[2][1] * M[3][3]) +

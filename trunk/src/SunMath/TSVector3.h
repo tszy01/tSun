@@ -1,13 +1,13 @@
-﻿#ifndef _TLVECTOR3_H_
-#define _TLVECTOR3_H_
+﻿#ifndef _TSVECTOR3_H_
+#define _TSVECTOR3_H_
 
-#include "TLFPU.h"
+#include "TSFPU.h"
 
 /**
 *	使用irrlicht的vector3d方法
 */
 
-namespace TLunaEngine{
+namespace TSun{
 	//! 3d vector template class with lots of operators and methods.
 	template <typename T>
 	class Vector3
@@ -101,7 +101,7 @@ namespace TLunaEngine{
 
 		inline T absDotProduct(const Vector3<T>& vec) const
         {
-            return TLunaEngine::abs_(X * vec.X) + TLunaEngine::abs_(Y * vec.Y) + TLunaEngine::abs_(Z * vec.Z);
+            return TSun::abs_(X * vec.X) + TSun::abs_(Y * vec.Y) + TSun::abs_(Z * vec.Z);
         }
 
 		// this-other的长度

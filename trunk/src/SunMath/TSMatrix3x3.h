@@ -1,11 +1,11 @@
-﻿#ifndef _TLMATRIX3X3_H_
-#define _TLMATRIX3X3_H_
-#include "TLVector3.h"
-#include "TLVector2.h"
+﻿#ifndef _TSMATRIX3X3_H_
+#define _TSMATRIX3X3_H_
+#include "TSVector3.h"
+#include "TSVector2.h"
 #include <vector>
 #include <assert.h>
 
-namespace TLunaEngine
+namespace TSun
 {
 	template<typename T>
 	class Matrix3x3
@@ -268,10 +268,10 @@ namespace TLunaEngine
 				m[0][1]*rkInverse[1][0]+
 				m[0][2]*rkInverse[2][0];
 
-			if(TLunaEngine::iszero(fDet))
+			if(TSun::iszero(fDet))
 				return Matrix3x3<T>();
 
-			fDet = TLunaEngine::reciprocal(fDet);
+			fDet = TSun::reciprocal(fDet);
 
 			for (TUByte iRow = 0; iRow < 3; iRow++)
 			{

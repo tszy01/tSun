@@ -1,10 +1,10 @@
-﻿#ifndef _TLROTATIONALSPLINE_H_
-#define _TLROTATIONALSPLINE_H_
-#include "TLQuaternion.h"
-#include "TLList.h"
+﻿#ifndef _TSROTATIONALSPLINE_H_
+#define _TSROTATIONALSPLINE_H_
+#include "TSQuaternion.h"
+#include "TSList.h"
 #include <assert.h>
 
-namespace TLunaEngine
+namespace TSun
 {
 	// rotational spline from ogre
 	template<typename T>

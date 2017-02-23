@@ -1,7 +1,7 @@
-﻿#ifndef _TLPLANE_H_
-#define _TLPLANE_H_
-#include "TLVector3.h"
-namespace TLunaEngine{
+﻿#ifndef _TSPLANE_H_
+#define _TSPLANE_H_
+#include "TSVector3.h"
+namespace TSun{
 
 	template<typename T>
 	class Plane

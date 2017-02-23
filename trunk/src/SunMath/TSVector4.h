@@ -1,10 +1,10 @@
-﻿#ifndef _TLVECTOR4_H_
-#define _TLVECTOR4_H_
+﻿#ifndef _TSVECTOR4_H_
+#define _TSVECTOR4_H_
 
-#include "TLFPU.h"
-#include "TLVector3.h"
+#include "TSFPU.h"
+#include "TSVector3.h"
 
-namespace TLunaEngine{
+namespace TSun{
 
 	/*
 	 *	使用Ogre的Vector4

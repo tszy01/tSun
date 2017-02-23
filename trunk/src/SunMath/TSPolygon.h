@@ -1,11 +1,11 @@
-﻿#ifndef _TLPOLYGON_H_
-#define _TLPOLYGON_H_
-#include "TLVector3.h"
+﻿#ifndef _TSPOLYGON_H_
+#define _TSPOLYGON_H_
+#include "TSVector3.h"
 #include <assert.h>
-#include "TLList.h"
-#include "TLMap.h"
+#include "TSList.h"
+#include "TSMap.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	template<typename T>
 	class Polygon
@@ -186,7 +186,7 @@ namespace TLunaEngine
 				TF32 len1 = v1.getLength();
 				TF32 len2 = v2.getLength();
 
-				if (TLunaEngine::equals(len1 * len2, 0.0f, 1e-4f))
+				if (TSun::equals(len1 * len2, 0.0f, 1e-4f))
 				{
 					// We are on a vertex so consider this inside
 					return TTRUE; 
@@ -199,7 +199,7 @@ namespace TLunaEngine
 			}
 
 			// result should be 2*PI if point is inside poly
-			return TLunaEngine::equals(anglesum, 2.0f * TLunaEngine::PI, 1e-4f);
+			return TSun::equals(anglesum, 2.0f * TSun::PI, 1e-4f);
 		}
 
 		/** Stores the edges of the polygon in ccw order.

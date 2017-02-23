@@ -1,9 +1,9 @@
-﻿#ifndef _TLCONSOLEINPUT_H_
-#define _TLCONSOLEINPUT_H_
+﻿#ifndef _TSCONSOLEINPUT_H_
+#define _TSCONSOLEINPUT_H_
 
-#include "TLString.h"
+#include "TSString.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	// Input listener class
 	class ConsoleInputListener

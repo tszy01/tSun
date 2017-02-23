@@ -1,9 +1,9 @@
-﻿#ifndef _TLZIP_H_
-#define _TLZIP_H_
-#include "TLMemFile.h"
+﻿#ifndef _TSZIP_H_
+#define _TSZIP_H_
+#include "TSMemFile.h"
 
 
-namespace TLunaEngine{
+namespace TSun{
 
 	class Zip
 	{

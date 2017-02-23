@@ -1,8 +1,8 @@
-﻿#include "TLLangDict.h"
-#include "TLUTF8FileReader.h"
-#include "TLUTF8FileWriter.h"
+﻿#include "TSLangDict.h"
+#include "TSUTF8FileReader.h"
+#include "TSUTF8FileWriter.h"
 
-namespace TLunaEngine
+namespace TSun
 {
 	LangDict::LangDict()
 	{

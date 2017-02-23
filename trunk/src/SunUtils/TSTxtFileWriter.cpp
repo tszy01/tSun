@@ -1,10 +1,10 @@
-﻿#include "TLTxtFileWriter.h"
+﻿#include "TSTxtFileWriter.h"
 #include <assert.h>
 #include <memory.h>
 #include <stdlib.h>
 #include <string>
 #include <tchar.h>
-namespace TLunaEngine{
+namespace TSun{
 
 	TxtFileWriter::TxtFileWriter(TVOID)
 	{
