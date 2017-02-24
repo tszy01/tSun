@@ -63,6 +63,9 @@
     <ClCompile Include="TSZip.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="TSBinaryFileProcessor.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSConfigFile.h">
@@ -105,6 +108,9 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="TSZip.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSBinaryFileProcessor.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
