@@ -11,7 +11,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SunUtils", "src\SunUtils\Su
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SunFoundationClassLibrary", "SunFoundationClassLibrary", "{7B3B679B-DF60-43CE-BD95-1BEDCAC5D8A6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dependent", "dependent", "{DC2AA840-0BE1-49D4-8A5E-0FEB7FB7A16A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dependence", "dependence", "{DC2AA840-0BE1-49D4-8A5E-0FEB7FB7A16A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua5.1_lib", "src\lua\mak.vs2008\lua5.1_lib.vcxproj", "{D7488B96-456A-1E46-8B0B-0F698E025694}"
 EndProject
