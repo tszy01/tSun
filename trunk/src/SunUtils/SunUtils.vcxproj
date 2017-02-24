@@ -70,12 +70,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IntDir>$(SolutionDir)\Intermediate\$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
-    <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)</OutDir>
+    <IntDir>$(SolutionDir)\..\Intermediate\$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
+    <OutDir>$(SolutionDir)\..\bin\$(Platform)\$(Configuration)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IntDir>$(SolutionDir)\Intermediate\$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
-    <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)</OutDir>
+    <IntDir>$(SolutionDir)\..\Intermediate\$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
+    <OutDir>$(SolutionDir)\..\bin\$(Platform)\$(Configuration)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)</OutDir>
@@ -116,7 +116,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <Lib>
-      <OutputFile>$(SolutionDir)\lib\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>$(SolutionDir)\..\lib\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -158,7 +158,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <OutputFile>$(SolutionDir)\lib\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>$(SolutionDir)\..\lib\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
