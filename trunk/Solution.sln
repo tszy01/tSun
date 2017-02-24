@@ -9,7 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SunMath", "src\SunMath\SunM
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SunUtils", "src\SunUtils\SunUtils.vcxproj", "{2EB3990F-5710-4ACF-B5F8-B3D48F10CD73}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SunFoundationClassLibrary", "SunFoundationClassLibrary", "{7B3B679B-DF60-43CE-BD95-1BEDCAC5D8A6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sun", "Sun", "{7B3B679B-DF60-43CE-BD95-1BEDCAC5D8A6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dependence", "dependence", "{DC2AA840-0BE1-49D4-8A5E-0FEB7FB7A16A}"
 EndProject
