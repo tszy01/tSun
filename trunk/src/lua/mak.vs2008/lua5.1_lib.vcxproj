@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D7488B96-456A-1E46-8B0B-0F698E025694}</ProjectGuid>
+    <ProjectGuid>{026B2C9F-6D29-4931-A116-FDE55CF84F44}</ProjectGuid>
     <RootNamespace>lua5.1_lib</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -81,12 +81,12 @@
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)</OutDir>
-    <IntDir>$(SolutionDir)\Intermediate\$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
+    <OutDir>$(SolutionDir)\..\bin\$(Platform)\$(Configuration)</OutDir>
+    <IntDir>$(SolutionDir)\..\Intermediate\$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)</OutDir>
-    <IntDir>$(SolutionDir)\Intermediate\$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
+    <OutDir>$(SolutionDir)\..\bin\$(Platform)\$(Configuration)</OutDir>
+    <IntDir>$(SolutionDir)\..\Intermediate\$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -131,7 +131,7 @@
       <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Lib>
-      <OutputFile>$(SolutionDir)\lib\$(Platform)\$(Configuration)\lua.lib</OutputFile>
+      <OutputFile>$(SolutionDir)\..\lib\$(Platform)\$(Configuration)\lua.lib</OutputFile>
     </Lib>
     <BuildLog>
       <Path>
@@ -181,7 +181,7 @@
       <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Lib>
-      <OutputFile>$(SolutionDir)\lib\$(Platform)\$(Configuration)\lua.lib</OutputFile>
+      <OutputFile>$(SolutionDir)\..\lib\$(Platform)\$(Configuration)\lua.lib</OutputFile>
     </Lib>
     <BuildLog>
       <Path>
