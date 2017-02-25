@@ -7,6 +7,7 @@
 #include "LuaInitApp.h"
 
 #include "TSString.h"
+#include "TSLog.h"
 #include "ConsoleWindow.h"
 #include "TSConsole.h"
 
@@ -19,7 +20,7 @@
 #include "TSUTF8FileReader.h"
 #include "TSUTF8FileWriter.h"
 #include "TSBinaryFileProcessor.h"
-#include "TSLog.h"
+#include "XMLResTest.h"
 #endif // BUILD_TEST
 
 int WindowLoop()
@@ -134,7 +135,15 @@ int runTest(HINSTANCE hInstance, LPSTR lpCmLine, int nCmdShow)
 	TLunaEngine::UTF8FileWriter::WriteLineInteger(sTmp, fp, 5, L';');
 
 	TLunaEngine::UTF8FileWriter::CloseTxtFile(fp);*/
+	
 
+	XMLResTest test;
+	/*test.newXMLDocument();
+	if (test.saveXMLFile("test0.xml") == TSun::TFALSE)
+	{
+		consoleWnd->GetConsoleOutput()->addText(L"save xml file error");
+	}*/
+	test.loadXMLFile("test0.xml");
 	
 	return 0;
 }

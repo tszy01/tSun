@@ -10,3 +10,9 @@ Release Note
 v 0.1.0
 1，从tLuna项目拷贝基础库部分代码到tSun项目，建立工程
 2，建立Sample工程
+
+v 0.1.1
+1，添加xml读写辅助类
+2，添加xml读写测试类
+3，修正String类BUG
+4，修正Log类BUG

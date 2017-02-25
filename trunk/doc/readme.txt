@@ -58,6 +58,7 @@ Timer -- 时钟信息获取
 
 LuaBase -- 用于处理lua脚本
 Zip -- 用于处理压缩
+XMLBase -- 用于处理XML读写
 
 ======================================================================================================
 
@@ -142,6 +143,7 @@ LuaInitApp -- 初始化lua脚本
 GlobleClass -- 全局对象管理
 ConfigDef.h -- 编译宏定义等
 Main.cpp -- 入口
+XMLResTest -- xml读写测试
 
 运行参数
 -initfile [filename]指定初始化脚本文件，默认为运行目录中的initApp.lua

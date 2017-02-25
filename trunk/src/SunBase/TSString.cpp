@@ -2880,8 +2880,8 @@ namespace TSun {
 		{
 			m_szPtr = SharedPtr<TWCHAR>(new TWCHAR[len + 1], TSun::SPFM_DELETE_T);
 			TWCHAR* szMyContent = m_szPtr.getPointer();
-			memset(szMyContent, 0, len + 1);
-			vswprintf(szMyContent, len, format, args);
+			memset(szMyContent, 0, (len + 1) * sizeof(TWCHAR));
+			vswprintf(szMyContent, format, args);
 			szMyContent[len] = L'\0';
 		}
 		va_end(args);

@@ -115,6 +115,9 @@ namespace TSun{
 
 	TVOID Log::WriteFile(LOG_LEVEL level,TBOOL bTrue, const TWCHAR* content, const TCHAR* codeName, TS32 codeLine)
 	{
+		// check to file flag
+		if (!m_bToFile)
+			return;
 		// 可以没有内容
 		// 但是必须有Path
 		if(!m_logPath)
