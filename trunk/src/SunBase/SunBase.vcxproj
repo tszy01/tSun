@@ -169,6 +169,7 @@
     <ClInclude Include="TSList.h" />
     <ClInclude Include="TSLock.h" />
     <ClInclude Include="TSMap.h" />
+    <ClInclude Include="TSMemAllocator.h" />
     <ClInclude Include="TSMutex.h" />
     <ClInclude Include="TSPair.h" />
     <ClInclude Include="TSSharedPtr.h" />
@@ -177,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TSDateTime.cpp" />
+    <ClCompile Include="TSMemAllocator.cpp" />
     <ClCompile Include="TSString.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
