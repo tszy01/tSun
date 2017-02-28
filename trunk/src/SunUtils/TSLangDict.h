@@ -12,12 +12,14 @@ namespace TSun
 	{
 	public:
 		// constructor
-		LangDict();
+		LangDict(MemAllocator* allocator = getDefaultMemAllocator());
 		// destructor
 		~LangDict();
 	protected:
 		// key string list
 		Map<TU64, WString> mStringList;
+		// memory allocator
+		DEFINE_MEM_ALLOCATOR_MEMBER;
 	public:
 		// load from file
 		// note : this will call clear

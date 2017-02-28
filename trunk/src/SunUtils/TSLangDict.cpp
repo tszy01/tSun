@@ -4,14 +4,15 @@
 
 namespace TSun
 {
-	LangDict::LangDict()
+	LangDict::LangDict(MemAllocator* allocator) : m_allocator(allocator)
 	{
-
+		mStringList = Map<TU64, WString>(getMemAllocator());
 	}
 
 	LangDict::~LangDict()
 	{
 		clearStrings();
+		m_allocator = 0;
 	}
 
 	TBOOL LangDict::loadFromFile(const TCHAR* filename)
@@ -34,7 +35,7 @@ namespace TSun
 				TU32 readCharCount = 0;
 				UTF8FileReader::ReadLineULongLong(&key, fp, 1, L' ');
 				UTF8FileReader::ReadLineWString(value, fp, 0, 0, 127, &readCharCount);
-				mStringList.push_back(Pair<TU64, WString>(key, value));
+				mStringList.push_back(Pair<TU64, WString>(key, WString(value, getMemAllocator())));
 			}
 			UTF8FileReader::CloseTxtFile(fp);
 		}

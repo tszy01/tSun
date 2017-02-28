@@ -23,7 +23,7 @@ namespace TSun{
 	class ConfigFile
 	{
 	public:
-		ConfigFile(TVOID);
+		ConfigFile(MemAllocator* allocator = getDefaultMemAllocator());
 	public:
 		~ConfigFile(TVOID);
 	public:
@@ -46,6 +46,8 @@ namespace TSun{
 		OPEN_FILE_TYPE m_openType;
 		// 保存文件名
 		TCHAR m_szFileName[256];
+		// memory allocator
+		DEFINE_MEM_ALLOCATOR_MEMBER;
 	protected:
 		// 从文件加载para和value
 		TBOOL LoadFromFile();
@@ -60,55 +62,55 @@ namespace TSun{
 		TVOID GetParameter(const TCHAR* paraName, String* pBuf);
 		inline TS16 GetParameterAsShort(const TCHAR* paraName)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			GetParameter(paraName, &strTmp);
 			return strTmp.ToShort();
 		}
 		inline TU16 GetParameterAsUShort(const TCHAR* paraName)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			GetParameter(paraName, &strTmp);
 			return strTmp.ToUShort();
 		}
 		inline TS32 GetParameterAsInt(const TCHAR* paraName)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			GetParameter(paraName,&strTmp);
 			return strTmp.ToInt();
 		}
 		inline TU32 GetParameterAsUInt(const TCHAR* paraName)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			GetParameter(paraName,&strTmp);
 			return strTmp.ToUInt();
 		}
 		inline TS64 GetParameterAsLongLong(const TCHAR* paraName)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			GetParameter(paraName,&strTmp);
 			return strTmp.ToLongLong();
 		}
 		inline TU64 GetParameterAsULongLong(const TCHAR* paraName)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			GetParameter(paraName,&strTmp);
 			return strTmp.ToULongLong();
 		}
 		inline TF32 GetParameterAsFloat(const TCHAR* paraName)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			GetParameter(paraName,&strTmp);
 			return strTmp.ToFloat();
 		}
 		inline TF64 GetParameterAsDouble(const TCHAR* paraName)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			GetParameter(paraName,&strTmp);
 			return strTmp.ToDouble();
 		}
 		inline TBOOL GetParameterAsBool(const TCHAR* paraName)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			GetParameter(paraName,&strTmp);
 			return strTmp.ToBool();
 		}
@@ -116,49 +118,49 @@ namespace TSun{
 		TVOID ChangeParameter(const TCHAR* paraName, const String* pBuf);
 		inline TVOID ChangeParameter(const TCHAR* paraName, TS16 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%hd", value);
 			ChangeParameter(paraName, &strTmp);
 		}
 		inline TVOID ChangeParameter(const TCHAR* paraName, TU16 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%hu", value);
 			ChangeParameter(paraName, &strTmp);
 		}
 		inline TVOID ChangeParameter(const TCHAR* paraName, TS32 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%d",value);
 			ChangeParameter(paraName,&strTmp);
 		}
 		inline TVOID ChangeParameter(const TCHAR* paraName, TU32 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%u",value);
 			ChangeParameter(paraName,&strTmp);
 		}
 		inline TVOID ChangeParameter(const TCHAR* paraName, TS64 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%lld", value);
 			ChangeParameter(paraName, &strTmp);
 		}
 		inline TVOID ChangeParameter(const TCHAR* paraName, TU64 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%llu", value);
 			ChangeParameter(paraName, &strTmp);
 		}
 		inline TVOID ChangeParameter(const TCHAR* paraName, TF32 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%f",value);
 			ChangeParameter(paraName,&strTmp);
 		}
 		inline TVOID ChangeParameter(const TCHAR* paraName, TF64 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%lf",value);
 			ChangeParameter(paraName,&strTmp);
 		}
@@ -173,49 +175,49 @@ namespace TSun{
 		TVOID AddParameter(const TCHAR* paraName, const String* pBuf);
 		inline TVOID AddParameter(const TCHAR* paraName, TS16 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%hd", value);
 			AddParameter(paraName, &strTmp);
 		}
 		inline TVOID AddParameter(const TCHAR* paraName, TU16 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%hu", value);
 			AddParameter(paraName, &strTmp);
 		}
 		inline TVOID AddParameter(const TCHAR* paraName, TS32 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%d",value);
 			AddParameter(paraName,&strTmp);
 		}
 		inline TVOID AddParameter(const TCHAR* paraName, TU32 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%u",value);
 			AddParameter(paraName,&strTmp);
 		}
 		inline TVOID AddParameter(const TCHAR* paraName, TS64 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%lld", value);
 			AddParameter(paraName, &strTmp);
 		}
 		inline TVOID AddParameter(const TCHAR* paraName, TU64 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%llu", value);
 			AddParameter(paraName, &strTmp);
 		}
 		inline TVOID AddParameter(const TCHAR* paraName, TF32 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%f",value);
 			AddParameter(paraName,&strTmp);
 		}
 		inline TVOID AddParameter(const TCHAR* paraName, TF64 value)
 		{
-			String strTmp;
+			String strTmp(getMemAllocator());
 			strTmp.Format("%lf",value);
 			AddParameter(paraName,&strTmp);
 		}

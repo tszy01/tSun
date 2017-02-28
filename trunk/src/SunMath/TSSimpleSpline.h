@@ -13,8 +13,10 @@ namespace TSun
 	class SimpleSpline
 	{
 	public:
-        SimpleSpline()
+        SimpleSpline(MemAllocator* allocator = getDefaultMemAllocator()) : m_allocator(allocator)
 		{
+			mPoints = List<Quaternion<T>>(getMemAllocator());
+			mTangents = List<Quaternion<T>>(getMemAllocator());
 			// Set up matrix
 			// Hermite polynomial
 			mCoeffs[0][0] = 2;
@@ -37,7 +39,18 @@ namespace TSun
 			mAutoCalc = TTRUE;
 		}
 
-		~SimpleSpline(){};
+		~SimpleSpline()
+		{
+			m_allocator = 0;
+		};
+
+		SimpleSpline(const SimpleSpline<T>& cpy) : m_allocator(cpy.m_allocator)
+		{
+			mAutoCalc = cpy.mAutoCalc;
+			mPoints = cpy.mPoints;
+			mTangents = cpy.mTangents;
+			mCoeffs = cpy.mCoeffs;
+		}
 
         /** Adds a control point to the end of the spline. */
         inline TVOID addPoint(const Vector3<T>& p)
@@ -270,6 +283,7 @@ namespace TSun
 		List<Vector3<T>> mTangents;
         /// Matrix of coefficients 
         Matrix4x4<T> mCoeffs;
+		DEFINE_MEM_ALLOCATOR_MEMBER;
 	};
 
 	// define float simple spline

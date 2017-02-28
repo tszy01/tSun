@@ -6,9 +6,10 @@
 
 namespace TSun{
 
-	ConfigFile::ConfigFile(TVOID) : m_stream(0),m_bOpen(TFALSE),m_openType(OPEN_NONE)
+	ConfigFile::ConfigFile(MemAllocator* allocator) : m_stream(0),m_bOpen(TFALSE),m_openType(OPEN_NONE),m_allocator(allocator)
 	{
 		memset(m_szFileName,0,256);
+		m_list = List<FILESTR>(getMemAllocator());
 	}
 
 	ConfigFile::~ConfigFile(TVOID)
@@ -18,6 +19,7 @@ namespace TSun{
 		{
 			CloseFile();
 		}
+		m_allocator = 0;
 	}
 
 	TBOOL ConfigFile::OpenFile(const TCHAR* file, ConfigFile::OPEN_FILE_TYPE type)
@@ -189,8 +191,8 @@ namespace TSun{
 		if(FindParameter(paraName,0))
 			return;
 		_FILESTR str;
-		str.m_strParameter = paraName;
-		str.m_strValue = *pBuf;
+		str.m_strParameter = String(paraName, getMemAllocator());
+		str.m_strValue = String(*pBuf);
 		m_list.push_back(str);
 	}
 
@@ -217,8 +219,8 @@ namespace TSun{
 	{
 		// 建一个结构体
 		FILESTR filemap;
-		filemap.m_strParameter = "";
-		filemap.m_strValue = "";
+		filemap.m_strParameter = String("", getMemAllocator());
+		filemap.m_strValue = String("", getMemAllocator());
 		// 临时变量
 		TU32 numRead = 0;
 		TCHAR c;

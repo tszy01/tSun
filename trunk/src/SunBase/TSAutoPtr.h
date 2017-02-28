@@ -28,6 +28,7 @@ namespace TSun{
 				T_DELETE(getMemAllocator(),T,m_pPtr);
 				m_pPtr = 0;
 			}
+			m_allocator = 0;
 		}
 	protected:
 		T* m_pPtr;

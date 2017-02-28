@@ -12,6 +12,8 @@
 #include "TSVector4.h"
 #include "TSQuaternion.h"
 
+#include "TSMemDef.h"
+
 namespace TSun{
 
 	// 三角形与AABB的关系
@@ -371,9 +373,10 @@ namespace TSun{
 	// 计算切线方向，用于法线贴图
 	template<typename T>
 	TVOID CalculateTangentArray(TS32 vertexCount, const Vector3<T> *vertex, const Vector3<T> *normal,
-		const Vector2<T> *texcoord, TS32 triangleCount, const TS32* indexArray, Vector4<T> *tangent)
+		const Vector2<T> *texcoord, TS32 triangleCount, const TS32* indexArray, Vector4<T> *tangent, 
+		MemAllocator* allocator = getDefaultMemAllocator())
 	{
-		Vector3<T> *tan1 = new Vector3<T>[vertexCount * 2];
+		Vector3<T> *tan1 = T_NEW_ARRAY(allocator, Vector3<T>, vertexCount * 2);
 		Vector3<T> *tan2 = tan1 + vertexCount;
 		//::ZeroMemory(tan1, vertexCount * sizeof(Ogre::Vector3) * 2);
 		memset(tan1,0,vertexCount * sizeof(Vector3<T>) * 2);
@@ -431,7 +434,7 @@ namespace TSun{
 			tangent[a].w = (n.crossProduct(t).dotProduct(tan2[a]) < 0.0F) ? -1.0F : 1.0F;
 		}
     
-		delete[] tan1;
+		T_DELETE_ARRAY(allocator, Vector3<T>, tan1);
 	}
 
 	/** Gets the shortest arc quaternion to rotate this vector to the destination

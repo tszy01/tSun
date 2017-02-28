@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "TSCommonTypeDef.h"
+#include "TSMemDef.h"
 namespace TSun{
 	class BinaryFileProcessor
 	{
@@ -56,9 +57,9 @@ namespace TSun{
 		// read double
 		static TBOOL readDouble(TF64* adResult,FILE* pStream, TU32 nCount);
 		// read string
-		static TBOOL readString(TCHAR* strResult,FILE* pStream,const TCHAR* strCmp,TBOOL* bEqual, TU32 nCount, TU32* pReadCount);
+		static TBOOL readString(TCHAR* strResult,FILE* pStream,const TCHAR* strCmp,TBOOL* bEqual, TU32 nCount, TU32* pReadCount, MemAllocator* allocator = getDefaultMemAllocator());
 		// read wstring
-		static TBOOL readWString(TWCHAR* strResult, FILE* pStream, const TWCHAR* strCmp, TBOOL* bEqual, TU32 nCount, TU32* pReadCount);
+		static TBOOL readWString(TWCHAR* strResult, FILE* pStream, const TWCHAR* strCmp, TBOOL* bEqual, TU32 nCount, TU32* pReadCount, MemAllocator* allocator = getDefaultMemAllocator());
 	};
 }
 

@@ -148,32 +148,32 @@ namespace TSun {
 		return (DateTime::DAY_OF_WEEK)A;
 	}
 
-	String DateTime::GetDayOfWeekString()
+	String DateTime::GetDayOfWeekString(MemAllocator* allocator)
 	{
 		TS32 dow = (TS32)GetDayOfWeek();
 		switch(dow)
 		{
 		case 0:
-			return String("MON");
+			return String("MON", allocator);
 		case 1:
-			return String("TUE");
+			return String("TUE", allocator);
 		case 2:
-			return String("WED");
+			return String("WED", allocator);
 		case 3:
-			return String("THU");
+			return String("THU", allocator);
 		case 4:
-			return String("FRI");
+			return String("FRI", allocator);
 		case 5:
-			return String("SET");
+			return String("SET", allocator);
 		case 6:
-			return String("SUN");
+			return String("SUN", allocator);
 		}
-		return String("ERROR");
+		return String("ERROR", allocator);
 	}
 
-	String DateTime::GetDateString()
+	String DateTime::GetDateString(MemAllocator* allocator)
 	{
-		String strRe;
+		String strRe(allocator);
 		strRe.Format("%d - %d - %d",m_Year,m_Month,m_Day);
 		return strRe;
 	}

@@ -2,21 +2,28 @@
 
 namespace TSun
 {
-	ConsoleOutput::ConsoleOutput() : _assistant(TNULL), _maxDisplayHeight(10), _displayStartLineNo(0), _maxLineCount(1000), _maxLineWidth(20)
+	ConsoleOutput::ConsoleOutput(MemAllocator* allocator) : 
+		_assistant(TNULL), _maxDisplayHeight(10), _displayStartLineNo(0), 
+		_maxLineCount(1000), _maxLineWidth(20), m_allocator(allocator)
 	{
-
+		_lineList = List<TextLine>(getMemAllocator());
+		_listenerList = List<ConsoleOutputListener*>(getMemAllocator());
 	}
 
-	ConsoleOutput::ConsoleOutput(ConsoleOutputAssistant* assistant, TU32 maxLineCount, TU32 maxLineWidth, TU32 maxDisplayHeight) :
-		_assistant(assistant), _maxDisplayHeight(maxDisplayHeight), _displayStartLineNo(0), _maxLineCount(maxLineCount), _maxLineWidth(maxLineWidth)
+	ConsoleOutput::ConsoleOutput(ConsoleOutputAssistant* assistant, TU32 maxLineCount, 
+		TU32 maxLineWidth, TU32 maxDisplayHeight, MemAllocator* allocator) :
+		_assistant(assistant), _maxDisplayHeight(maxDisplayHeight), _displayStartLineNo(0), 
+		_maxLineCount(maxLineCount), _maxLineWidth(maxLineWidth), m_allocator(allocator)
 	{
-
+		_lineList = List<TextLine>(getMemAllocator());
+		_listenerList = List<ConsoleOutputListener*>(getMemAllocator());
 	}
 
 	ConsoleOutput::~ConsoleOutput()
 	{
 		clearListener();
 		clear();
+		m_allocator = 0;
 	}
 
 	TVOID ConsoleOutput::addText(const WString& text)
@@ -26,7 +33,7 @@ namespace TSun
 
 		_assistant->beginMeasureTextSize();
 
-		WString tmpStr;
+		WString tmpStr(getMemAllocator());
 		TU32 measureWidth, measureHeight;
 
 		// split to lines and add
@@ -133,7 +140,7 @@ namespace TSun
 
 	WString ConsoleOutput::getDisplayStr()
 	{
-		WString result;
+		WString result(getMemAllocator());
 		TU32 index = 0;
 		TU32 totalHeight = 0;
 

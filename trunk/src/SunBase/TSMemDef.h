@@ -86,11 +86,11 @@ P = TSun::TNULL;
 protected: \
 	TSun::MemAllocator* m_allocator; \
 public: \
-	TSun::MemAllocator* getMemAllocator() \
+	TSun::MemAllocator* getMemAllocator() const \
 	{ \
 		if(m_allocator == TSun::TNULL) \
 		{ \
-			m_allocator = TSun::getDefaultAllocator(); \
+			return TSun::getDefaultMemAllocator(); \
 		} \
 		return m_allocator; \
 	}

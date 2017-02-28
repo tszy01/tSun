@@ -33,8 +33,8 @@ namespace TSun {
 	public:
 		// 得到字符串
 		DAY_OF_WEEK GetDayOfWeek();
-		String GetDayOfWeekString();
-		String GetDateString();
+		String GetDayOfWeekString(MemAllocator* allocator = getDefaultMemAllocator());
+		String GetDateString(MemAllocator* allocator = getDefaultMemAllocator());
 		// 得到数值
 		inline TS32 GetYear()
 		{

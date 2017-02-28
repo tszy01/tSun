@@ -19,16 +19,18 @@ namespace TSun {
 	public:
 		static T* getSingletonPtr(MemAllocator* allocator = getDefaultMemAllocator())
 		{
-			m_allocator = allocator;
-			if(!m_Ptr)
+			if (!m_Ptr)
+			{
 				m_Ptr = T_NEW(getMemAllocator(), T);
+				m_Ptr->m_allocator = allocator;
+			}
 			return m_Ptr;
 		};
 		static TVOID delSingletonPtr()
 		{
 			if(m_Ptr)
 			{
-				T_DELETE(getMemAllocator(), T, m_Ptr);
+				T_DELETE(m_Ptr->getMemAllocator(), T, m_Ptr);
 				m_Ptr = 0;
 			}
 		}

@@ -142,6 +142,7 @@ namespace TSun {
 		}
 		virtual ~SharedPtr() {
             release();
+			m_allocator = 0;
 		}
 
 
@@ -240,12 +241,12 @@ namespace TSun {
 				T_DELETE_ARRAY(getMemAllocator(), T, pRep);
 				break;
 			case SPFM_FREE:
-				getMemAllocator()->freeMem(pRep, file, line);
+				getMemAllocator()->freeMem(pRep, __FILE__, __LINE__);
 				break;
 			};
 			// use OGRE_FREE instead of OGRE_DELETE_T since 'unsigned int' isn't a destructor
 			// we only used OGRE_NEW_T to be able to use constructor
-			delete pUseCount;
+			T_DELETE(getMemAllocator(), TU32, pUseCount);
 			mMutex.CloseMutexHandle();
         }
 

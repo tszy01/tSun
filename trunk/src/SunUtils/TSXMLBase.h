@@ -13,7 +13,7 @@ namespace TSun {
 	{
 	public:
 		// constructor
-		XMLBase();
+		XMLBase(MemAllocator* allocator = getDefaultMemAllocator());
 		// destructor
 		virtual ~XMLBase();
 	private:
@@ -22,6 +22,8 @@ namespace TSun {
 	protected:
 		// version
 		String mVersion;
+		// memory allocator
+		DEFINE_MEM_ALLOCATOR_MEMBER;
 	public:
 		// load from file
 		TBOOL loadXMLFile(const TCHAR* filename);

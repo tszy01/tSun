@@ -52,11 +52,13 @@ namespace TSun
 		// listener list
 		// need to maintance the memory by self
 		List<ConsoleInputListener*> _listenerList;
+		// memory allocator
+		DEFINE_MEM_ALLOCATOR_MEMBER;
 	public:
-		ConsoleInput();
+		ConsoleInput(MemAllocator* allocator = getDefaultMemAllocator());
 		~ConsoleInput();
 
-		ConsoleInput(TU32 maxLineWidth, TU32 defaultCharWidth);
+		ConsoleInput(TU32 maxLineWidth, TU32 defaultCharWidth, MemAllocator* allocator = getDefaultMemAllocator());
 	public:
 		inline TVOID setMaxLineWidth(TU32 maxLineWidth)
 		{

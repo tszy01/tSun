@@ -61,6 +61,7 @@ namespace TSun {
 		~Map(TVOID)
 		{
 			clear();
+			m_allocator = 0;
 		};
 	protected:
 		// 起始指针

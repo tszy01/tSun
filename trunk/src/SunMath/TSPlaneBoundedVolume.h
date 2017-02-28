@@ -10,15 +10,30 @@ namespace TSun
 	template<typename T>
 	class PlaneBoundedVolume
 	{
+		// memory allocator
+		DEFINE_MEM_ALLOCATOR_MEMBER;
 	public:
         /// Publicly accessible plane list, you can modify this direct
 		List<Plane<T>> planes;
         EIntersectionRelation3D outside;
 
-		PlaneBoundedVolume() :outside(ISREL3D_BACK) {}
+		PlaneBoundedVolume(MemAllocator* allocator = getDefaultMemAllocator()) : 
+			outside(ISREL3D_BACK), m_allocator(allocator)
+		{
+			planes = List<Plane<T>>(getMemAllocator());
+		}
         /** Constructor, determines which side is deemed to be 'outside' */
-        PlaneBoundedVolume(EIntersectionRelation3D theOutside) 
-            : outside(theOutside) {}
+        PlaneBoundedVolume(EIntersectionRelation3D theOutside, MemAllocator* allocator = getDefaultMemAllocator())
+            : outside(theOutside), m_allocator(allocator)
+		{
+			planes = List<Plane<T>>(getMemAllocator());
+		}
+
+		PlaneBoundedVolume(const PlaneBoundedVolume<T>& cpy)
+			: outside(cpy.outside), m_allocator(cpy.m_allocator)
+		{
+			planes = cpy.planes;
+		}
 
         /** Intersection test with AABB
         @remarks May return TFALSE positives but will never miss an intersection.

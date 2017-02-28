@@ -18,21 +18,25 @@ namespace TSun
 	{
 	protected:
 		List<Polygon<T>*> mPolygons;
-
+		// memory allocator
+		DEFINE_MEM_ALLOCATOR_MEMBER;
 	public:
-		ConvexBody()
+		ConvexBody(MemAllocator* allocator = getDefaultMemAllocator()) : m_allocator(allocator)
 		{
+			mPolygons = List<Polygon<T>*>(getMemAllocator());
 			//mPolygons.reserve(8);
 		}
 		~ConvexBody()
 		{
 			reset();
+			m_allocator = 0;
 		}
-		ConvexBody( const ConvexBody<T>& cpy )
+		ConvexBody( const ConvexBody<T>& cpy) : m_allocator(cpy.m_allocator)
 		{
+			mPolygons = List<Polygon<T>*>(getMemAllocator());
 			for (TU32 i = 0; i < cpy.getPolygonCount(); ++i )
 			{
-				Polygon *p = new Polygon<T>();
+				Polygon *p = T_NEW(getMemAllocator(), Polygon<T>);
 				*p = cpy.getPolygon( i );
 				mPolygons.push_back( p );
 			}
@@ -62,7 +66,7 @@ namespace TSun
 			Polygon<T> *poly;
 
 			// near
-			poly = new Polygon<T>();
+			poly = T_NEW(getMemAllocator(), Polygon<T>);
 			poly->insertVertex( pts[0] );
 			poly->insertVertex( pts[1] );
 			poly->insertVertex( pts[2] );
@@ -70,7 +74,7 @@ namespace TSun
 			mPolygons.push_back( poly );
 
 			// far
-			poly = new Polygon<T>();
+			poly = T_NEW(getMemAllocator(), Polygon<T>);
 			poly->insertVertex( pts[5] );
 			poly->insertVertex( pts[4] );
 			poly->insertVertex( pts[7] );
@@ -78,7 +82,7 @@ namespace TSun
 			mPolygons.push_back( poly );
 
 			// left
-			poly = new Polygon<T>();
+			poly = T_NEW(getMemAllocator(), Polygon<T>);
 			poly->insertVertex( pts[5] );
 			poly->insertVertex( pts[6] );
 			poly->insertVertex( pts[2] );
@@ -86,7 +90,7 @@ namespace TSun
 			mPolygons.push_back( poly ); 
 
 			// right
-			poly = new Polygon<T>();
+			poly = T_NEW(getMemAllocator(), Polygon<T>);
 			poly->insertVertex( pts[4] );
 			poly->insertVertex( pts[0] );
 			poly->insertVertex( pts[3] );
@@ -94,7 +98,7 @@ namespace TSun
 			mPolygons.push_back( poly ); 
 
 			// bottom
-			poly = new Polygon<T>();
+			poly = T_NEW(getMemAllocator(), Polygon<T>);
 			poly->insertVertex( pts[6] );
 			poly->insertVertex( pts[7] );
 			poly->insertVertex( pts[3] );
@@ -102,7 +106,7 @@ namespace TSun
 			mPolygons.push_back( poly ); 
 
 			// top
-			poly = new Polygon<T>();
+			poly = T_NEW(getMemAllocator(), Polygon<T>);
 			poly->insertVertex( pts[4] );
 			poly->insertVertex( pts[5] );
 			poly->insertVertex( pts[1] );
@@ -135,7 +139,7 @@ namespace TSun
 			reset();
 
 			// far
-			poly = new Polygon<T>();
+			poly = T_NEW(getMemAllocator(), Polygon<T>);
 			poly->insertVertex( currentVertex ); // 0 
 			currentVertex.Y = max.Y;
 			poly->insertVertex( currentVertex ); // 1
@@ -146,7 +150,7 @@ namespace TSun
 			insertPolygon( poly );
 
 			// right
-			poly = new Polygon<T>();
+			poly = T_NEW(getMemAllocator(), Polygon<T>);
 			poly->insertVertex( currentVertex ); // 3
 			currentVertex.Y = max.Y;
 			poly->insertVertex( currentVertex ); // 2
@@ -157,7 +161,7 @@ namespace TSun
 			insertPolygon( poly ); 
 
 			// near
-			poly = new Polygon<T>();
+			poly = T_NEW(getMemAllocator(), Polygon<T>);
 			poly->insertVertex( currentVertex ); // 7
 			currentVertex.Y = max.Y;
 			poly->insertVertex( currentVertex ); // 4
@@ -168,7 +172,7 @@ namespace TSun
 			insertPolygon( poly );
 
 			// left
-			poly = new Polygon<T>();
+			poly = T_NEW(getMemAllocator(), Polygon<T>);
 			poly->insertVertex( currentVertex ); // 6
 			currentVertex.Y = max.Y;
 			poly->insertVertex( currentVertex ); // 5
@@ -179,7 +183,7 @@ namespace TSun
 			insertPolygon( poly ); 
 
 			// bottom
-			poly = new Polygon<T>();
+			poly = T_NEW(getMemAllocator(), Polygon<T>);
 			poly->insertVertex( currentVertex ); // 0 
 			currentVertex.X = max.X;
 			poly->insertVertex( currentVertex ); // 3
@@ -190,7 +194,7 @@ namespace TSun
 			insertPolygon( poly );
 
 			// top
-			poly = new Polygon<T>();
+			poly = T_NEW(getMemAllocator(), Polygon<T>);
 			currentVertex = max;
 			poly->insertVertex( currentVertex ); // 4
 			currentVertex.Z = min.Z;
@@ -323,10 +327,10 @@ namespace TSun
 				const Polygon<T>& p = current.getPolygon( iPoly );
 
 				// the polygon to assemble
-				Polygon<T> *pNew = new Polygon<T>();
+				Polygon<T> *pNew = T_NEW(getMemAllocator(), Polygon<T>);
 
 				// the intersection polygon (indeed it's an edge or it's empty)
-				Polygon<T> *pIntersect = new Polygon<T>();
+				Polygon<T> *pIntersect = T_NEW(getMemAllocator(), Polygon<T>);
 			
 				// check if polygons lie inside or outside (or on the plane)
 				// for each vertex check where it is situated in regard to the plane
@@ -335,7 +339,7 @@ namespace TSun
 				// - side is clipSide: vertex will be clipped
 				// - side is !clipSide: vertex will be untouched
 				// - side is NOSIDE:   vertex will be untouched
-				EIntersectionRelation3D *side = new EIntersectionRelation3D[vertexCount];
+				EIntersectionRelation3D *side = T_NEW_ARRAY(getMemAllocator(), EIntersectionRelation3D, vertexCount);
 				for (TU32 iVertex = 0; iVertex < vertexCount; ++iVertex )
 				{
 					side[ iVertex ] = pl.getSide( p.getVertex( iVertex ) );
@@ -436,14 +440,14 @@ namespace TSun
 					else
 					{
 						// delete pNew because it's empty or invalid
-						delete pNew;
+						T_DELETE(getMemAllocator(), Polygon<T>, pNew);
 						pNew = 0;
 					}
 				}
 				else
 				{
 					// delete pNew because it's empty or invalid
-					delete pNew;
+					T_DELETE(getMemAllocator(), Polygon<T>, pNew);
 					pNew = 0;
 				}
 
@@ -455,11 +459,11 @@ namespace TSun
 
 				// delete intersection polygon
 				// vertices were copied (if there were any)
-				delete pIntersect;
+				T_DELETE(getMemAllocator(), Polygon<T>, pIntersect);
 				pIntersect = 0;
 
 				// delete side info
-				delete [] side;
+				T_DELETE_ARRAY(getMemAllocator(), EIntersectionRelation3D, side);
 				side = 0;
 			}
 
@@ -467,7 +471,7 @@ namespace TSun
 			// at least three edges are needed for a polygon
 			if ( intersectionEdges.size() >= 3 )
 			{
-				Polygon<T> *pClosing = new Polygon<T>();
+				Polygon<T> *pClosing = T_NEW(getMemAllocator(), Polygon<T>);
 
 				// Analyze the intersection list and insert the intersection points in ccw order
 				// Each point is twice in the list because of the fact that we have a convex body
@@ -560,7 +564,7 @@ namespace TSun
 				// mating intersection edge NOT found!
 				else
 				{
-					delete pClosing;
+					T_DELETE(getMemAllocator(), Polygon<T>, pClosing);
 				}
 
 			} // if intersectionEdges contains more than three elements
@@ -648,7 +652,7 @@ namespace TSun
 				Map<Vector3<T>, Vector3<T>>::Iterator mapIt = edgeMap.begin();
 
 				// build polygon it.first, it.second, point
-				Polygon<T> *p = new Polygon<T>();
+				Polygon<T> *p = T_NEW(getMemAllocator(), Polygon<T>);
 
 				p->insertVertex(mapIt->Key);
 				p->insertVertex(mapIt->Value);
@@ -670,7 +674,7 @@ namespace TSun
 			for (List<Polygon<T>*>::Iterator it = mPolygons.begin(); 
 				it != mPolygons.end(); ++it)
 			{
-				delete *it;
+				T_DELETE(getMemAllocator(), Polygon<T>, *it);
 			}
 			mPolygons.clear();
 		}
@@ -782,7 +786,7 @@ namespace TSun
 									 bCurrent.equals(aNext))
 								{
 									// polygons are neighbors, assemble new one
-									Polygon<T> *pNew = new Polygon<T>();
+									Polygon<T> *pNew = T_NEW(getMemAllocator(), Polygon<T>);
 
 									// insert all vertices of A up to the join (including the common vertex, ignoring
 									// whether the first vertex of A may be a shared vertex)
@@ -879,7 +883,7 @@ namespace TSun
 
 			// Compare the polygons. They may not be in correct order.
 			// A correct convex body does not have identical polygons in its body.
-			TBOOL *bChecked = new TBOOL[getPolygonCount()];
+			TBOOL *bChecked = T_NEW_ARRAY(getMemAllocator(), TBOOL, getPolygonCount());
 			for (TU32 i=0; i<getPolygonCount(); ++i )
 			{
 				bChecked[ i ] = TFALSE;
@@ -904,7 +908,7 @@ namespace TSun
 
 				if ( bFound == TFALSE )
 				{
-					delete [] bChecked;
+					T_DELETE_ARRAY(getMemAllocator(), TBOOL, bChecked);
 					bChecked = 0;
 					return TFALSE;
 				}
@@ -914,13 +918,13 @@ namespace TSun
 			{
 				if ( bChecked[ i ] != TTRUE )
 				{
-					delete [] bChecked;
+					T_DELETE_ARRAY(getMemAllocator(), TBOOL, bChecked);
 					bChecked = 0;
 					return TFALSE;
 				}
 			}
 
-			delete [] bChecked;
+			T_DELETE_ARRAY(getMemAllocator(), TBOOL, bChecked);
 			bChecked = 0;
 			return TTRUE;
 		}
@@ -992,7 +996,7 @@ namespace TSun
 			it.advance(poly);
 			//std::advance(it, poly);
 		
-			delete *it;
+			T_DELETE(getMemAllocator(), Polygon<T>, *it);
 			mPolygons.erase(it);
 		}
 
@@ -1050,7 +1054,7 @@ namespace TSun
 			if (pdata != mPolygons[poly])
 			{
 				// delete old polygon
-				delete mPolygons[ poly ];
+				T_DELETE(getMemAllocator(), Polygon<T>, mPolygons[poly]);
 
 				// set new polygon
 				mPolygons[poly] = pdata;
@@ -1150,7 +1154,7 @@ namespace TSun
 			// allocate numPolygons polygons with each numVertices vertices
 			for (TU32 iPoly = 0; iPoly < numPolygons; ++iPoly )
 			{
-				Polygon<T> *poly = new Polygon<T>;
+				Polygon<T> *poly = T_NEW(getMemAllocator(), Polygon<T>);
 
 				for (TU32 iVertex = 0; iVertex < numVertices; ++iVertex )
 				{

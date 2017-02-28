@@ -11,3 +11,10 @@ v 0.1.1
 
 v 0.2.0
 1，添加内存管理
+
+autoptr
+sharedptr
+string
+wstring
+list
+map
