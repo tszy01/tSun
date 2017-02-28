@@ -4,6 +4,7 @@
 #include "TSCommonTypeDef.h"
 #include "TSLock.h"
 #include <list>
+#include <map>
 
 namespace TSun {
 	class MemAllocator
@@ -16,7 +17,7 @@ namespace TSun {
 		{
 			MEM_STATE_UNUSED = 1,
 			MEM_STATE_ALLOCATED = 2,
-			MEM_STATE_FREED = 3,
+			MEM_STATE_DELETED = 3,
 		};
 		struct MEM_BLOCK
 		{
@@ -43,7 +44,8 @@ namespace TSun {
 			}
 		};
 	private:
-		std::list<MEM_BLOCK> _memList;
+		std::map<void*, MEM_BLOCK> _memList;
+		std::list<std::map<void*, MEM_BLOCK>::iterator> _unusedList;
 		MEM_BLOCK _globalMem;
 		Mutex _memMutex;
 	public:
@@ -52,8 +54,9 @@ namespace TSun {
 		TVOID* allocateMem(TSIZE size);
 		TBOOL freeMem(TVOID* p);
 	private:
-		TBOOL addMemBlock(TVOID* p, TSIZE size, MEM_STATE state, std::list<MEM_BLOCK>::iterator& itrWhere);
-		TBOOL findAvailableBlock(TSIZE size, std::list<MEM_BLOCK>::iterator& itrFind);
+		TBOOL addUnusedMemBlock(TVOID* p, TSIZE size, std::map<void*, MEM_BLOCK>::iterator& itrWhere);
+		TBOOL findAvailableBlock(TSIZE size, std::map<void*, MEM_BLOCK>::iterator& itrFind);
+		TVOID onMemBlockChanged(std::map<void*, MEM_BLOCK>::iterator& itrWhere, MEM_STATE oldState, MEM_STATE newState);
 	};
 }
 

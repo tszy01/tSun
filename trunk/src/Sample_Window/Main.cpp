@@ -13,6 +13,7 @@
 
 #include "ConfigDef.h"
 #include "GlobleClass.h"
+#include "TSMemAllocator.h"
 
 #ifdef BUILD_TEST
 #include "TSTxtFileReader.h"
@@ -22,6 +23,8 @@
 #include "TSBinaryFileProcessor.h"
 #include "XMLResTest.h"
 #endif // BUILD_TEST
+
+TSun::MemAllocator _globalAllocator;
 
 int WindowLoop()
 {
@@ -137,14 +140,29 @@ int runTest(HINSTANCE hInstance, LPSTR lpCmLine, int nCmdShow)
 	TLunaEngine::UTF8FileWriter::CloseTxtFile(fp);*/
 	
 
-	XMLResTest test;
+	//XMLResTest test;
 	/*test.newXMLDocument();
 	if (test.saveXMLFile("test0.xml") == TSun::TFALSE)
 	{
 		consoleWnd->GetConsoleOutput()->addText(L"save xml file error");
 	}*/
-	test.loadXMLFile("test0.xml");
-	
+	//test.loadXMLFile("test0.xml");
+
+	void* a = _globalAllocator.allocateMem(4);
+	void* b = _globalAllocator.allocateMem(4);
+	void* c = _globalAllocator.allocateMem(4);
+	void* d = _globalAllocator.allocateMem(4);
+	_globalAllocator.freeMem(c);
+	c = 0;
+	c = _globalAllocator.allocateMem(4);
+	_globalAllocator.freeMem(b);
+	b = 0;
+	_globalAllocator.freeMem(a);
+	a = 0;
+	_globalAllocator.freeMem(c);
+	c = 0;
+	_globalAllocator.freeMem(d);
+	d = 0;
 	return 0;
 }
 #endif // BUILD_TEST
@@ -155,6 +173,10 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmLine,
 	//_CrtSetBreakAlloc(538);
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif // DEMO_CHECK_MEM_LEAK
+
+	// memory management
+	_globalAllocator.initialize(1024 * 1024 * 10);
+
 	// init variables
 	TSun::String initScriptFile("initapp.lua");
 	bool bEditor = false;
@@ -239,5 +261,8 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmLine,
 	ConsoleWindow::delSingletonPtr();
 	TSun::Log::DestroyLogSystem();
 	LuaInit::delSingletonPtr();
+
+	// memory management
+	_globalAllocator.destroy();
 	return re;
 }

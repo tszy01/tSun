@@ -22,7 +22,7 @@ namespace TSun {
 		memset(p, 0, totalSize);
 		_globalMem._p = p;
 		_globalMem._size = totalSize;
-		addMemBlock(p, totalSize, MEM_STATE_UNUSED, _memList.begin());
+		addUnusedMemBlock(p, totalSize, _memList.begin());
 		return TTRUE;
 	}
 
@@ -40,21 +40,27 @@ namespace TSun {
 	TVOID* MemAllocator::allocateMem(TSIZE size)
 	{
 		Lock(_memMutex);
-		std::list<MEM_BLOCK>::iterator itr;
+		std::map<void*, MEM_BLOCK>::iterator itr;
 		if (!findAvailableBlock(size, itr))
 			return 0;
-		if (itr->_size == size)
+		if (itr->second._size == size)
 		{
-			itr->_state = MEM_STATE_ALLOCATED;
-			return itr->_p;
+			itr->second._state = MEM_STATE_ALLOCATED;
+			onMemBlockChanged(itr, MEM_STATE_UNUSED, MEM_STATE_ALLOCATED);
+			return itr->second._p;
 		}
-		TVOID* nextHead = (TUByte*)(itr->_p) + size;
-		size_t nextSize = itr->_size - size;
-		addMemBlock(nextHead, nextSize, MEM_STATE_UNUSED, itr);
+		TVOID* p = itr->second._p;
+		TSIZE origSize = itr->second._size;
 
-		itr->_size = size;
-		itr->_state = MEM_STATE_ALLOCATED;
-		return itr->_p;
+		itr->second._size = size;
+		itr->second._state = MEM_STATE_ALLOCATED;
+		onMemBlockChanged(itr, MEM_STATE_UNUSED, MEM_STATE_ALLOCATED);
+
+		TVOID* nextHead = (TUByte*)(p) + size;
+		TSIZE nextSize = origSize - size;
+		addUnusedMemBlock(nextHead, nextSize, itr);
+		
+		return p;
 	}
 
 	TBOOL MemAllocator::freeMem(TVOID* p)
@@ -62,78 +68,119 @@ namespace TSun {
 		if (!p)
 			return TFALSE;
 		Lock(_memMutex);
-		TBOOL find = TFALSE;
-		std::list<MEM_BLOCK>::iterator itr = _memList.begin();
-		std::list<MEM_BLOCK>::iterator itrFind = _memList.end();
-		for (; itr != _memList.end();)
+		std::map<void*, MEM_BLOCK>::iterator itrFind = _memList.find(p);
+		if (itrFind == _memList.end())
+			return TFALSE;
+		bool needAddUnused = true;
+		std::map<void*, MEM_BLOCK>::iterator itr = itrFind;
+		while (true)
 		{
-			if (itr->_p == p)
+			if (itr == _memList.begin())
 			{
-				itr->_state = MEM_STATE_UNUSED;
-				find = TTRUE;
-				itrFind = itr;
-				++itr;
+				break;
+			}
+			--itr;
+			if (itr->second._state != MEM_STATE_UNUSED)
+			{
+				break;
 			}
 			else
 			{
-				if (find)
-				{
-					if (itr->_state == MEM_STATE_UNUSED)
-					{
-						itrFind->_size += itr->_size;
-						itr = _memList.erase(itr);
-					}
-					else
-					{
-						break;
-					}
-				}
-				else
-				{
-					++itr;
-				}
+				itrFind->second._state = MEM_STATE_UNUSED;
+				itrFind = itr;
+				needAddUnused = false;
 			}
 		}
-		if (!find)
-			return TFALSE;
-		itrFind->_state = MEM_STATE_UNUSED;
-		memset(itrFind->_p, 0, itrFind->_size);
+		itr = itrFind;
+		++itr;
+		for (; itr != _memList.end();)
+		{
+			if (itr->second._state == MEM_STATE_UNUSED)
+			{
+				itrFind->second._size += itr->second._size;
+				onMemBlockChanged(itr, MEM_STATE_UNUSED, MEM_STATE_DELETED);
+				itr = _memList.erase(itr);
+			}
+			else
+			{
+				break;
+			}
+		}
+		itrFind->second._state = MEM_STATE_UNUSED;
+		memset(itrFind->second._p, 0, itrFind->second._size);
+		if (needAddUnused)
+		{
+			onMemBlockChanged(itrFind, MEM_STATE_ALLOCATED, MEM_STATE_UNUSED);
+		}
 		return TTRUE;
 	}
 
-	TBOOL MemAllocator::addMemBlock(TVOID* p, TSIZE size, MemAllocator::MEM_STATE state, std::list<MEM_BLOCK>::iterator& itrWhere)
+	TBOOL MemAllocator::addUnusedMemBlock(TVOID* p, TSIZE size, std::map<void*, MEM_BLOCK>::iterator& itrWhere)
 	{
 		if (!p)
 			return TFALSE;
-		_memList.insert(itrWhere, MEM_BLOCK(p, size, state));
+		std::map<void*, MEM_BLOCK>::iterator itr = _memList.insert(itrWhere, std::pair<void*, MEM_BLOCK>(p, MEM_BLOCK(p, size, MEM_STATE_UNUSED)));
+		onMemBlockChanged(itr, MEM_STATE_UNUSED, MEM_STATE_UNUSED);
 		return TTRUE;
 	}
 
-	TBOOL MemAllocator::findAvailableBlock(TSIZE size, std::list<MEM_BLOCK>::iterator& itrFind)
+	TVOID MemAllocator::onMemBlockChanged(std::map<void*, MEM_BLOCK>::iterator& itrWhere, MEM_STATE oldState, MEM_STATE newState)
 	{
-		std::list<MEM_BLOCK>::iterator itr = _memList.begin();
-		for (; itr != _memList.end(); ++itr)
+		if (newState == MEM_STATE_UNUSED)
 		{
-			if (itr->_state == MEM_STATE_UNUSED)
+			_unusedList.push_back(itrWhere);
+		}
+		else if (newState == MEM_STATE_ALLOCATED || newState == MEM_STATE_DELETED)
+		{
+			std::list<std::map<void*, MEM_BLOCK>::iterator>::iterator itrUnused = _unusedList.begin();
+			for (; itrUnused != _unusedList.end(); ++itrUnused)
 			{
-				if (itr->_size == size)
+				if ((*itrUnused) == itrWhere)
 				{
-					itrFind = itr;
-					return TTRUE;
+					_unusedList.erase(itrUnused);
+					break;
 				}
 			}
 		}
-		itr = _memList.begin();
-		for (; itr != _memList.end(); ++itr)
+		
+	}
+
+	TBOOL MemAllocator::findAvailableBlock(TSIZE size, std::map<void*, MEM_BLOCK>::iterator& itrFind)
+	{
+		TBOOL find = TFALSE;
+		TSIZE findSize = 0;
+		std::list<std::map<void*, MEM_BLOCK>::iterator>::iterator itrUnused = _unusedList.begin();
+		std::list<std::map<void*, MEM_BLOCK>::iterator>::iterator itrFindA = _unusedList.end();
+		for (; itrUnused != _unusedList.end(); ++itrUnused)
 		{
-			if (itr->_state == MEM_STATE_UNUSED)
+			if ((*itrUnused)->second._size == size)
 			{
-				if (itr->_size >= size)
+				itrFind = (*itrUnused);
+				return TTRUE;
+			}
+			else if ((*itrUnused)->second._size >= size)
+			{
+				if (find == TFALSE)
 				{
-					itrFind = itr;
-					return TTRUE;
+					itrFindA = itrUnused;
+					find = TTRUE;
+					findSize = (*itrUnused)->second._size;
+				}
+				else
+				{
+					if ((*itrUnused)->second._size < findSize)
+					{
+						itrFindA = itrUnused;
+						findSize = (*itrUnused)->second._size;
+					}
 				}
 			}
+		}
+
+		if (find)
+		{
+			itrFind = (*itrFindA);
+			return TTRUE;
 		}
 		return TFALSE;
 	}
