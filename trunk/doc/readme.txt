@@ -24,6 +24,8 @@ TSCommonTypeDef.h -- 定义一些基本
 TSConfigDef.h -- 全局配置定义
 TSCommonFunc.h -- 全局函数
 
+TSMemDef.h -- 定义内存的申请释放
+MemAllocator -- 内存管理类
 Map<T>:一个<Key,Value>对的链表
 List<T>:一个双向链表
 Pair<T>:Map用键值对
@@ -144,6 +146,7 @@ GlobleClass -- 全局对象管理
 ConfigDef.h -- 编译宏定义等
 Main.cpp -- 入口
 XMLResTest -- xml读写测试
+MemTest -- 用于内存管理模块的测试
 
 运行参数
 -initfile [filename]指定初始化脚本文件，默认为运行目录中的initApp.lua
