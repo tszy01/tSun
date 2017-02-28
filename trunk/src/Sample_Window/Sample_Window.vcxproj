@@ -173,6 +173,7 @@
     <ClCompile Include="GlobleClass.cpp" />
     <ClCompile Include="LuaInitApp.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MemTest.cpp" />
     <ClCompile Include="XMLResTest.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +181,7 @@
     <ClInclude Include="ConsoleWindow.h" />
     <ClInclude Include="GlobleClass.h" />
     <ClInclude Include="LuaInitApp.h" />
+    <ClInclude Include="MemTest.h" />
     <ClInclude Include="XMLResTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

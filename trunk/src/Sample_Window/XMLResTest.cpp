@@ -2,6 +2,8 @@
 
 #include "TSLog.h"
 
+#ifdef BUILD_TEST
+
 XMLResTest::XMLResTest() : TSun::XMLBase()
 {
 	mVersion = "1.0.0";
@@ -46,3 +48,5 @@ TSun::TBOOL XMLResTest::onElementRead(TiXmlElement* parent, TiXmlElement* elemen
 	}
 	return TSun::TTRUE;
 }
+
+#endif

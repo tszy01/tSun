@@ -14,6 +14,7 @@
 #include "ConfigDef.h"
 #include "GlobleClass.h"
 #include "TSMemAllocator.h"
+#include "TSMemDef.h"
 
 #ifdef BUILD_TEST
 #include "TSTxtFileReader.h"
@@ -22,9 +23,12 @@
 #include "TSUTF8FileWriter.h"
 #include "TSBinaryFileProcessor.h"
 #include "XMLResTest.h"
+#include "MemTest.h"
 #endif // BUILD_TEST
 
+#ifdef USE_SUN_ALLOCATOR
 TSun::MemAllocator _globalAllocator;
+#endif
 
 int WindowLoop()
 {
@@ -148,21 +152,46 @@ int runTest(HINSTANCE hInstance, LPSTR lpCmLine, int nCmdShow)
 	}*/
 	//test.loadXMLFile("test0.xml");
 
-	void* a = _globalAllocator.allocateMem(4);
-	void* b = _globalAllocator.allocateMem(4);
-	void* c = _globalAllocator.allocateMem(4);
-	void* d = _globalAllocator.allocateMem(4);
-	_globalAllocator.freeMem(c);
+#ifdef USE_SUN_ALLOCATOR
+	void* a = _globalAllocator.allocateMem(4, __FILE__, __LINE__);
+	void* b = _globalAllocator.allocateMem(4, __FILE__, __LINE__);
+	void* c = _globalAllocator.allocateMem(4, __FILE__, __LINE__);
+	void* d = _globalAllocator.allocateMem(4, __FILE__, __LINE__);
+	_globalAllocator.freeMem(c, __FILE__, __LINE__);
 	c = 0;
-	c = _globalAllocator.allocateMem(4);
-	_globalAllocator.freeMem(b);
+	c = _globalAllocator.allocateMem(4, __FILE__, __LINE__);
+	_globalAllocator.freeMem(b, __FILE__, __LINE__);
 	b = 0;
-	_globalAllocator.freeMem(a);
+	_globalAllocator.freeMem(a, __FILE__, __LINE__);
 	a = 0;
-	_globalAllocator.freeMem(c);
+	_globalAllocator.freeMem(c, __FILE__, __LINE__);
 	c = 0;
-	_globalAllocator.freeMem(d);
+	_globalAllocator.freeMem(d, __FILE__, __LINE__);
 	d = 0;
+
+	MemTest* mem = T_NEW(&_globalAllocator, MemTest);
+	mem->setA(5);
+	T_SAFE_DELETE(&_globalAllocator, MemTest, mem);
+
+	MemTest* memA = T_NEW_ARRAY(&_globalAllocator, MemTest, 5);
+	for (TSun::TSIZE i = 0; i < 5; ++i)
+	{
+		memA[i].setA((TSun::TS32)i);
+	}
+	T_SAFE_DELETE_ARRAY(&_globalAllocator, MemTest, memA);
+#else
+
+	MemTest* mem = T_NEW(0, MemTest);
+	mem->setA(5);
+	T_SAFE_DELETE(0, MemTest, mem);
+
+	MemTest* memA = T_NEW_ARRAY(0, MemTest, 5);
+	for (TSun::TSIZE i = 0; i < 5; ++i)
+	{
+		memA[i].setA((TSun::TS32)i);
+	}
+	T_SAFE_DELETE_ARRAY(0, MemTest, memA);
+#endif
 	return 0;
 }
 #endif // BUILD_TEST
@@ -174,8 +203,10 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmLine,
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif // DEMO_CHECK_MEM_LEAK
 
+#ifdef USE_SUN_ALLOCATOR
 	// memory management
-	_globalAllocator.initialize(1024 * 1024 * 10);
+	_globalAllocator.initialize(1024 * 1024 * 10, "GlobalAllocator");
+#endif
 
 	// init variables
 	TSun::String initScriptFile("initapp.lua");
@@ -262,7 +293,9 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmLine,
 	TSun::Log::DestroyLogSystem();
 	LuaInit::delSingletonPtr();
 
+#ifdef USE_SUN_ALLOCATOR
 	// memory management
 	_globalAllocator.destroy();
+#endif
 	return re;
 }

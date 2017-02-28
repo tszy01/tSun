@@ -170,6 +170,7 @@
     <ClInclude Include="TSLock.h" />
     <ClInclude Include="TSMap.h" />
     <ClInclude Include="TSMemAllocator.h" />
+    <ClInclude Include="TSMemDef.h" />
     <ClInclude Include="TSMutex.h" />
     <ClInclude Include="TSPair.h" />
     <ClInclude Include="TSSharedPtr.h" />

@@ -2,7 +2,9 @@
 #define _XMLRESTEST_H_
 
 #include "TSXMLBase.h"
+#include "ConfigDef.h"
 
+#ifdef BUILD_TEST
 class XMLResTest : public TSun::XMLBase
 {
 public:
@@ -24,5 +26,6 @@ protected:
 	// rewrite this function to get key-value
 	virtual TSun::TBOOL onElementRead(TiXmlElement* parent, TiXmlElement* element, const TSun::String& eleName);
 };
+#endif
 
 #endif

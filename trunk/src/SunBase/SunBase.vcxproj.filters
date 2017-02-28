@@ -63,6 +63,9 @@
     <ClInclude Include="TSMemAllocator.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="TSMemDef.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TSDateTime.cpp">
