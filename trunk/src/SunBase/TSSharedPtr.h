@@ -30,6 +30,7 @@ THE SOFTWARE.
 
 #include "TSLock.h"
 #include "TSCommonFunc.h"
+#include "TSMemDef.h"
 #include <assert.h>
 
 namespace TSun {
@@ -47,19 +48,23 @@ namespace TSun {
 		T* pRep;
 		TU32* pUseCount;
 		SharedPtrFreeMethod useFreeMethod;
+		// memory allocator
+		DEFINE_MEM_ALLOCATOR_MEMBER
 	public:
 		Mutex mMutex;
 
-		SharedPtr() : pRep(0), pUseCount(0), useFreeMethod(SPFM_DELETE)
+		SharedPtr(MemAllocator* allocator = getDefaultMemAllocator()) : 
+			pRep(0), pUseCount(0), useFreeMethod(SPFM_DELETE), m_allocator(allocator)
         {
 			mMutex.SetNull();
         }
 
         template< class Y>
-		explicit SharedPtr(Y* rep, SharedPtrFreeMethod freeMethod = SPFM_DELETE) 
+		explicit SharedPtr(Y* rep, MemAllocator* allocator, SharedPtrFreeMethod freeMethod = SPFM_DELETE)
 			: pRep(rep)
-			, pUseCount(rep ? new TU32() : 0)
+			, pUseCount(0)
 			, useFreeMethod(freeMethod)
+			, m_allocator(allocator)
 		{
 			mMutex.SetNull();
 			//OGRE_NEW_AUTO_SHARED_MUTEX
@@ -67,12 +72,13 @@ namespace TSun {
 			// 这里改成如果有指针，也就是如果有usecount，才构造，否则构造出来的mutex就不会被释放了
 			if(rep)
 			{
+				pUseCount = T_NEW(getMemAllocator(), TU32);
 				(*pUseCount) = 1;
 				mMutex.CreateMutexHandle();
 			}
 		}
 		SharedPtr(const SharedPtr& r)
-            : pRep(0), pUseCount(0), useFreeMethod(SPFM_DELETE)
+            : pRep(0), pUseCount(0), useFreeMethod(SPFM_DELETE), m_allocator(r.m_allocator)
 		{
 			// lock & copy other mutex pointer
             
@@ -104,7 +110,7 @@ namespace TSun {
 		
 		template< class Y>
 		SharedPtr(const SharedPtr<Y>& r)
-            : pRep(0), pUseCount(0), useFreeMethod(SPFM_DELETE)
+            : pRep(0), pUseCount(0), useFreeMethod(SPFM_DELETE), m_allocator(r.m_allocator)
 		{
 			// lock & copy other mutex pointer
 
@@ -147,12 +153,13 @@ namespace TSun {
 			@remarks
 				Assumes that the SharedPtr is uninitialised!
 		*/
-		TVOID bind(T* rep, SharedPtrFreeMethod freeMethod = SPFM_DELETE) {
+		TVOID bind(T* rep, MemAllocator* allocator, SharedPtrFreeMethod freeMethod = SPFM_DELETE) {
 			assert(!pRep && !pUseCount && mMutex.IsNull());
 			mMutex.CreateMutexHandle();
 			Lock lock;
 			lock.LockMutex(mMutex);
-			pUseCount = new TU32();
+			m_allocator = allocator;
+			pUseCount = T_NEW(getMemAllocator(), TU32);
 			(*pUseCount) = 1;
 			pRep = rep;
 			useFreeMethod = freeMethod;
@@ -227,13 +234,13 @@ namespace TSun {
 			switch(useFreeMethod)
 			{
 			case SPFM_DELETE:
-				delete pRep;
+				T_DELETE(getMemAllocator(),T,pRep);
 				break;
 			case SPFM_DELETE_T:
-				delete [] pRep;
+				T_DELETE_ARRAY(getMemAllocator(), T, pRep);
 				break;
 			case SPFM_FREE:
-				free(pRep);
+				getMemAllocator()->freeMem(pRep, file, line);
 				break;
 			};
 			// use OGRE_FREE instead of OGRE_DELETE_T since 'unsigned int' isn't a destructor

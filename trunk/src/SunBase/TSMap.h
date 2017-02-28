@@ -3,6 +3,7 @@
 
 #include "TSCommonTypeDef.h"
 #include "TSPair.h"
+#include "TSMemDef.h"
 namespace TSun {
 
 	template<typename TK,typename TV>
@@ -50,11 +51,12 @@ namespace TSun {
 		};
 		// ----------------------------------------------
 	public:
-		Map(TVOID)
+		Map(MemAllocator* allocator = getDefaultMemAllocator())
 		{
 			m_First = 0;
 			m_Last = 0;
 			m_Size = 0;
+			m_allocator = allocator;
 		};
 		~Map(TVOID)
 		{
@@ -67,9 +69,11 @@ namespace TSun {
 		HASHTABLE_NODE* m_Last;
 		// 大小
 		TU64 m_Size;
+		// memory allocator
+		DEFINE_MEM_ALLOCATOR_MEMBER
 	public:
 		// 拷贝构造
-		Map(const Map<TK,TV>& other) : m_First(0), m_Last(0), m_Size(0)
+		Map(const Map<TK,TV>& other) : m_First(0), m_Last(0), m_Size(0), m_allocator(0)
 		{
 			clone(other);
 		}
@@ -89,6 +93,7 @@ namespace TSun {
 				push_back(node->Key,node->Value);
 				node = node->Next;
 			}
+			m_allocator = other.m_allocator;
 		}
 
 		// 重载=
@@ -123,7 +128,7 @@ namespace TSun {
 			while(m_First)
 			{
 				HASHTABLE_NODE * next = m_First->Next;
-				delete m_First;
+				T_DELETE(getMemAllocator(), HASHTABLE_NODE, m_First);
 				m_First = next;
 			}
 			m_Last = 0;
@@ -155,7 +160,7 @@ namespace TSun {
 			{
 				itr.Current->Next->Prev = itr.Current->Prev;
 			}
-			delete itr.Current;
+			T_DELETE(getMemAllocator(), HASHTABLE_NODE, itr.Current);
 			itr.Current = 0;
 			--m_Size;
 			return returnIterator;
@@ -173,7 +178,7 @@ namespace TSun {
 		// 从前面插入
 		inline TVOID push_front(const TK& key, const TV& value)
 		{
-			HASHTABLE_NODE* node = new HASHTABLE_NODE;
+			HASHTABLE_NODE* node = T_NEW(getMemAllocator(), HASHTABLE_NODE);
 			node->Key = key;
 			node->Value = value;
 			++m_Size;
@@ -192,7 +197,7 @@ namespace TSun {
 		// 从前面插入
 		inline TVOID push_front(const Pair<TK, TV>& pair)
 		{
-			HASHTABLE_NODE* node = new HASHTABLE_NODE;
+			HASHTABLE_NODE* node = T_NEW(getMemAllocator(), HASHTABLE_NODE);
 			node->Key = pair.key();
 			node->Value = pair.value();
 			++m_Size;
@@ -211,7 +216,7 @@ namespace TSun {
 		// 从后面插入一个
 		inline TVOID push_back(const TK& key, const TV& value)
 		{
-			HASHTABLE_NODE* node = new HASHTABLE_NODE;
+			HASHTABLE_NODE* node = T_NEW(getMemAllocator(), HASHTABLE_NODE);
 			node->Key = key;
 			node->Value = value;
 			++m_Size;
@@ -225,7 +230,7 @@ namespace TSun {
 		// 从后面插入一个
 		inline TVOID push_back(const Pair<TK,TV>& pair)
 		{
-			HASHTABLE_NODE* node = new HASHTABLE_NODE;
+			HASHTABLE_NODE* node = T_NEW(getMemAllocator(), HASHTABLE_NODE);
 			node->Key = pair.key();
 			node->Value = pair.value();
 			++m_Size;
@@ -239,7 +244,7 @@ namespace TSun {
 		// 在某节点之后插入
 		inline TVOID insert_after(const Iterator& it, const TK& key, const TV& value)
 		{
-			HASHTABLE_NODE* node = new HASHTABLE_NODE;
+			HASHTABLE_NODE* node = T_NEW(getMemAllocator(), HASHTABLE_NODE);
 			node->Key = key;
 			node->Value = value;
 			node->Next = it.Current->Next;
@@ -254,7 +259,7 @@ namespace TSun {
 		// 在某节点之后插入
 		inline TVOID insert_after(const Iterator& it, const Pair<TK, TV>& pair)
 		{
-			HASHTABLE_NODE* node = new HASHTABLE_NODE;
+			HASHTABLE_NODE* node = T_NEW(getMemAllocator(), HASHTABLE_NODE);
 			node->Key = pair.key();
 			node->Value = pair.value();
 			node->Next = it.Current->Next;
@@ -269,7 +274,7 @@ namespace TSun {
 		// 在某节点之前插入
 		inline TVOID insert_before(const Iterator& it, const TK& key, const TV& value)
 		{
-			HASHTABLE_NODE* node = new HASHTABLE_NODE;
+			HASHTABLE_NODE* node = T_NEW(getMemAllocator(), HASHTABLE_NODE);
 			node->Key = key;
 			node->Value = value;
 			node->Prev = it.Current->Prev;
@@ -284,7 +289,7 @@ namespace TSun {
 		// 在某节点之前插入
 		inline TVOID insert_before(const Iterator& it, const Pair<TK, TV>& pair)
 		{
-			HASHTABLE_NODE* node = new HASHTABLE_NODE;
+			HASHTABLE_NODE* node = T_NEW(getMemAllocator(), HASHTABLE_NODE);
 			node->Key = pair.key();
 			node->Value = pair.value();
 			node->Prev = it.Current->Prev;

@@ -1,9 +1,8 @@
 ﻿#include "TSMemAllocator.h"
 #include <assert.h>
 
-#ifdef USE_SUN_ALLOCATOR
-
 namespace TSun {
+#if MEM_ALLOCATOR_TYPE == 1
 	MemAllocator::MemAllocator() : _name("")
 #ifdef MEM_ALLOCATOR_LOG
 		, _logFp(TNULL)
@@ -312,6 +311,135 @@ namespace TSun {
 		sprintf_s(szTmp2, 1023, "memory addr:%p, size:%llu, file:%s, line:%d\n", p, size, file, line);
 	}
 #endif
-}
+#else
+	MemAllocator::MemAllocator() : _name("")
+	#ifdef MEM_ALLOCATOR_LOG
+	, _logFp(TNULL)
+	#endif
+	{
+		_memMutex.CreateMutexHandle();
+	}
 
+
+	MemAllocator::~MemAllocator()
+	{
+		destroy();
+	}
+
+	TBOOL MemAllocator::initialize(TSIZE totalSize, const TCHAR* name)
+	{
+		if (name != TNULL)
+		{
+			_name = name;
+		}
+#ifdef MEM_ALLOCATOR_LOG
+		{
+			if (_logFp != TNULL)
+				return TFALSE;
+			TCHAR szName[256] = { 0 };
+			sprintf_s(szName, 255, "%s_log.txt", name);
+			TS32 re = fopen_s(&_logFp, szName, "at");
+			if (re != 0 || _logFp == TNULL)
+			{
+				return TFALSE;
+			}
+			log("initialize start", totalSize);
+		}
 #endif
+#ifdef MEM_ALLOCATOR_LOG
+#if MEM_ALLOCATOR_LOG_LEVEL == 1
+		log("initialize end", totalSize);
+#endif
+#endif
+		return TTRUE;
+	}
+
+	void MemAllocator::destroy()
+	{
+#ifdef MEM_ALLOCATOR_LOG
+#if MEM_ALLOCATOR_LOG_LEVEL == 1
+		log("destory called", 0);
+#endif
+#endif
+		_memMutex.CloseMutexHandle();
+#ifdef MEM_ALLOCATOR_LOG
+		log("destory end", 0);
+		if (_logFp)
+		{
+			::fclose(_logFp);
+			_logFp = TNULL;
+		}
+#endif
+	}
+
+	TVOID* MemAllocator::allocateMem(TSIZE size, const TCHAR *file, TS32 line)
+	{
+		Lock(_memMutex);
+		TVOID* p = ::malloc(size);
+		if (!p)
+		{
+#ifdef MEM_ALLOCATOR_LOG
+			log("no available memory", size);
+			logFileLine(file, line);
+#endif
+			assert(false);
+			return 0;
+		}
+#ifdef MEM_ALLOCATOR_LOG
+#if MEM_ALLOCATOR_LOG_LEVEL == 1
+		log("memory allocated", size);
+		logFileLine(file, line);
+#endif
+#endif
+		return p;
+	}
+
+	TBOOL MemAllocator::freeMem(TVOID* p, const TCHAR *file, TS32 line)
+	{
+		if (!p)
+			return TFALSE;
+		Lock(_memMutex);
+		free(p);
+#ifdef MEM_ALLOCATOR_LOG
+#if MEM_ALLOCATOR_LOG_LEVEL == 1
+		log("memory freed", 0);
+		logFileLine(file, line);
+#endif
+#endif
+		return TTRUE;
+	}
+
+#ifdef MEM_ALLOCATOR_LOG
+	TVOID MemAllocator::log(const TCHAR* str, TSIZE size)
+	{
+		if (!str || !_logFp)
+			return;
+		//SYSTEMTIME sysTime;
+		//::GetLocalTime(&sysTime);
+		//TCHAR szTmp[16] = { 0 };
+		//sprintf_s(szTmp, 15, "%d:%d:%d\n", sysTime.wHour, sysTime.wMinute, sysTime.wSecond);
+		//fwrite(szTmp, sizeof(TCHAR), strlen(szTmp), _logFp);
+		TCHAR szTmp2[256] = { 0 };
+		sprintf_s(szTmp2, 255, "%s size:%llu\n", str, size);
+		fwrite(szTmp2, sizeof(TCHAR), strlen(szTmp2), _logFp);
+	}
+
+	TVOID MemAllocator::logFileLine(const TCHAR *file, TS32 line)
+	{
+		if (!file || !_logFp)
+			return;
+		TCHAR szTmp2[512] = { 0 };
+		sprintf_s(szTmp2, 511, "file:%s, line:%d\n", file, line);
+		fwrite(szTmp2, sizeof(TCHAR), strlen(szTmp2), _logFp);
+	}
+
+	TVOID MemAllocator::logUnReleased(TVOID* p, TSIZE size, const TCHAR *file, TS32 line)
+	{
+		if (!file || !_logFp)
+			return;
+		TCHAR szTmp2[1024] = { 0 };
+		sprintf_s(szTmp2, 1023, "memory addr:%p, size:%llu, file:%s, line:%d\n", p, size, file, line);
+	}
+#endif
+#endif
+}

@@ -2,6 +2,7 @@
 #define _TSSINGLETON_H_
 
 #include "TSCommonTypeDef.h"
+#include "TSMemDef.h"
 namespace TSun {
 
 	template<class T>
@@ -16,22 +17,24 @@ namespace TSun {
 		{
 		}
 	public:
-		static T* getSingletonPtr()
+		static T* getSingletonPtr(MemAllocator* allocator = getDefaultMemAllocator())
 		{
+			m_allocator = allocator;
 			if(!m_Ptr)
-				m_Ptr = new T;
+				m_Ptr = T_NEW(getMemAllocator(), T);
 			return m_Ptr;
 		};
 		static TVOID delSingletonPtr()
 		{
 			if(m_Ptr)
 			{
-				delete m_Ptr;
+				T_DELETE(getMemAllocator(), T, m_Ptr);
 				m_Ptr = 0;
 			}
 		}
 	protected:
 		static T* m_Ptr;
+		DEFINE_MEM_ALLOCATOR_MEMBER;
 	};
 
 }

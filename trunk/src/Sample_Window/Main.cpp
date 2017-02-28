@@ -26,9 +26,14 @@
 #include "MemTest.h"
 #endif // BUILD_TEST
 
-#ifdef USE_SUN_ALLOCATOR
 TSun::MemAllocator _globalAllocator;
-#endif
+
+namespace TSun {
+	TSun::MemAllocator* getDefaultMemAllocator()
+	{
+		return &_globalAllocator;
+	}
+}
 
 int WindowLoop()
 {
@@ -152,7 +157,6 @@ int runTest(HINSTANCE hInstance, LPSTR lpCmLine, int nCmdShow)
 	}*/
 	//test.loadXMLFile("test0.xml");
 
-#ifdef USE_SUN_ALLOCATOR
 	void* a = _globalAllocator.allocateMem(4, __FILE__, __LINE__);
 	void* b = _globalAllocator.allocateMem(4, __FILE__, __LINE__);
 	void* c = _globalAllocator.allocateMem(4, __FILE__, __LINE__);
@@ -179,19 +183,7 @@ int runTest(HINSTANCE hInstance, LPSTR lpCmLine, int nCmdShow)
 		memA[i].setA((TSun::TS32)i);
 	}
 	T_SAFE_DELETE_ARRAY(&_globalAllocator, MemTest, memA);
-#else
 
-	MemTest* mem = T_NEW(0, MemTest);
-	mem->setA(5);
-	T_SAFE_DELETE(0, MemTest, mem);
-
-	MemTest* memA = T_NEW_ARRAY(0, MemTest, 5);
-	for (TSun::TSIZE i = 0; i < 5; ++i)
-	{
-		memA[i].setA((TSun::TS32)i);
-	}
-	T_SAFE_DELETE_ARRAY(0, MemTest, memA);
-#endif
 	return 0;
 }
 #endif // BUILD_TEST
@@ -203,10 +195,8 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmLine,
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif // DEMO_CHECK_MEM_LEAK
 
-#ifdef USE_SUN_ALLOCATOR
 	// memory management
 	_globalAllocator.initialize(1024 * 1024 * 10, "GlobalAllocator");
-#endif
 
 	// init variables
 	TSun::String initScriptFile("initapp.lua");
@@ -293,9 +283,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmLine,
 	TSun::Log::DestroyLogSystem();
 	LuaInit::delSingletonPtr();
 
-#ifdef USE_SUN_ALLOCATOR
 	// memory management
 	_globalAllocator.destroy();
-#endif
 	return re;
 }

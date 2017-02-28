@@ -2,6 +2,7 @@
 #define _TSLIST_H_
 
 #include "TSCommonTypeDef.h"
+#include "TSMemDef.h"
 namespace TSun {
 
 	template<typename T>
@@ -48,11 +49,12 @@ namespace TSun {
 		};
 		// ----------------------------------------------
 	public:
-		List(TVOID)
+		List(MemAllocator* allocator = getDefaultMemAllocator())
 		{
 			m_First = 0;
 			m_Last = 0;
 			m_Size = 0;
+			m_allocator = allocator;
 		};
 		~List(TVOID)
 		{
@@ -65,9 +67,11 @@ namespace TSun {
 		LIST_NODE* m_Last;
 		// 大小
 		TU64 m_Size;
+		// memory allocator
+		DEFINE_MEM_ALLOCATOR_MEMBER
 	public:
 		// 拷贝构造
-		List(const List<T>& other) : m_First(0), m_Last(0), m_Size(0)
+		List(const List<T>& other) : m_First(0), m_Last(0), m_Size(0), m_allocator(0)
 		{
 			clone(other);
 		}
@@ -87,6 +91,7 @@ namespace TSun {
 				push_back(node->Value);
 				node = node->Next;
 			}
+			m_allocator = other.m_allocator;
 		}
 
 		// 重载=
@@ -106,7 +111,7 @@ namespace TSun {
 			while(m_First)
 			{
 				LIST_NODE * next = m_First->Next;
-				delete m_First;
+				T_DELETE(getMemAllocator(), LIST_NODE, m_First);
 				m_First = next;
 			}
 			m_Last = 0;
@@ -120,7 +125,7 @@ namespace TSun {
 		// 从后方插入
 		inline TVOID push_back(const T& value)
 		{
-			LIST_NODE* node = new LIST_NODE;
+			LIST_NODE* node = T_NEW(getMemAllocator(), LIST_NODE);
 			node->Value = value;
 			++m_Size;
 			if (m_First == 0)
@@ -134,7 +139,7 @@ namespace TSun {
 		// 从前面插入
 		inline TVOID push_front(const T& value)
 		{
-			LIST_NODE* node = new LIST_NODE;
+			LIST_NODE* node = T_NEW(getMemAllocator(), LIST_NODE);
 			node->Value = value;
 			++m_Size;
 			if (m_First == 0)
@@ -167,7 +172,7 @@ namespace TSun {
 		// 在某节点之后插入
 		inline TVOID insert_after(const Iterator& it, const T& value)
 		{
-			LIST_NODE* node = new LIST_NODE;
+			LIST_NODE* node = T_NEW(getMemAllocator(), LIST_NODE);
 			node->Value = value;
 			node->Next = it.Current->Next;
 			if (it.Current->Next)
@@ -181,7 +186,7 @@ namespace TSun {
 		// 在某节点之前插入
 		inline TVOID insert_before(const Iterator& it, const T& value)
 		{
-			LIST_NODE* node = new LIST_NODE;
+			LIST_NODE* node = T_NEW(getMemAllocator(), LIST_NODE);
 			node->Value = value;
 			node->Prev = it.Current->Prev;
 			if (it.Current->Prev)
@@ -213,7 +218,7 @@ namespace TSun {
 			{
 				it.Current->Next->Prev = it.Current->Prev;
 			}
-			delete it.Current;
+			T_DELETE(getMemAllocator(), LIST_NODE, it.Current);
 			it.Current = 0;
 			--m_Size;
 			return returnIterator;

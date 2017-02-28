@@ -3,8 +3,6 @@
 
 #include "TSConfigDef.h"
 
-#ifdef USE_SUN_ALLOCATOR
-
 #include "TSCommonTypeDef.h"
 #include "TSLock.h"
 #include <list>
@@ -16,6 +14,7 @@
 #endif
 
 namespace TSun {
+#if MEM_ALLOCATOR_TYPE == 1
 	class MemAllocator
 	{
 	public:
@@ -78,8 +77,31 @@ namespace TSun {
 		TVOID logUnReleased(TVOID* p, TSIZE size, const TCHAR *file, TS32 line);
 #endif
 	};
-}
-
+#else
+	class MemAllocator
+	{
+	public:
+		MemAllocator();
+		~MemAllocator();
+	private:
+		Mutex _memMutex;
+		std::string _name;
+#ifdef MEM_ALLOCATOR_LOG
+		FILE* _logFp;
 #endif
+	public:
+		TBOOL initialize(TSIZE totalSize, const TCHAR* name);
+		TVOID destroy();
+		TVOID* allocateMem(TSIZE size, const TCHAR *file = TNULL, TS32 line = 0);
+		TBOOL freeMem(TVOID* p, const TCHAR *file = TNULL, TS32 line = 0);
+	private:
+#ifdef MEM_ALLOCATOR_LOG
+		TVOID log(const TCHAR* str, TSIZE size);
+		TVOID logFileLine(const TCHAR *file, TS32 line);
+		TVOID logUnReleased(TVOID* p, TSIZE size, const TCHAR *file, TS32 line);
+#endif
+	};
+#endif
+}
 
 #endif
