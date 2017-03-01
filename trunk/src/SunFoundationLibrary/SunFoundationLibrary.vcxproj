@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8785C02F-C8C9-43B8-B300-B64DF8032C88}</ProjectGuid>
+    <ProjectGuid>{709B9FB9-4EA3-403D-AF60-3E233F3CA886}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SunBase</RootNamespace>
+    <RootNamespace>SunFoundationLibrary</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -77,11 +77,11 @@
     <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
   </PropertyGroup>
@@ -91,12 +91,16 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\lua\include;..\ZLib;..\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <BuildLog>
+      <Path />
+    </BuildLog>
     <Lib>
       <OutputFile>$(SolutionDir)\lib\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
@@ -107,12 +111,16 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\lua\include;..\ZLib;..\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <BuildLog>
+      <Path />
+    </BuildLog>
     <Lib>
       <OutputFile>$(SolutionDir)\lib\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
@@ -125,14 +133,18 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\lua\include;..\ZLib;..\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <BuildLog>
+      <Path />
+    </BuildLog>
     <Lib>
       <OutputFile>$(SolutionDir)\lib\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
@@ -145,14 +157,18 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\lua\include;..\ZLib;..\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <BuildLog>
+      <Path />
+    </BuildLog>
     <Lib>
       <OutputFile>$(SolutionDir)\lib\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
@@ -161,26 +177,85 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TSAABBox.h" />
     <ClInclude Include="TSAutoPtr.h" />
+    <ClInclude Include="TSBinaryFileProcessor.h" />
+    <ClInclude Include="TSColorValue.h" />
     <ClInclude Include="TSCommonFunc.h" />
     <ClInclude Include="TSCommonTypeDef.h" />
     <ClInclude Include="TSConfigDef.h" />
+    <ClInclude Include="TSConfigFile.h" />
+    <ClInclude Include="TSConsole.h" />
+    <ClInclude Include="TSConsoleInput.h" />
+    <ClInclude Include="TSConsoleOutput.h" />
+    <ClInclude Include="TSConvexBody.h" />
     <ClInclude Include="TSDateTime.h" />
+    <ClInclude Include="TSDegree.h" />
+    <ClInclude Include="TSDualQuaternion.h" />
+    <ClInclude Include="TSFPU.h" />
+    <ClInclude Include="TSLangDict.h" />
+    <ClInclude Include="TSLine.h" />
     <ClInclude Include="TSList.h" />
     <ClInclude Include="TSLock.h" />
+    <ClInclude Include="TSLog.h" />
+    <ClInclude Include="TSLuaBase.h" />
     <ClInclude Include="TSMap.h" />
+    <ClInclude Include="TSMathUtils.h" />
+    <ClInclude Include="TSMatrix3x3.h" />
+    <ClInclude Include="TSMatrix4x4.h" />
     <ClInclude Include="TSMemAllocator.h" />
     <ClInclude Include="TSMemDef.h" />
+    <ClInclude Include="TSMemFile.h" />
     <ClInclude Include="TSMutex.h" />
     <ClInclude Include="TSPair.h" />
+    <ClInclude Include="TSPlane.h" />
+    <ClInclude Include="TSPlaneBoundedVolume.h" />
+    <ClInclude Include="TSPolygon.h" />
+    <ClInclude Include="TSQuaternion.h" />
+    <ClInclude Include="TSRadian.h" />
+    <ClInclude Include="TSRay.h" />
+    <ClInclude Include="TSRotationalSpline.h" />
     <ClInclude Include="TSSharedPtr.h" />
+    <ClInclude Include="TSSimpleSpline.h" />
     <ClInclude Include="TSSingleton.h" />
+    <ClInclude Include="TSSphere.h" />
     <ClInclude Include="TSString.h" />
+    <ClInclude Include="TSTimer.h" />
+    <ClInclude Include="TSTriangle.h" />
+    <ClInclude Include="TSTxtFileReader.h" />
+    <ClInclude Include="TSTxtFileWriter.h" />
+    <ClInclude Include="TSUTF8FileReader.h" />
+    <ClInclude Include="TSUTF8FileWriter.h" />
+    <ClInclude Include="TSVector2.h" />
+    <ClInclude Include="TSVector3.h" />
+    <ClInclude Include="TSVector4.h" />
+    <ClInclude Include="TSXMLBase.h" />
+    <ClInclude Include="TSZip.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="TSBinaryFileProcessor.cpp" />
+    <ClCompile Include="TSColorValue.cpp" />
+    <ClCompile Include="TSConfigFile.cpp" />
+    <ClCompile Include="TSConsole.cpp" />
+    <ClCompile Include="TSConsoleInput.cpp" />
+    <ClCompile Include="TSConsoleOutput.cpp" />
+    <ClCompile Include="TSConvexBody.cpp" />
     <ClCompile Include="TSDateTime.cpp" />
+    <ClCompile Include="TSDegree.cpp" />
+    <ClCompile Include="TSLangDict.cpp" />
+    <ClCompile Include="TSLog.cpp" />
+    <ClCompile Include="TSLuaBase.cpp" />
     <ClCompile Include="TSMemAllocator.cpp" />
+    <ClCompile Include="TSMemFile.cpp" />
+    <ClCompile Include="TSRadian.cpp" />
     <ClCompile Include="TSString.cpp" />
+    <ClCompile Include="TSTimer.cpp" />
+    <ClCompile Include="TSTxtFileReader.cpp" />
+    <ClCompile Include="TSTxtFileWriter.cpp" />
+    <ClCompile Include="TSUTF8FileReader.cpp" />
+    <ClCompile Include="TSUTF8FileWriter.cpp" />
+    <ClCompile Include="TSXMLBase.cpp" />
+    <ClCompile Include="TSZip.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
