@@ -151,3 +151,15 @@ MemTest -- 用于内存管理模块的测试
 运行参数
 -initfile [filename]指定初始化脚本文件，默认为运行目录中的initApp.lua
 -test 执行测试分支
+
+======================================================================================================
+
+编译配置
+
+TSConfigDef.h
+MEM_ALLOCATOR_TYPE -- 1:Sun Allocator, 2: c++ allocator
+MEM_ALLOCATOR_LOG -- 记录分配回收日志
+MEM_ALLOCATOR_LOG_LEVEL -- 1：全部记录， 2：只记录错误和关键信息
+
+ConfigDef.h
+BUILD_TEST -- 编译测试用代码
