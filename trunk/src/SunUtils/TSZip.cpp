@@ -2,30 +2,25 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <malloc.h>
 #include "zlib.h"
 
 #include "TSString.h"
 
 namespace TSun{
-
-	TU32 Zip::m_FileNum=0;
-	TUByte* Zip::m_TempBuf=0;
-	TSIZE Zip::m_TempSize=0;
-
-	Zip::Zip(TVOID)
+	Zip::Zip(TVOID) : m_FileNum(0), m_TempBuf(0), m_TempSize(0)
 	{
 	}
 
 	Zip::~Zip(TVOID)
 	{
+		ClearBuffer();
 	}
 
 	TVOID Zip::ClearBuffer()
 	{
 		if(m_TempSize>0)
 		{
-			free(m_TempBuf);
+			getBlockMemAllocator()->freeMem(m_TempBuf, __FILE__, __LINE__);
 			m_TempBuf=0;
 		}
 		m_TempSize=0;
@@ -100,7 +95,7 @@ namespace TSun{
 		TSIZE lastsize = m_TempSize;
 		if(lastsize==0)
 		{
-			m_TempBuf = (TUByte*)malloc(sizeof(TU32)*2+namelen);
+			m_TempBuf = (TUByte*)getBlockMemAllocator()->allocateMem(sizeof(TU32) * 2 + namelen, __FILE__, __LINE__);
 			memset(m_TempBuf,0,sizeof(TU32)*2+namelen);
 			m_FileNum=1;
 			(*((TU32*)m_TempBuf))=m_FileNum;
@@ -108,7 +103,11 @@ namespace TSun{
 		}
 		else
 		{
-			m_TempBuf = (TUByte*)realloc(m_TempBuf,m_TempSize+sizeof(TU32)+namelen);
+			TUByte* newBuf = (TUByte*)getBlockMemAllocator()->allocateMem(m_TempSize + sizeof(TU32) + namelen, __FILE__, __LINE__);
+			memcpy(newBuf, m_TempBuf, m_TempSize);
+			getBlockMemAllocator()->freeMem(m_TempBuf, __FILE__, __LINE__);
+			m_TempBuf = newBuf;
+			//m_TempBuf = (TUByte*)realloc(m_TempBuf,m_TempSize+sizeof(TU32)+namelen);
 			memset(m_TempBuf+lastsize,0,sizeof(TU32)+namelen);
 			m_FileNum+=1;
 			(*((TU32*)m_TempBuf))=m_FileNum;
@@ -134,18 +133,26 @@ namespace TSun{
 			if(ferror(file))
 			{
 				fclose(file);
+				if (tmpbuf)
+				{
+					getBlockMemAllocator()->freeMem(tmpbuf, __FILE__, __LINE__);
+				}
 				return 0;
 			}
 			TSIZE lasttmpsize = tmpsize;
 			if(lasttmpsize==0)
 			{
-				tmpbuf=(TUByte*)malloc(readByte);
+				tmpbuf=(TUByte*)getBlockMemAllocator()->allocateMem(readByte, __FILE__, __LINE__);
 				memset(tmpbuf,0,readByte);
 				tmpsize+=readByte;
 			}
 			else
 			{
-				tmpbuf=(TUByte*)realloc(tmpbuf,tmpsize+readByte);
+				TUByte* newBuf = (TUByte*)getBlockMemAllocator()->allocateMem(tmpsize + readByte, __FILE__, __LINE__);
+				memcpy(newBuf, tmpbuf, tmpsize);
+				getBlockMemAllocator()->freeMem(tmpbuf, __FILE__, __LINE__);
+				tmpbuf = newBuf;
+				//tmpbuf=(TUByte*)realloc(tmpbuf,tmpsize+readByte);
 				memset(tmpbuf+lasttmpsize,0,readByte);
 				tmpsize+=readByte;
 			}
@@ -154,7 +161,13 @@ namespace TSun{
 			if(feof(file))
 				break;
 		}while(TTRUE);
-		m_TempBuf = (TUByte*)realloc(m_TempBuf,m_TempSize+sizeof(TU64)+tmpsize);
+
+		TUByte* newBuf = (TUByte*)getBlockMemAllocator()->allocateMem(m_TempSize + sizeof(TU64) + tmpsize, __FILE__, __LINE__);
+		memcpy(newBuf, m_TempBuf, m_TempSize);
+		getBlockMemAllocator()->freeMem(m_TempBuf, __FILE__, __LINE__);
+		m_TempBuf = newBuf;
+
+		//m_TempBuf = (TUByte*)realloc(m_TempBuf,m_TempSize+sizeof(TU64)+tmpsize);
 		memset(m_TempBuf+m_TempSize,0,sizeof(TU64)+tmpsize);
 		// 注意写到文件中的SIZE要强制变成TU64
 		TU64 tmpsizeForWrite = (TU64)tmpsize;
@@ -163,7 +176,7 @@ namespace TSun{
 		memcpy(m_TempBuf+m_TempSize,tmpbuf,tmpsize);
 		m_TempSize+=tmpsize;
 		fclose(file);
-		free(tmpbuf);
+		getBlockMemAllocator()->freeMem(tmpbuf, __FILE__, __LINE__);
 		return 1;
 	}
 
@@ -177,12 +190,12 @@ namespace TSun{
 		TS32 re = fopen_s(&output,zipname,"w");
 		if(re!=0)
 			return 0;
-		TUByte* outbuf = new TUByte[m_TempSize];
+		TUByte* outbuf = T_NEW_ARRAY(getBlockMemAllocator(), TUByte, m_TempSize);
 		TU32 outsize = 0;
 		if(def(m_TempBuf,(TU32)m_TempSize,outbuf,&outsize,Z_DEFAULT_COMPRESSION)!=Z_OK)
 		{
 			fclose(output);
-			delete [] outbuf;
+			T_DELETE_ARRAY(getBlockMemAllocator(), TUByte, outbuf);
 			return 0;
 		}
 		TU64 tempSizeForWrite = (TU64)m_TempSize;
@@ -190,17 +203,17 @@ namespace TSun{
 		if(ferror(output))
 		{
 			fclose(output);
-			delete [] outbuf;
+			T_DELETE_ARRAY(getBlockMemAllocator(), TUByte, outbuf);
 			return 0;
 		}
 		fwrite(outbuf,1,outsize,output);
 		if(ferror(output))
 		{
 			fclose(output);
-			delete [] outbuf;
+			T_DELETE_ARRAY(getBlockMemAllocator(), TUByte, outbuf);
 			return 0;
 		}
-		delete [] outbuf;
+		T_DELETE_ARRAY(getBlockMemAllocator(), TUByte, outbuf);
 		fclose(output);
 		return 1;
 	}
@@ -224,18 +237,27 @@ namespace TSun{
 			if(ferror(file))
 			{
 				fclose(file);
+				if (tmpbuf)
+				{
+					getBlockMemAllocator()->freeMem(tmpbuf, __FILE__, __LINE__);
+				}
 				return 0;
 			}
 			TSIZE lasttmpsize = tmpsize;
 			if(lasttmpsize==0)
 			{
-				tmpbuf=(TUByte*)malloc(readByte);
+				tmpbuf = (TUByte*)getBlockMemAllocator()->allocateMem(readByte, __FILE__, __LINE__);
 				memset(tmpbuf,0,readByte);
 				tmpsize+=readByte;
 			}
 			else
 			{
-				tmpbuf=(TUByte*)realloc(tmpbuf,tmpsize+readByte);
+				TUByte* newBuf = (TUByte*)getBlockMemAllocator()->allocateMem(tmpsize + readByte, __FILE__, __LINE__);
+				memcpy(newBuf, tmpbuf, tmpsize);
+				getBlockMemAllocator()->freeMem(tmpbuf, __FILE__, __LINE__);
+				tmpbuf = newBuf;
+
+				//tmpbuf=(TUByte*)realloc(tmpbuf,tmpsize+readByte);
 				memset(tmpbuf+lasttmpsize,0,readByte);
 				tmpsize+=readByte;
 			}
@@ -247,32 +269,37 @@ namespace TSun{
 		fclose(file);
 		// 读原尺寸
 		TU64 origsize = *((TU64*)tmpbuf);
-		if(origsize<=0)
+		if (origsize <= 0)
+		{
+			getBlockMemAllocator()->freeMem(tmpbuf, __FILE__, __LINE__);
 			return 0;
+		}
 		// 解压缩
-		TUByte* out = new TUByte[origsize];
+		TUByte* out = T_NEW_ARRAY(getBlockMemAllocator(), TUByte, origsize);
 		if(inf(tmpbuf+sizeof(TU64),(TU32)(tmpsize-sizeof(TU64)),out,(TU32)origsize)!=Z_OK)
 		{
-			delete [] out;
+			T_DELETE_ARRAY(getBlockMemAllocator(), TUByte, out);
+			getBlockMemAllocator()->freeMem(tmpbuf, __FILE__, __LINE__);
 			return 0;
 		}
 		if(buf)
 		{
-			TUByte* p = *buf;
-			p = (TUByte*)malloc(origsize);
-			memcpy(p,out,origsize);
+			(*buf) = (TUByte*)getBlockMemAllocator()->allocateMem(origsize, __FILE__, __LINE__);
+			memcpy(*buf,out,origsize);
 		}
-		else
+		//else
 		{
 			ClearBuffer();
-			m_TempBuf = (TUByte*)malloc(origsize);
+			m_TempBuf = (TUByte*)getBlockMemAllocator()->allocateMem(origsize, __FILE__, __LINE__);
 			memcpy(m_TempBuf,out,origsize);
 			m_TempSize = (TSIZE)origsize;
 		}
+		T_DELETE_ARRAY(getBlockMemAllocator(), TUByte, out);
+		getBlockMemAllocator()->freeMem(tmpbuf, __FILE__, __LINE__);
 		return origsize;
 	}
 
-	TS32 Zip::CopyMemToFile(TCHAR* dirname, TBOOL bBuildFile, MemFile **ppMemFile)
+	TS32 Zip::CopyMemToFile(TCHAR* dirname, TBOOL bBuildFile, List<MemFile*>& memFileList)
 	{
 		if(!dirname || m_TempSize<=0)
 			return 0;
@@ -280,13 +307,10 @@ namespace TSun{
 		// 文件数量
 		m_FileNum = (TU32)(*m_TempBuf);
 		offset+=sizeof(TU32);
-		if(ppMemFile && m_FileNum>0)
-		{
-			(*ppMemFile) = new MemFile[m_FileNum];
-		}
 		// 循环生成文件
 		for(TU32 i=0;i<m_FileNum;i++)
 		{
+			MemFile* pMemFile = T_NEW(getStructMemAllocator(), MemFile);
 			TU32 fileNameLen = 0;
 			TCHAR szName[1024]={0};
 			TCHAR szFull[1024]={0};
@@ -302,7 +326,7 @@ namespace TSun{
 			// 文件内容
 			TU64 fileSize=(TU64)(*(m_TempBuf+offset));
 			offset+=sizeof(TU64);
-			pContent=new TUByte[fileSize];
+			pContent=T_NEW_ARRAY(getBlockMemAllocator(), TUByte, fileSize);
 			memcpy(pContent,m_TempBuf+offset, (TSIZE)fileSize);
 			conSize= (TSIZE)fileSize;
 			offset+= (TSIZE)fileSize;
@@ -318,19 +342,20 @@ namespace TSun{
 					if(ferror(outfile))
 					{
 						fclose(outfile);
-						delete [] pContent;
+						T_DELETE_ARRAY(getBlockMemAllocator(), TUByte, pContent);
 						return 0;
 					}
 					fclose(outfile);
 				}
 			}
-			if(ppMemFile)
+			if(pMemFile)
 			{
-				ppMemFile[i]->SetFullName(szFull);
-				ppMemFile[i]->SetContent(pContent,conSize);
+				pMemFile->SetFullName(szFull);
+				pMemFile->SetContent(pContent,conSize);
 			}
+			memFileList.push_back(pMemFile);
 
-			delete [] pContent;
+			T_DELETE_ARRAY(getBlockMemAllocator(), TUByte, pContent);
 		}
 		return 1;
 	}

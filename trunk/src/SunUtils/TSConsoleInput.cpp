@@ -8,11 +8,10 @@ namespace TSun
 		_listenerList = List<ConsoleInputListener*>();
 	}
 
-	ConsoleInput::ConsoleInput(TU32 maxLineWidth, TU32 defaultCharWidth) :
-		_insertPos(0), _maxLineWidth(maxLineWidth), _displayStartPos(0), _defaultCharWidth(defaultCharWidth)
+	TVOID ConsoleInput::init(TU32 maxLineWidth, TU32 defaultCharWidth)
 	{
-		_charList = List<Char>();
-		_listenerList = List<ConsoleInputListener*>();
+		_maxLineWidth = maxLineWidth;
+		_defaultCharWidth = defaultCharWidth;
 	}
 
 	ConsoleInput::~ConsoleInput()

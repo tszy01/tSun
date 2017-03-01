@@ -21,7 +21,7 @@ namespace TSun{
 		memset(m_szName,0,1024);
 		if(m_ContentSize>0)
 		{
-			free(m_pContent);
+			getBlockMemAllocator()->freeMem(m_pContent, __FILE__, __LINE__);
 		}
 		m_pContent = 0;
 		m_ContentSize = 0;
@@ -33,21 +33,21 @@ namespace TSun{
 			return;
 		if(m_ContentSize>0)
 		{
-			free(m_pContent);
+			getBlockMemAllocator()->freeMem(m_pContent, __FILE__, __LINE__);
 		}
-		m_pContent = (TUByte*)malloc(size);
+		m_pContent = (TUByte*)getBlockMemAllocator()->allocateMem(size, __FILE__, __LINE__);
 		memcpy(m_pContent,pContent,size);
 		m_ContentSize=size;
 	}
 
-	TSIZE MemFile::GetContent(TUByte **pContent)
+	TSIZE MemFile::GetContent(TUByte** ppContent)
 	{
-		if(!pContent)
+		if(!ppContent)
 			return 0;
 		if(m_ContentSize>0)
 		{
-			(*pContent) = (TUByte*)malloc(m_ContentSize);
-			memcpy(*pContent,m_pContent,m_ContentSize);
+			*ppContent = (TUByte*)getBlockMemAllocator()->allocateMem(m_ContentSize, __FILE__, __LINE__);
+			memcpy(*ppContent,m_pContent,m_ContentSize);
 			return m_ContentSize;
 		}
 		return 0;

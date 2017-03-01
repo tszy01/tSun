@@ -10,13 +10,12 @@ namespace TSun
 		_listenerList = List<ConsoleOutputListener*>();
 	}
 
-	ConsoleOutput::ConsoleOutput(ConsoleOutputAssistant* assistant, TU32 maxLineCount, 
-		TU32 maxLineWidth, TU32 maxDisplayHeight) :
-		_assistant(assistant), _maxDisplayHeight(maxDisplayHeight), _displayStartLineNo(0), 
-		_maxLineCount(maxLineCount), _maxLineWidth(maxLineWidth)
+	TVOID ConsoleOutput::init(ConsoleOutputAssistant* assistant, TU32 maxLineCount, TU32 maxLineWidth, TU32 maxDisplayHeight)
 	{
-		_lineList = List<TextLine>();
-		_listenerList = List<ConsoleOutputListener*>();
+		_assistant = assistant;
+		_maxDisplayHeight = maxDisplayHeight;
+		_maxLineCount = maxLineCount;
+		_maxLineWidth = maxLineWidth;
 	}
 
 	ConsoleOutput::~ConsoleOutput()

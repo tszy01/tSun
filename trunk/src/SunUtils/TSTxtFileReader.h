@@ -30,6 +30,7 @@ namespace TSun{
 		// out bEqual:是否和比较的字符段匹配，如果没有比较，传0
 		// in nCount:一共可以装几个字符
 		// out pReadCount:返回实际读取的字符
+		// note, use getBlockMemAllocator to release buffer
 		static TBOOL ReadLineString(TCHAR* strResult,FILE* pStream,TCHAR* strCmp,TBOOL* bEqual, TU32 nCount, TU32* pReadCount);
 
 		// 读取一行整数

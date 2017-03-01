@@ -49,7 +49,7 @@ namespace TSun
 	public:
 		ConsoleOutput();
 		~ConsoleOutput();
-		ConsoleOutput(ConsoleOutputAssistant* assistant, TU32 maxLineCount, TU32 maxLineWidth, TU32 maxDisplayHeight);
+		TVOID init(ConsoleOutputAssistant* assistant, TU32 maxLineCount, TU32 maxLineWidth, TU32 maxDisplayHeight);
 	protected:
 		// line list
 		List<TextLine> _lineList;

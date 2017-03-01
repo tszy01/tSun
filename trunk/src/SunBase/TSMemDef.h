@@ -76,6 +76,8 @@ namespace TSun {
 	TSun::MemAllocator* getListMemAllocator();
 	// structure mem allocator
 	TSun::MemAllocator* getStructMemAllocator();
+	// block mem allocator
+	TSun::MemAllocator* getBlockMemAllocator();
 }
 
 #define T_NEW(A, T) (TSun::new_class<T>((A), __FILE__, __LINE__))

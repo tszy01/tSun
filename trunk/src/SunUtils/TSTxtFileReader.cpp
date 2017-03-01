@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string>
 #include <tchar.h>
+#include "TSMemDef.h"
 namespace TSun{
 
 	TxtFileReader::TxtFileReader(TVOID)
@@ -518,7 +519,10 @@ namespace TSun{
 				if(ferror(file))
 				{
 					fclose(file);
-					free(tmpbuf);
+					if (tmpbuf)
+					{
+						getBlockMemAllocator()->freeMem(tmpbuf, __FILE__, __LINE__);
+					}
 					return TFALSE;
 				}
 				if(readByteA <= 0)
@@ -529,13 +533,17 @@ namespace TSun{
 			TU64 lasttmpsize = tmpsize;
 			if(lasttmpsize==0)
 			{
-				tmpbuf=(TUByte*)malloc(readByteA);
+				tmpbuf = (TUByte*)getBlockMemAllocator()->allocateMem(readByteA, __FILE__, __LINE__);
 				memset(tmpbuf,0,readByteA);
 				tmpsize+=readByteA;
 			}
 			else
 			{
-				tmpbuf=(TUByte*)realloc(tmpbuf,tmpsize+readByteA);
+				TUByte* newBuf = (TUByte*)getBlockMemAllocator()->allocateMem(tmpsize + readByteA, __FILE__, __LINE__);
+				memcpy(newBuf, tmpbuf, tmpsize);
+				getBlockMemAllocator()->freeMem(tmpbuf, __FILE__, __LINE__);
+				tmpbuf = newBuf;
+				//tmpbuf=(TUByte*)realloc(tmpbuf,tmpsize+readByteA);
 				memset(tmpbuf+lasttmpsize,0,readByteA);
 				tmpsize+=readByteA;
 			}

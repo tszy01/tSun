@@ -20,28 +20,6 @@ public:
 	}
 };
 
-//template<>
-//MemTest* new_class(TSun::MemAllocator* allocator, const char *file, int line)
-//{
-//	if (!allocator)
-//	{
-//		return TSun::TNULL;
-//	}
-//	MemTest* newPtr = new (allocator->allocateMem(sizeof(MemTest))) MemTest();
-//	return newPtr;
-//};
-//
-//template<>
-//TSun::TVOID delete_class(TSun::MemAllocator* allocator, MemTest* p, const char *file, int line)
-//{
-//	if (!allocator || !p)
-//	{
-//		return;
-//	}
-//	p->~MemTest();
-//	allocator->freeMem(p);
-//};
-
 #endif
 
 #endif

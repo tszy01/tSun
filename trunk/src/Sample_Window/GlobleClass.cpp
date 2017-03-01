@@ -21,10 +21,10 @@ TSun::TBOOL GlobleClass::InitGlobleClass(const TSun::String& resDir, const TSun:
 		strDictFile = "lang_dict//sys_en.txt";
 	}
 	TSun::String strLangDictFullFile = m_strResDir + strDictFile;
-	mLangDict = new TSun::LangDict();
+	mLangDict = T_NEW(TSun::getStructMemAllocator(), TSun::LangDict);
 	if (!mLangDict->loadFromFile(strLangDictFullFile.GetString()))
 	{
-		delete mLangDict;
+		T_DELETE(TSun::getStructMemAllocator(), TSun::LangDict, mLangDict);
 		mLangDict = 0;
 		return TSun::TFALSE;
 	}
@@ -37,7 +37,7 @@ TSun::TVOID GlobleClass::DestroyGlobleClass()
 	// destroy language dictionary
 	if (mLangDict)
 	{
-		delete mLangDict;
+		T_DELETE(TSun::getStructMemAllocator(), TSun::LangDict, mLangDict);
 		mLangDict = 0;
 	}
 }

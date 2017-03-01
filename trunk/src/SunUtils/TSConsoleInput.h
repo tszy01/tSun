@@ -56,7 +56,7 @@ namespace TSun
 		ConsoleInput();
 		~ConsoleInput();
 
-		ConsoleInput(TU32 maxLineWidth, TU32 defaultCharWidth);
+		TVOID init(TU32 maxLineWidth, TU32 defaultCharWidth);
 	public:
 		inline TVOID setMaxLineWidth(TU32 maxLineWidth)
 		{

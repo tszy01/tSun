@@ -53,6 +53,11 @@ namespace TSun {
 	{
 		return &_globalAllocator;
 	}
+
+	TSun::MemAllocator* getBlockMemAllocator()
+	{
+		return &_globalAllocator;
+	}
 }
 
 int WindowLoop()
@@ -193,6 +198,10 @@ int runTest(HINSTANCE hInstance, LPSTR lpCmLine, int nCmdShow)
 	c = 0;
 	_globalAllocator.freeMem(d, __FILE__, __LINE__);
 	d = 0;
+
+	int** s = T_NEW_ARRAY(&_globalAllocator, int*, 5);
+	T_DELETE_ARRAY(&_globalAllocator, int*, s);
+	s = 0;
 
 	MemTest* mem = T_NEW(&_globalAllocator, MemTest);
 	mem->setA(5);

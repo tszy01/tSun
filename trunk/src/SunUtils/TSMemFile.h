@@ -22,7 +22,8 @@ namespace TSun{
 		// 设置内容
 		TVOID SetContent(TUByte* pContent, TSIZE size);
 		// 得到内容
-		TSIZE GetContent(TUByte** pContent);
+		// note, use getBlockMemAllocator to release ppContent
+		TSIZE GetContent(TUByte** ppContent);
 		// 设置全名
 		TVOID SetFullName(TCHAR* fullname);
 		// 得到全名
