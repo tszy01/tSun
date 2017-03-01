@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{524a3fec-794d-4626-903d-9e9a6b0708a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{dca0bbc2-e4ac-4454-a9e6-42a617fec0a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{b683b762-a4a9-4f2d-ab1c-8bd6f53e1294}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TSAutoPtr.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSCommonFunc.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSCommonTypeDef.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSConfigDef.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSDateTime.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSList.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSLock.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSMap.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSMemAllocator.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSMemDef.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSMutex.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSPair.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSSharedPtr.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSSingleton.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSString.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TSAABBox.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSColorValue.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSConvexBody.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSDegree.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSDualQuaternion.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSFPU.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSLine.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSMathUtils.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSMatrix3x3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSMatrix4x4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSPlane.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSPlaneBoundedVolume.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSPolygon.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSQuaternion.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSRadian.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSRay.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSRotationalSpline.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSSimpleSpline.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSSphere.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSTriangle.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSVector2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSVector3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSVector4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TSBinaryFileProcessor.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSConfigFile.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSConsole.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSConsoleInput.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSConsoleOutput.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSLangDict.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSLog.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSLuaBase.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSMemFile.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSTimer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSTxtFileReader.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSTxtFileWriter.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSUTF8FileReader.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSUTF8FileWriter.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSXMLBase.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TSZip.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TSDateTime.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="TSMemAllocator.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="TSString.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="TSColorValue.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="TSConvexBody.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="TSDegree.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="TSRadian.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="TSBinaryFileProcessor.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSConfigFile.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSConsole.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSConsoleInput.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSConsoleOutput.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSLangDict.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSLog.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSLuaBase.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSMemFile.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSTimer.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSTxtFileReader.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSTxtFileWriter.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSUTF8FileReader.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSUTF8FileWriter.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSXMLBase.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TSZip.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
