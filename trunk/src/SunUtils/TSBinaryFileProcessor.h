@@ -57,9 +57,9 @@ namespace TSun{
 		// read double
 		static TBOOL readDouble(TF64* adResult,FILE* pStream, TU32 nCount);
 		// read string
-		static TBOOL readString(TCHAR* strResult,FILE* pStream,const TCHAR* strCmp,TBOOL* bEqual, TU32 nCount, TU32* pReadCount, MemAllocator* allocator = getDefaultMemAllocator());
+		static TBOOL readString(TCHAR* strResult,FILE* pStream,const TCHAR* strCmp,TBOOL* bEqual, TU32 nCount, TU32* pReadCount);
 		// read wstring
-		static TBOOL readWString(TWCHAR* strResult, FILE* pStream, const TWCHAR* strCmp, TBOOL* bEqual, TU32 nCount, TU32* pReadCount, MemAllocator* allocator = getDefaultMemAllocator());
+		static TBOOL readWString(TWCHAR* strResult, FILE* pStream, const TWCHAR* strCmp, TBOOL* bEqual, TU32 nCount, TU32* pReadCount);
 	};
 }
 

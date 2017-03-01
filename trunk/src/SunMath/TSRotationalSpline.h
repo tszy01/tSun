@@ -11,22 +11,18 @@ namespace TSun
 	class RotationalSpline
 	{
 	public:
-        RotationalSpline(MemAllocator* allocator = getDefaultMemAllocator()) : m_allocator(allocator)
+        RotationalSpline() : mAutoCalc(TTRUE), mPoints(List<Quaternion<T>>()), 
+			mTangents(List<Quaternion<T>>())
 		{
-			mAutoCalc = TTRUE;
-			mPoints = List<Quaternion<T>>(getMemAllocator());
-			mTangents = List<Quaternion<T>>(getMemAllocator());
-		}
-        ~RotationalSpline()
-		{
-			m_allocator = 0;
 		}
 
-		RotationalSpline(const RotationalSpline<T>& cpy) : m_allocator(cpy.m_allocator)
+        ~RotationalSpline()
 		{
-			mAutoCalc = cpy.mAutoCalc;
-			mPoints = cpy.mPoints;
-			mTangents = cpy.mTangents;
+		}
+
+		RotationalSpline(const RotationalSpline<T>& cpy) : mAutoCalc(cpy.mAutoCalc),
+			mPoints(cpy.mPoints), mTangents(cpy.mTangents)
+		{
 		}
 
         /** Adds a control point to the end of the spline. */
@@ -236,7 +232,6 @@ namespace TSun
         TBOOL mAutoCalc;
 		List<Quaternion<T>> mPoints;
 		List<Quaternion<T>> mTangents;
-		DEFINE_MEM_ALLOCATOR_MEMBER;
 	};
 
 	// define float rotational spline

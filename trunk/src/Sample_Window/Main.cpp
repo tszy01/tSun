@@ -33,6 +33,26 @@ namespace TSun {
 	{
 		return &_globalAllocator;
 	}
+
+	TSun::MemAllocator* getStringMemAllocator()
+	{
+		return &_globalAllocator;
+	}
+
+	TSun::MemAllocator* getMathMemAllocator()
+	{
+		return &_globalAllocator;
+	}
+
+	TSun::MemAllocator* getListMemAllocator()
+	{
+		return &_globalAllocator;
+	}
+
+	TSun::MemAllocator* getStructMemAllocator()
+	{
+		return &_globalAllocator;
+	}
 }
 
 int WindowLoop()
@@ -161,6 +181,7 @@ int runTest(HINSTANCE hInstance, LPSTR lpCmLine, int nCmdShow)
 	void* b = _globalAllocator.allocateMem(4, __FILE__, __LINE__);
 	void* c = _globalAllocator.allocateMem(4, __FILE__, __LINE__);
 	void* d = _globalAllocator.allocateMem(4, __FILE__, __LINE__);
+
 	_globalAllocator.freeMem(c, __FILE__, __LINE__);
 	c = 0;
 	c = _globalAllocator.allocateMem(4, __FILE__, __LINE__);
@@ -177,7 +198,7 @@ int runTest(HINSTANCE hInstance, LPSTR lpCmLine, int nCmdShow)
 	mem->setA(5);
 	T_SAFE_DELETE(&_globalAllocator, MemTest, mem);
 
-	MemTest* memA = T_NEW_ARRAY(&_globalAllocator, MemTest, 5);
+	MemTest* memA = T_NEW_ARRAY(&_globalAllocator, MemTest, 4 + 1);
 	for (TSun::TSIZE i = 0; i < 5; ++i)
 	{
 		memA[i].setA((TSun::TS32)i);
@@ -284,6 +305,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmLine,
 	LuaInit::delSingletonPtr();
 
 	// memory management
-	_globalAllocator.destroy();
+	// do not call destroy and let the system destroy it
+	//_globalAllocator.destroy();
 	return re;
 }

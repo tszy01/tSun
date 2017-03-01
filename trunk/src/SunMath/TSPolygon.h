@@ -13,8 +13,6 @@ namespace TSun
 	public:
 		//typedef multimap<Vector3<T>, Vector3<T>>::type		EdgeMap;
 		//typedef std::pair< Vector3<T>, Vector3<T>>		Edge;
-		// memory allocator
-		DEFINE_MEM_ALLOCATOR_MEMBER;
 	protected:
 		List<Vector3<T>> mVertexList;
 		mutable Vector3<T>	mNormal;
@@ -51,21 +49,17 @@ namespace TSun
 			mIsNormalSet = TTRUE;
 		}
 	public:
-		Polygon(MemAllocator* allocator = getDefaultMemAllocator()) : m_allocator(allocator)
+		Polygon() : mVertexList(List<Vector3<T>>())
 		{
 			mNormal = Vector3<T>(0,0,0);
 			mIsNormalSet = TFALSE;
-			mVertexList = List<Vector3<T>>(getMemAllocator());
 			mVertexList.reserve(6);
 		}
 		~Polygon()
 		{
 		}
-		Polygon( const Polygon<T>& cpy) : m_allocator(cpy.m_allocator)
+		Polygon( const Polygon<T>& cpy) : mVertexList(cpy.mVertexList), mNormal(cpy.mNormal), mIsNormalSet(cpy.mIsNormalSet)
 		{
-			mVertexList = cpy.mVertexList;
-			mNormal = cpy.mNormal;
-			mIsNormalSet = cpy.mIsNormalSet;
 		}
 
 		/** Inserts a vertex at a specific position.

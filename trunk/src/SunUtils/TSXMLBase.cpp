@@ -3,15 +3,13 @@
 #include "tinyxml.h"
 
 namespace TSun {
-	XMLBase::XMLBase(MemAllocator* allocator) : mTiDoc(TNULL), m_allocator(allocator)
+	XMLBase::XMLBase() : mTiDoc(TNULL), mVersion("")
 	{
-		mVersion = String("", getMemAllocator());
 	}
 
 	XMLBase::~XMLBase()
 	{
 		deleteXMLDocument();
-		m_allocator = 0;
 	}
 
 	TBOOL XMLBase::loadXMLFile(const TCHAR* filename)
@@ -19,7 +17,7 @@ namespace TSun {
 		if (!filename)
 			return TFALSE;
 		deleteXMLDocument();
-		mTiDoc = T_NEW(getMemAllocator(), TiXmlDocument);
+		mTiDoc = T_NEW(getStructMemAllocator(), TiXmlDocument);
 		if (!mTiDoc->LoadFile(filename))
 			return TFALSE;
 		// read root
@@ -63,7 +61,7 @@ namespace TSun {
 	{
 		if (mTiDoc != TNULL)
 		{
-			T_DELETE(getMemAllocator(), TiXmlDocument, mTiDoc);
+			T_DELETE(getStructMemAllocator(), TiXmlDocument, mTiDoc);
 			mTiDoc = TNULL;
 		}
 	}
@@ -71,7 +69,7 @@ namespace TSun {
 	TBOOL XMLBase::newXMLDocument(const String& rootName)
 	{
 		deleteXMLDocument();
-		mTiDoc = T_NEW(getMemAllocator(), TiXmlDocument);
+		mTiDoc = T_NEW(getStructMemAllocator(), TiXmlDocument);
 		TiXmlElement ele(rootName.GetString());
 		ele.SetAttribute("version", mVersion.GetString());
 		mTiDoc->InsertEndChild(ele);

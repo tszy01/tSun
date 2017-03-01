@@ -261,7 +261,7 @@ namespace TSun{
 		return TFALSE;
 	}
 
-	TBOOL BinaryFileProcessor::readString(TCHAR* strResult,FILE* pStream,const TCHAR* strCmp,TBOOL* bEqual, TU32 nCount, TU32* pReadCount, MemAllocator* allocator)
+	TBOOL BinaryFileProcessor::readString(TCHAR* strResult,FILE* pStream,const TCHAR* strCmp,TBOOL* bEqual, TU32 nCount, TU32* pReadCount)
 	{
 		if(!strResult || !pStream || nCount<=0)
 		{
@@ -279,16 +279,16 @@ namespace TSun{
 				*pReadCount = strLen;
 			return TTRUE;
 		}
-		TCHAR* szRead = T_NEW_ARRAY(allocator, TCHAR, strLen);
+		TCHAR* szRead = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, strLen);
 		memset(szRead,0,strLen);
 		if((TU32)fread(szRead,sizeof(TCHAR),strLen,pStream)!=strLen)
 		{
-			T_DELETE_ARRAY(allocator, TCHAR, szRead);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, szRead);
 			return TFALSE;
 		}
 		if(nCount < strLen)
 		{
-			T_DELETE_ARRAY(allocator, TCHAR, szRead);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, szRead);
 			return TFALSE;
 		}
 		strcpy(strResult,szRead);
@@ -305,11 +305,11 @@ namespace TSun{
 				*bEqual=TFALSE;
 			}
 		}
-		T_DELETE_ARRAY(allocator, TCHAR, szRead);
+		T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, szRead);
 		return TTRUE;
 	}
 
-	TBOOL BinaryFileProcessor::readWString(TWCHAR* strResult, FILE* pStream, const TWCHAR* strCmp, TBOOL* bEqual, TU32 nCount, TU32* pReadCount, MemAllocator* allocator)
+	TBOOL BinaryFileProcessor::readWString(TWCHAR* strResult, FILE* pStream, const TWCHAR* strCmp, TBOOL* bEqual, TU32 nCount, TU32* pReadCount)
 	{
 		if (!strResult || !pStream || nCount <= 0)
 		{
@@ -327,16 +327,16 @@ namespace TSun{
 				*pReadCount = strLen;
 			return TTRUE;
 		}
-		TWCHAR* szRead = T_NEW_ARRAY(allocator, TWCHAR, strLen);
+		TWCHAR* szRead = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, strLen);
 		memset(szRead, 0, strLen * sizeof(TWCHAR));
 		if ((TU32)fread(szRead, sizeof(TWCHAR), strLen, pStream) != strLen)
 		{
-			T_DELETE_ARRAY(allocator, TWCHAR, szRead);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, szRead);
 			return TFALSE;
 		}
 		if (nCount < strLen)
 		{
-			T_DELETE_ARRAY(allocator, TWCHAR, szRead);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, szRead);
 			return TFALSE;
 		}
 		wcscpy(strResult, szRead);
@@ -353,7 +353,7 @@ namespace TSun{
 				*bEqual = TFALSE;
 			}
 		}
-		T_DELETE_ARRAY(allocator, TWCHAR, szRead);
+		T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, szRead);
 		return TTRUE;
 	}
 }

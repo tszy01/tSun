@@ -47,9 +47,9 @@ namespace TSun
 			WString _text;
 		};
 	public:
-		ConsoleOutput(MemAllocator* allocator = getDefaultMemAllocator());
+		ConsoleOutput();
 		~ConsoleOutput();
-		ConsoleOutput(ConsoleOutputAssistant* assistant, TU32 maxLineCount, TU32 maxLineWidth, TU32 maxDisplayHeight, MemAllocator* allocator = getDefaultMemAllocator());
+		ConsoleOutput(ConsoleOutputAssistant* assistant, TU32 maxLineCount, TU32 maxLineWidth, TU32 maxDisplayHeight);
 	protected:
 		// line list
 		List<TextLine> _lineList;
@@ -67,8 +67,6 @@ namespace TSun
 		// assistant
 		// need to maintance the memory by self
 		ConsoleOutputAssistant* _assistant;
-		// memory allocator
-		DEFINE_MEM_ALLOCATOR_MEMBER;
 	public:
 		// set max line count
 		inline TVOID setMaxLineCount(TU32 maxLineCount)

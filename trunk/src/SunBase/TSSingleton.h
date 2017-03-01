@@ -17,11 +17,11 @@ namespace TSun {
 		{
 		}
 	public:
-		static T* getSingletonPtr(MemAllocator* allocator = getDefaultMemAllocator())
+		static T* getSingletonPtr(MemAllocator* allocator = getStructMemAllocator())
 		{
 			if (!m_Ptr)
 			{
-				m_Ptr = T_NEW(getMemAllocator(), T);
+				m_Ptr = new (allocator->allocateMem(sizeof(T), __FILE__, __LINE__)) T;
 				m_Ptr->m_allocator = allocator;
 			}
 			return m_Ptr;
@@ -30,7 +30,8 @@ namespace TSun {
 		{
 			if(m_Ptr)
 			{
-				T_DELETE(m_Ptr->getMemAllocator(), T, m_Ptr);
+				m_Ptr->~T();
+				m_Ptr->getMemAllocator()->freeMem(m_Ptr, __FILE__, __LINE__);
 				m_Ptr = 0;
 			}
 		}

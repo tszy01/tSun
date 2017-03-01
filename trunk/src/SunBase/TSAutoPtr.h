@@ -9,29 +9,54 @@ namespace TSun{
 	class AutoPtr
 	{
 	public:
-		AutoPtr(MemAllocator* allocator = getDefaultMemAllocator()) : m_pPtr(0), m_allocator(allocator)
+		enum FREE_METHOD
+		{
+			FREE_METHOD_DELETE,
+			FREE_METHOD_DELETE_T,
+			FREE_METHOD_FREE
+		};
+	public:
+		AutoPtr(MemAllocator* allocator) : m_pPtr(0), m_FreeMethod(FREE_METHOD_DELETE), m_allocator(allocator)
 		{
 		}
 
-		AutoPtr(const T* ptr, MemAllocator* allocator) : m_pPtr(ptr), m_allocator(allocator)
+		AutoPtr(const T* ptr, FREE_METHOD freeMethod, MemAllocator* allocator) : m_pPtr(ptr), m_FreeMethod(freeMethod), m_allocator(allocator)
 		{
 		}
 
-		AutoPtr(const AutoPtr<T>& other) : m_pPtr(other.m_pPtr), m_allocator(other.m_allocator)
+		AutoPtr(const AutoPtr<T>& other) : m_pPtr(other.m_pPtr), m_FreeMethod(other.m_FreeMethod), m_allocator(other.m_allocator)
 		{
+		}
+
+		TVOID destroy()
+		{
+			if (m_pPtr)
+			{
+				switch (m_FreeMethod)
+				{
+				case FREE_METHOD_DELETE:
+					T_DELETE(getMemAllocator(), T, m_pPtr);
+					break;
+				case FREE_METHOD_DELETE_T:
+					T_DELETE_ARRAY(getMemAllocator(), T, m_pPtr);
+					break;
+				case FREE_METHOD_FREE:
+					getMemAllocator()->freeMem(m_pPtr, __FILE__, __LINE__);
+					break;
+				}
+
+				m_pPtr = 0;
+			}
 		}
 
 		~AutoPtr(TVOID)
 		{
-			if(m_pPtr)
-			{
-				T_DELETE(getMemAllocator(),T,m_pPtr);
-				m_pPtr = 0;
-			}
+			destroy();
 			m_allocator = 0;
 		}
 	protected:
 		T* m_pPtr;
+		FREE_METHOD m_FreeMethod;
 		// memory allocator
 		DEFINE_MEM_ALLOCATOR_MEMBER;
 	public:
@@ -40,27 +65,19 @@ namespace TSun{
 			if(other.GetPtr() == m_pPtr)
 				return *this;
 
-			if(m_pPtr)
-			{
-				T_DELETE(getMemAllocator(), T, m_pPtr);
-				m_pPtr = 0;
-			}
+			destroy();
 			m_pPtr = other.m_pPtr;
+			m_FreeMethod = other.m_FreeMethod;
 			m_allocator = other.m_allocator;
 		}
 
-		inline AutoPtr<T>& operator=(const T* ptr)
-		{
-			if(ptr == m_pPtr)
-				return *this;
-
-			if(m_pPtr)
-			{
-				T_DELETE(getMemAllocator(), T, m_pPtr);
-				m_pPtr = 0;
-			}
+		inline TVOID bind(const T* ptr, MemAllocator* allocator, FREE_METHOD freeMethod) {
+			if (ptr == m_pPtr)
+				return;
+			m_allocator = allocator;
+			destroy();
 			m_pPtr = ptr;
-			m_allocator = other.m_allocator;
+			m_FreeMethod = freeMethod;
 		}
 
 		inline TBOOL IsNullPtr() const

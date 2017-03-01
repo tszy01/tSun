@@ -20,9 +20,9 @@
 
 namespace TSun {
 
-	String::String(MemAllocator* allocator) : m_nLength(0), m_allocator(allocator)
+	String::String() : m_nLength(0), m_szPtr(SharedPtr<TCHAR>(getStringMemAllocator()))
 	{
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, 0 + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, 0 + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		szMyContent[0] = '\0';
 		m_nLength = 0;
@@ -32,10 +32,9 @@ namespace TSun {
 	{
 		m_szPtr.setNull();
 		m_nLength=0;
-		m_allocator = 0;
 	}
 
-	String::String(const TCHAR* szContent, MemAllocator* allocator) : m_allocator(allocator)
+	String::String(const TCHAR* szContent) : m_szPtr(SharedPtr<TCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
@@ -49,7 +48,7 @@ namespace TSun {
 				szTmp++;
 			}
 			szTmp=0;
-			m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+			m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 			TCHAR* szMyContent = m_szPtr.getPointer();
 			memcpy(szMyContent,szContent,n);
 			szMyContent[n]='\0';
@@ -57,12 +56,12 @@ namespace TSun {
 		}
 	}
 
-	String::String(const TCHAR cContent, MemAllocator* allocator) : m_allocator(allocator)
+	String::String(const TCHAR cContent) : m_szPtr(SharedPtr<TCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TU32 n = 1;
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		TCHAR szTmp[2] = {0};
 		szTmp[0] = cContent;
@@ -71,7 +70,7 @@ namespace TSun {
 		m_nLength = n;
 	}
 
-	String::String(const String &strContent) : m_allocator(strContent.m_allocator)
+	String::String(const String &strContent) : m_szPtr(SharedPtr<TCHAR>(getStringMemAllocator()))
 	{
 		if(strContent.m_szPtr.isNull()) return;
 		m_szPtr.setNull();
@@ -82,59 +81,59 @@ namespace TSun {
 		//printf(m_szContent);
 	}
 
-	String::String(const TS32 iRight, MemAllocator* allocator) : m_allocator(allocator)
+	String::String(const TS32 iRight) : m_szPtr(SharedPtr<TCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%d",iRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
 		m_nLength = n;
 	}
-	String::String(const TU32 uiRight, MemAllocator* allocator) : m_allocator(allocator)
+	String::String(const TU32 uiRight) : m_szPtr(SharedPtr<TCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%u",uiRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
 		m_nLength = n;
 	}
-	String::String(const TF32 fRight, MemAllocator* allocator) : m_allocator(allocator)
+	String::String(const TF32 fRight) : m_szPtr(SharedPtr<TCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%f",fRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
 		m_nLength = n;
 	}
-	String::String(const TF64 dRight, MemAllocator* allocator) : m_allocator(allocator)
+	String::String(const TF64 dRight) : m_szPtr(SharedPtr<TCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%lf",dRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
 		m_nLength = n;
 	}
-	String::String(const TBOOL bRight, MemAllocator* allocator) : m_allocator(allocator)
+	String::String(const TBOOL bRight) : m_szPtr(SharedPtr<TCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
@@ -144,63 +143,63 @@ namespace TSun {
 		else
 			szTmp[0] = '0';
 		TU32 n = 1;
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
 		m_nLength = n;
 	}
 
-	String::String(const TS16 sRight, MemAllocator* allocator) : m_allocator(allocator)
+	String::String(const TS16 sRight) : m_szPtr(SharedPtr<TCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%hd",sRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
 		m_nLength = n;
 	}
 
-	String::String(const TU16 usRight, MemAllocator* allocator) : m_allocator(allocator)
+	String::String(const TU16 usRight) : m_szPtr(SharedPtr<TCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%hu",usRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
 		m_nLength = n;
 	}
 
-	String::String(const TS64 llRight, MemAllocator* allocator) : m_allocator(allocator)
+	String::String(const TS64 llRight) : m_szPtr(SharedPtr<TCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%lld", llRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
 		m_nLength = n;
 	}
 
-	String::String(const TU64 ullRight, MemAllocator* allocator) : m_allocator(allocator)
+	String::String(const TU64 ullRight) : m_szPtr(SharedPtr<TCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%llu",ullRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
@@ -217,7 +216,6 @@ namespace TSun {
 		m_szPtr = strRight.m_szPtr;
 		TU32 len = strRight.m_nLength;
 		m_nLength=len;
-		m_allocator = strRight.m_allocator;
 		//printf(m_szContent);
 		return *this;
 	}
@@ -237,7 +235,7 @@ namespace TSun {
 				szTmp++;
 			}
 			szTmp=0;
-			m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+			m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 			TCHAR* szMyContent = m_szPtr.getPointer();
 			memcpy(szMyContent,szRight,n);
 			szMyContent[n]='\0';
@@ -254,7 +252,7 @@ namespace TSun {
 		m_nLength = 0;
 
 		TU32 n = 1;
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		TCHAR szTmp[2] = {0};
 		szTmp[0] = cRight;
@@ -272,7 +270,7 @@ namespace TSun {
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%d",iRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
@@ -286,7 +284,7 @@ namespace TSun {
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%u",uiRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
@@ -300,7 +298,7 @@ namespace TSun {
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%f",fRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
@@ -314,7 +312,7 @@ namespace TSun {
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%lf",dRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
@@ -331,7 +329,7 @@ namespace TSun {
 		else
 			szTmp[0] = '0';
 		TU32 n = 1;
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
@@ -346,7 +344,7 @@ namespace TSun {
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%hd",sRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
@@ -360,7 +358,7 @@ namespace TSun {
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%hu",usRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
@@ -375,7 +373,7 @@ namespace TSun {
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%lld",llRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
@@ -389,7 +387,7 @@ namespace TSun {
 		TCHAR szTmp[64] = {0};
 		sprintf_s(szTmp,64,"%llu",ullRight);
 		TU32 n = (TU32)strlen(szTmp);
-		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, n + 1), getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + 1), getStringMemAllocator(),TSun::SPFM_DELETE_T);
 		TCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent,szTmp,n);
 		szMyContent[n] = '\0';
@@ -399,7 +397,7 @@ namespace TSun {
 
 	String String::operator +(const TCHAR* szRight)
 	{
-		String result("", getMemAllocator());
+		String result("");
 
 		if(szRight!=0 && m_szPtr.isNull()==TFALSE)
 		{
@@ -411,7 +409,7 @@ namespace TSun {
 				szTmp++;
 			}
 
-			TCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TCHAR, n + m_nLength + 1);
+			TCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + m_nLength + 1);
 			szTmp=m_szPtr.getPointer();
 			for(TU32 i=0;i<m_nLength;i++)
 			{
@@ -428,7 +426,7 @@ namespace TSun {
 			szTmp=0;
 			sz[n+m_nLength]='\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, sz);
 		}
 
 		return result;
@@ -436,7 +434,7 @@ namespace TSun {
 
 	String String::operator +(const TCHAR cRight)
 	{
-		String result("", getMemAllocator());
+		String result("");
 
 		if(m_szPtr.isNull()==TFALSE)
 		{
@@ -444,7 +442,7 @@ namespace TSun {
 			TCHAR szTmp2[2] = {0};
 			szTmp2[0] = cRight;
 
-			TCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TCHAR, n + m_nLength + 1);
+			TCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + m_nLength + 1);
 			TCHAR* szTmp=m_szPtr.getPointer();
 			for(TU32 i=0;i<m_nLength;i++)
 			{
@@ -461,7 +459,7 @@ namespace TSun {
 			szTmp=0;
 			sz[n+m_nLength]='\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, sz);
 		}
 
 		return result;
@@ -469,13 +467,13 @@ namespace TSun {
 
 	String String::operator +(const String &strRight)
 	{
-		String result("", getMemAllocator());
+		String result("");
 
 		if(m_szPtr.isNull()==TFALSE && strRight.m_szPtr.isNull()==TFALSE)
 		{
 			TU32 n = strRight.m_nLength;
 
-			TCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TCHAR, n + m_nLength + 1);
+			TCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + m_nLength + 1);
 			const TCHAR* szTmp=m_szPtr.getPointer();
 			for(TU32 i=0;i<m_nLength;i++)
 			{
@@ -492,7 +490,7 @@ namespace TSun {
 			szTmp=0;
 			sz[n+m_nLength]='\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, sz);
 		}
 
 		return result;
@@ -500,7 +498,7 @@ namespace TSun {
 
 	String String::operator +(const TS32 iRight)
 	{
-		String result("", getMemAllocator());
+		String result("");
 
 		if(m_szPtr.isNull()==TFALSE)
 		{
@@ -508,7 +506,7 @@ namespace TSun {
 			sprintf_s(szTmp2,64,"%d",iRight);
 			TU32 n = (TU32)strlen(szTmp2);
 
-			TCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TCHAR, n + m_nLength + 1);
+			TCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + m_nLength + 1);
 			const TCHAR* szTmp=m_szPtr.getPointer();
 			for(TU32 i=0;i<m_nLength;i++)
 			{
@@ -525,14 +523,14 @@ namespace TSun {
 			szTmp=0;
 			sz[n+m_nLength]='\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, sz);
 		}
 
 		return result;
 	}
 	String String::operator +(const TU32 uiRight)
 	{
-		String result("", getMemAllocator());
+		String result("");
 
 		if(m_szPtr.isNull()==TFALSE)
 		{
@@ -540,7 +538,7 @@ namespace TSun {
 			sprintf_s(szTmp2,64,"%u",uiRight);
 			TU32 n = (TU32)strlen(szTmp2);
 
-			TCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TCHAR, n + m_nLength + 1);
+			TCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + m_nLength + 1);
 			const TCHAR* szTmp=m_szPtr.getPointer();
 			for(TU32 i=0;i<m_nLength;i++)
 			{
@@ -557,14 +555,14 @@ namespace TSun {
 			szTmp=0;
 			sz[n+m_nLength]='\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, sz);
 		}
 
 		return result;
 	}
 	String String::operator +(const TF32 fRight)
 	{
-		String result("", getMemAllocator());
+		String result("");
 
 		if(m_szPtr.isNull()==TFALSE)
 		{
@@ -572,7 +570,7 @@ namespace TSun {
 			sprintf_s(szTmp2,64,"%f",fRight);
 			TU32 n = (TU32)strlen(szTmp2);
 
-			TCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TCHAR, n + m_nLength + 1);
+			TCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + m_nLength + 1);
 			const TCHAR* szTmp=m_szPtr.getPointer();
 			for(TU32 i=0;i<m_nLength;i++)
 			{
@@ -589,14 +587,14 @@ namespace TSun {
 			szTmp=0;
 			sz[n+m_nLength]='\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, sz);
 		}
 
 		return result;
 	}
 	String String::operator +(const TF64 dRight)
 	{
-		String result("", getMemAllocator());
+		String result("");
 
 		if(m_szPtr.isNull()==TFALSE)
 		{
@@ -604,7 +602,7 @@ namespace TSun {
 			sprintf_s(szTmp2,64,"%lf",dRight);
 			TU32 n = (TU32)strlen(szTmp2);
 
-			TCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TCHAR, n + m_nLength + 1);
+			TCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + m_nLength + 1);
 			const TCHAR* szTmp=m_szPtr.getPointer();
 			for(TU32 i=0;i<m_nLength;i++)
 			{
@@ -621,14 +619,14 @@ namespace TSun {
 			szTmp=0;
 			sz[n+m_nLength]='\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, sz);
 		}
 
 		return result;
 	}
 	String String::operator +(const TBOOL bRight)
 	{
-		String result("", getMemAllocator());
+		String result("");
 
 		if(m_szPtr.isNull()==TFALSE)
 		{
@@ -639,7 +637,7 @@ namespace TSun {
 				szTmp2[0] = '0';
 			TU32 n = 1;
 
-			TCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TCHAR, n + m_nLength + 1);
+			TCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + m_nLength + 1);
 			const TCHAR* szTmp=m_szPtr.getPointer();
 			for(TU32 i=0;i<m_nLength;i++)
 			{
@@ -656,7 +654,7 @@ namespace TSun {
 			szTmp=0;
 			sz[n+m_nLength]='\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, sz);
 		}
 
 		return result;
@@ -664,7 +662,7 @@ namespace TSun {
 
 	String String::operator +(const TS16 sRight)
 	{
-		String result("", getMemAllocator());
+		String result("");
 
 		if(m_szPtr.isNull()==TFALSE)
 		{
@@ -672,7 +670,7 @@ namespace TSun {
 			sprintf_s(szTmp2,64,"%hd",sRight);
 			TU32 n = (TU32)strlen(szTmp2);
 
-			TCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TCHAR, n + m_nLength + 1);
+			TCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + m_nLength + 1);
 			const TCHAR* szTmp=m_szPtr.getPointer();
 			for(TU32 i=0;i<m_nLength;i++)
 			{
@@ -689,14 +687,14 @@ namespace TSun {
 			szTmp=0;
 			sz[n+m_nLength]='\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, sz);
 		}
 
 		return result;
 	}
 	String String::operator +(const TU16 usRight)
 	{
-		String result("", getMemAllocator());
+		String result("");
 
 		if(m_szPtr.isNull()==TFALSE)
 		{
@@ -704,7 +702,7 @@ namespace TSun {
 			sprintf_s(szTmp2,64,"%hu",usRight);
 			TU32 n = (TU32)strlen(szTmp2);
 
-			TCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TCHAR, n + m_nLength + 1);
+			TCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + m_nLength + 1);
 			const TCHAR* szTmp=m_szPtr.getPointer();
 			for(TU32 i=0;i<m_nLength;i++)
 			{
@@ -721,7 +719,7 @@ namespace TSun {
 			szTmp=0;
 			sz[n+m_nLength]='\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, sz);
 		}
 
 		return result;
@@ -729,7 +727,7 @@ namespace TSun {
 
 	String String::operator +(const TS64 llRight)
 	{
-		String result("", getMemAllocator());
+		String result("");
 
 		if(m_szPtr.isNull()==TFALSE)
 		{
@@ -737,7 +735,7 @@ namespace TSun {
 			sprintf_s(szTmp2,64,"%lld", llRight);
 			TU32 n = (TU32)strlen(szTmp2);
 
-			TCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TCHAR, n + m_nLength + 1);
+			TCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + m_nLength + 1);
 			const TCHAR* szTmp=m_szPtr.getPointer();
 			for(TU32 i=0;i<m_nLength;i++)
 			{
@@ -754,14 +752,14 @@ namespace TSun {
 			szTmp=0;
 			sz[n+m_nLength]='\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, sz);
 		}
 
 		return result;
 	}
 	String String::operator +(const TU64 ullRight)
 	{
-		String result("", getMemAllocator());
+		String result("");
 
 		if(m_szPtr.isNull()==TFALSE)
 		{
@@ -769,7 +767,7 @@ namespace TSun {
 			sprintf_s(szTmp2,64,"%llu",ullRight);
 			TU32 n = (TU32)strlen(szTmp2);
 
-			TCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TCHAR, n + m_nLength + 1);
+			TCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, n + m_nLength + 1);
 			const TCHAR* szTmp=m_szPtr.getPointer();
 			for(TU32 i=0;i<m_nLength;i++)
 			{
@@ -786,7 +784,7 @@ namespace TSun {
 			szTmp=0;
 			sz[n+m_nLength]='\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, sz);
 		}
 
 		return result;
@@ -1229,12 +1227,12 @@ namespace TSun {
 
 	String String::Mid(TU32 startPos, TU32 count) const
 	{
-		String result("", getMemAllocator());
+		String result("");
 
 		if(startPos<m_nLength && m_szPtr.isNull()==TFALSE && count>0 && startPos>=0)
 		{
 			const TCHAR* szThis = m_szPtr.getPointer();
-			TCHAR* szTmp = T_NEW_ARRAY(getMemAllocator(), TCHAR, count + 1);
+			TCHAR* szTmp = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, count + 1);
 			TU32 i = 0;
 			for(;i<count;i++)
 			{
@@ -1243,7 +1241,7 @@ namespace TSun {
 			}
 			szTmp[i] = '\0';
 			result = szTmp;
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, szTmp);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, szTmp);
 		}
 
 		return result;
@@ -1251,13 +1249,13 @@ namespace TSun {
 
 	String String::Mid(TU32 startPos) const
 	{
-		String result("", getMemAllocator());
+		String result("");
 
 		if(startPos<m_nLength && m_szPtr.isNull()==TFALSE && startPos>=0)
 		{
 			const TCHAR* szThis = m_szPtr.getPointer();
 			TU32 count = m_nLength - startPos;
-			TCHAR* szTmp = T_NEW_ARRAY(getMemAllocator(), TCHAR, count + 1);
+			TCHAR* szTmp = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, count + 1);
 			TU32 i = 0;
 			for(;i<count;i++)
 			{
@@ -1266,7 +1264,7 @@ namespace TSun {
 			}
 			szTmp[i] = '\0';
 			result = szTmp;
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, szTmp);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, szTmp);
 		}
 
 		return result;
@@ -1286,7 +1284,7 @@ namespace TSun {
 		len = _vscprintf( format, args ); 
 		if (len >= 0)
 		{
-			m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getMemAllocator(), TCHAR, len + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+			m_szPtr = SharedPtr<TCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TCHAR, len + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 			TCHAR* szMyContent = m_szPtr.getPointer();
 			memset(szMyContent, 0, len + 1);
 			vsprintf(szMyContent, format, args);
@@ -1303,7 +1301,7 @@ namespace TSun {
 	{
 		if(m_szPtr.isNull() || startPos<0 || startPos>=m_nLength || !szFind) return -1;
 
-		String strFind(szFind, getMemAllocator());
+		String strFind(szFind);
 		String strOrig(*this);
 		TU32 len = strFind.GetLength();
 		if(len<=0) return -1;
@@ -1379,7 +1377,7 @@ namespace TSun {
 
 	List<String> String::Split(TCHAR sz, TU32* pCount) const
 	{
-		List<String> aResult(getMemAllocator());
+		List<String> aResult;
 		if(m_szPtr.isNull() || !pCount) 
 			return aResult;
 
@@ -1412,7 +1410,7 @@ namespace TSun {
 		return aResult;
 	}
 
-	TVOID String::CutFilePath(TCHAR* fullname, TCHAR* filename, TCHAR* pathname, MemAllocator* allocator)
+	TVOID String::CutFilePath(TCHAR* fullname, TCHAR* filename, TCHAR* pathname)
 	{
 		if(!fullname)
 			return;
@@ -1436,7 +1434,7 @@ namespace TSun {
 		{
 			if(pch)
 			{
-				String strTmp(fullname, allocator);
+				String strTmp(fullname);
 				TS32 pos = strTmp.Find(pch,0,TTRUE);
 				String path = strTmp.Mid(0,pos+1);
 				strcpy(pathname,path.GetString());
@@ -1531,12 +1529,12 @@ namespace TSun {
 	SharedPtr<TWCHAR> String::ToWString() const
 	{
 		if(m_szPtr.isNull() || m_nLength<=0)
-			return SharedPtr<TWCHAR>(getMemAllocator());
-		TWCHAR* newBuff = T_NEW_ARRAY(getMemAllocator(), TWCHAR, m_nLength + 1);
+			return SharedPtr<TWCHAR>(getStringMemAllocator());
+		TWCHAR* newBuff = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, m_nLength + 1);
 		mbstowcs(newBuff,m_szPtr.getPointer(),m_nLength);
 		//::MultiByteToWideChar(CP_ACP, 0, m_szPtr.getPointer(), m_nLength, newBuff, m_nLength);
 		newBuff[m_nLength] = L'\0';
-		return SharedPtr<TWCHAR>(newBuff, getMemAllocator(),TSun::SPFM_DELETE_T);
+		return SharedPtr<TWCHAR>(newBuff, getStringMemAllocator(),TSun::SPFM_DELETE_T);
 	}
 
 	String& String::MakeLower()
@@ -1569,12 +1567,12 @@ namespace TSun {
 			return *this;
 		if(pos<0 || pos>=m_nLength)
 			return *this;
-		TCHAR* szNew = T_NEW_ARRAY(getMemAllocator(), TCHAR, m_nLength + 1);
+		TCHAR* szNew = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, m_nLength + 1);
 		memcpy(szNew,m_szPtr.getPointer(),m_nLength);
 		szNew[pos]=value;
 		szNew[m_nLength]='\0';
 		m_szPtr.setNull();
-		m_szPtr.bind(szNew, getMemAllocator(),TSun::SPFM_DELETE_T);
+		m_szPtr.bind(szNew, getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		return *this;
 	}
 
@@ -1619,9 +1617,9 @@ namespace TSun {
 
 	// ------------------------------------ WString -----------------------------------------------------
 
-	WString::WString(MemAllocator* allocator) : m_nLength(0), m_allocator(allocator)
+	WString::WString() : m_nLength(0) , m_szPtr(SharedPtr<TWCHAR>(getStringMemAllocator()))
 	{
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, 0 + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, 0 + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		szMyContent[0] = L'\0';
 		m_nLength = 0;
@@ -1631,10 +1629,9 @@ namespace TSun {
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
-		m_allocator = 0;
 	}
 
-	WString::WString(const TWCHAR *szContent, MemAllocator* allocator) : m_allocator(allocator)
+	WString::WString(const TWCHAR *szContent) : m_szPtr(SharedPtr<TWCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
@@ -1648,7 +1645,7 @@ namespace TSun {
 				szTmp++;
 			}
 			szTmp = 0;
-			m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+			m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 			TWCHAR* szMyContent = m_szPtr.getPointer();
 			memcpy(szMyContent, szContent, n * sizeof(TWCHAR));
 			szMyContent[n] = L'\0';
@@ -1656,12 +1653,12 @@ namespace TSun {
 		}
 	}
 
-	WString::WString(const TWCHAR cContent, MemAllocator* allocator) : m_allocator(allocator)
+	WString::WString(const TWCHAR cContent) : m_szPtr(SharedPtr<TWCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TU32 n = 1;
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		TWCHAR szTmp[2] = { 0 };
 		szTmp[0] = cContent;
@@ -1670,7 +1667,7 @@ namespace TSun {
 		m_nLength = n;
 	}
 
-	WString::WString(const WString &strContent) : m_allocator(strContent.m_allocator)
+	WString::WString(const WString &strContent) : m_szPtr(SharedPtr<TWCHAR>(getStringMemAllocator()))
 	{
 		if (strContent.m_szPtr.isNull()) return;
 		m_szPtr.setNull();
@@ -1680,60 +1677,60 @@ namespace TSun {
 		m_nLength = len;
 	}
 
-	WString::WString(const TS32 iRight, MemAllocator* allocator) : m_allocator(allocator)
+	WString::WString(const TS32 iRight) : m_szPtr(SharedPtr<TWCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%d", iRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
 		m_nLength = n;
 	}
 
-	WString::WString(const TU32 uiRight, MemAllocator* allocator) : m_allocator(allocator)
+	WString::WString(const TU32 uiRight) : m_szPtr(SharedPtr<TWCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%u", uiRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
 		m_nLength = n;
 	}
-	WString::WString(const TF32 fRight, MemAllocator* allocator) : m_allocator(allocator)
+	WString::WString(const TF32 fRight) : m_szPtr(SharedPtr<TWCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%f", fRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
 		m_nLength = n;
 	}
-	WString::WString(const TF64 dRight, MemAllocator* allocator) : m_allocator(allocator)
+	WString::WString(const TF64 dRight) : m_szPtr(SharedPtr<TWCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%lf", dRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
 		m_nLength = n;
 	}
-	WString::WString(const TBOOL bRight, MemAllocator* allocator) : m_allocator(allocator)
+	WString::WString(const TBOOL bRight) : m_szPtr(SharedPtr<TWCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
@@ -1743,63 +1740,63 @@ namespace TSun {
 		else
 			szTmp[0] = L'0';
 		TU32 n = 1;
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
 		m_nLength = n;
 	}
 
-	WString::WString(const TS16 sRight, MemAllocator* allocator) : m_allocator(allocator)
+	WString::WString(const TS16 sRight) : m_szPtr(SharedPtr<TWCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%hd", sRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
 		m_nLength = n;
 	}
 
-	WString::WString(const TU16 usRight, MemAllocator* allocator) : m_allocator(allocator)
+	WString::WString(const TU16 usRight) : m_szPtr(SharedPtr<TWCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%hu", usRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
 		m_nLength = n;
 	}
 
-	WString::WString(const TS64 llRight, MemAllocator* allocator) : m_allocator(allocator)
+	WString::WString(const TS64 llRight) : m_szPtr(SharedPtr<TWCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%lld", llRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
 		m_nLength = n;
 	}
 
-	WString::WString(const TU64 ullRight, MemAllocator* allocator) : m_allocator(allocator)
+	WString::WString(const TU64 ullRight) : m_szPtr(SharedPtr<TWCHAR>(getStringMemAllocator()))
 	{
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%llu", ullRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
@@ -1816,7 +1813,6 @@ namespace TSun {
 		m_szPtr = strRight.m_szPtr;
 		TU32 len = strRight.m_nLength;
 		m_nLength = len;
-		m_allocator = strRight.m_allocator;
 		//printf(m_szContent);
 		return *this;
 	}
@@ -1835,7 +1831,7 @@ namespace TSun {
 				szTmp++;
 			}
 			szTmp = 0;
-			m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+			m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 			TWCHAR* szMyContent = m_szPtr.getPointer();
 			memcpy(szMyContent, szRight, n * sizeof(TWCHAR));
 			szMyContent[n] = L'\0';
@@ -1850,7 +1846,7 @@ namespace TSun {
 		m_szPtr.setNull();
 		m_nLength = 0;
 		TU32 n = 1;
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		TWCHAR szTmp[2] = { 0 };
 		szTmp[0] = cRight;
@@ -1868,7 +1864,7 @@ namespace TSun {
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%d", iRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
@@ -1882,7 +1878,7 @@ namespace TSun {
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%u", uiRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
@@ -1896,7 +1892,7 @@ namespace TSun {
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%f", fRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
@@ -1910,7 +1906,7 @@ namespace TSun {
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%lf", dRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
@@ -1927,7 +1923,7 @@ namespace TSun {
 		else
 			szTmp[0] = L'0';
 		TU32 n = 1;
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
@@ -1942,7 +1938,7 @@ namespace TSun {
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%hd", sRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
@@ -1956,7 +1952,7 @@ namespace TSun {
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%hu", usRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
@@ -1971,7 +1967,7 @@ namespace TSun {
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%lld", llRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
@@ -1985,7 +1981,7 @@ namespace TSun {
 		TWCHAR szTmp[64] = { 0 };
 		swprintf_s(szTmp, 64, L"%llu", ullRight);
 		TU32 n = (TU32)wcslen(szTmp);
-		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		TWCHAR* szMyContent = m_szPtr.getPointer();
 		memcpy(szMyContent, szTmp, n * sizeof(TWCHAR));
 		szMyContent[n] = L'\0';
@@ -1995,7 +1991,7 @@ namespace TSun {
 
 	WString WString::operator +(const TWCHAR *szRight)
 	{
-		WString result(L"", getMemAllocator());
+		WString result(L"");
 
 		if (szRight != 0 && m_szPtr.isNull() == TFALSE)
 		{
@@ -2007,7 +2003,7 @@ namespace TSun {
 				szTmp++;
 			}
 
-			TWCHAR *sz = T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + m_nLength + 1);
+			TWCHAR *sz = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + m_nLength + 1);
 			szTmp = m_szPtr.getPointer();
 			for (TU32 i = 0; i<m_nLength; i++)
 			{
@@ -2024,7 +2020,7 @@ namespace TSun {
 			szTmp = 0;
 			sz[n + m_nLength] = L'\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TWCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, sz);
 		}
 
 		return result;
@@ -2032,7 +2028,7 @@ namespace TSun {
 
 	WString WString::operator +(const TWCHAR cRight)
 	{
-		WString result(L"", getMemAllocator());
+		WString result(L"");
 
 		if (m_szPtr.isNull() == TFALSE)
 		{
@@ -2040,7 +2036,7 @@ namespace TSun {
 			TWCHAR szTmp2[2] = { 0 };
 			szTmp2[0] = cRight;
 
-			TWCHAR *sz = T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + m_nLength + 1);
+			TWCHAR *sz = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + m_nLength + 1);
 			const TWCHAR *szTmp = m_szPtr.getPointer();
 			for (TU32 i = 0; i<m_nLength; i++)
 			{
@@ -2057,7 +2053,7 @@ namespace TSun {
 			szTmp = 0;
 			sz[n + m_nLength] = L'\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TWCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, sz);
 		}
 
 		return result;
@@ -2065,13 +2061,13 @@ namespace TSun {
 
 	WString WString::operator +(const WString &strRight)
 	{
-		WString result(L"", getMemAllocator());
+		WString result(L"");
 
 		if (m_szPtr.isNull() == TFALSE && strRight.m_szPtr.isNull() == TFALSE)
 		{
 			TU32 n = strRight.m_nLength;
 
-			TWCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + m_nLength + 1);
+			TWCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + m_nLength + 1);
 			const TWCHAR* szTmp = m_szPtr.getPointer();
 			for (TU32 i = 0; i<m_nLength; i++)
 			{
@@ -2088,7 +2084,7 @@ namespace TSun {
 			szTmp = 0;
 			sz[n + m_nLength] = L'\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TWCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, sz);
 		}
 
 		return result;
@@ -2096,7 +2092,7 @@ namespace TSun {
 
 	WString WString::operator +(const TS32 iRight)
 	{
-		WString result(L"", getMemAllocator());
+		WString result(L"");
 
 		if (m_szPtr.isNull() == TFALSE)
 		{
@@ -2104,7 +2100,7 @@ namespace TSun {
 			swprintf_s(szTmp2, 64, L"%d", iRight);
 			TU32 n = (TU32)wcslen(szTmp2);
 
-			TWCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + m_nLength + 1);
+			TWCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + m_nLength + 1);
 			const TWCHAR* szTmp = m_szPtr.getPointer();
 			for (TU32 i = 0; i<m_nLength; i++)
 			{
@@ -2121,14 +2117,14 @@ namespace TSun {
 			szTmp = 0;
 			sz[n + m_nLength] = L'\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TWCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, sz);
 		}
 
 		return result;
 	}
 	WString WString::operator +(const TU32 uiRight)
 	{
-		WString result(L"", getMemAllocator());
+		WString result(L"");
 
 		if (m_szPtr.isNull() == TFALSE)
 		{
@@ -2136,7 +2132,7 @@ namespace TSun {
 			swprintf_s(szTmp2, 64, L"%u", uiRight);
 			TU32 n = (TU32)wcslen(szTmp2);
 
-			TWCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + m_nLength + 1);
+			TWCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + m_nLength + 1);
 			const TWCHAR* szTmp = m_szPtr.getPointer();
 			for (TU32 i = 0; i<m_nLength; i++)
 			{
@@ -2153,14 +2149,14 @@ namespace TSun {
 			szTmp = 0;
 			sz[n + m_nLength] = L'\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TWCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, sz);
 		}
 
 		return result;
 	}
 	WString WString::operator +(const TF32 fRight)
 	{
-		WString result(L"", getMemAllocator());
+		WString result(L"");
 
 		if (m_szPtr.isNull() == TFALSE)
 		{
@@ -2168,7 +2164,7 @@ namespace TSun {
 			swprintf_s(szTmp2, 64, L"%f", fRight);
 			TU32 n = (TU32)wcslen(szTmp2);
 
-			TWCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + m_nLength + 1);
+			TWCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + m_nLength + 1);
 			const TWCHAR* szTmp = m_szPtr.getPointer();
 			for (TU32 i = 0; i<m_nLength; i++)
 			{
@@ -2185,14 +2181,14 @@ namespace TSun {
 			szTmp = 0;
 			sz[n + m_nLength] = L'\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TWCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, sz);
 		}
 
 		return result;
 	}
 	WString WString::operator +(const TF64 dRight)
 	{
-		WString result(L"", getMemAllocator());
+		WString result(L"");
 
 		if (m_szPtr.isNull() == TFALSE)
 		{
@@ -2200,7 +2196,7 @@ namespace TSun {
 			swprintf_s(szTmp2, 64, L"%lf", dRight);
 			TU32 n = (TU32)wcslen(szTmp2);
 
-			TWCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + m_nLength + 1);
+			TWCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + m_nLength + 1);
 			const TWCHAR* szTmp = m_szPtr.getPointer();
 			for (TU32 i = 0; i<m_nLength; i++)
 			{
@@ -2217,14 +2213,14 @@ namespace TSun {
 			szTmp = 0;
 			sz[n + m_nLength] = L'\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TWCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, sz);
 		}
 
 		return result;
 	}
 	WString WString::operator +(const TBOOL bRight)
 	{
-		WString result(L"", getMemAllocator());
+		WString result(L"");
 
 		if (m_szPtr.isNull() == TFALSE)
 		{
@@ -2235,7 +2231,7 @@ namespace TSun {
 				szTmp2[0] = L'0';
 			TU32 n = 1;
 
-			TWCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + m_nLength + 1);
+			TWCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + m_nLength + 1);
 			const TWCHAR* szTmp = m_szPtr.getPointer();
 			for (TU32 i = 0; i<m_nLength; i++)
 			{
@@ -2252,7 +2248,7 @@ namespace TSun {
 			szTmp = 0;
 			sz[n + m_nLength] = L'\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TWCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, sz);
 		}
 
 		return result;
@@ -2260,7 +2256,7 @@ namespace TSun {
 
 	WString WString::operator +(const TS16 sRight)
 	{
-		WString result(L"", getMemAllocator());
+		WString result(L"");
 
 		if (m_szPtr.isNull() == TFALSE)
 		{
@@ -2268,7 +2264,7 @@ namespace TSun {
 			swprintf_s(szTmp2, 64, L"%hd", sRight);
 			TU32 n = (TU32)wcslen(szTmp2);
 
-			TWCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + m_nLength + 1);
+			TWCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + m_nLength + 1);
 			const TWCHAR* szTmp = m_szPtr.getPointer();
 			for (TU32 i = 0; i<m_nLength; i++)
 			{
@@ -2285,14 +2281,14 @@ namespace TSun {
 			szTmp = 0;
 			sz[n + m_nLength] = L'\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TWCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, sz);
 		}
 
 		return result;
 	}
 	WString WString::operator +(const TU16 usRight)
 	{
-		WString result(L"", getMemAllocator());
+		WString result(L"");
 
 		if (m_szPtr.isNull() == TFALSE)
 		{
@@ -2300,7 +2296,7 @@ namespace TSun {
 			swprintf_s(szTmp2, 64, L"%hu", usRight);
 			TU32 n = (TU32)wcslen(szTmp2);
 
-			TWCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + m_nLength + 1);
+			TWCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + m_nLength + 1);
 			const TWCHAR* szTmp = m_szPtr.getPointer();
 			for (TU32 i = 0; i<m_nLength; i++)
 			{
@@ -2317,7 +2313,7 @@ namespace TSun {
 			szTmp = 0;
 			sz[n + m_nLength] = L'\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TWCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, sz);
 		}
 
 		return result;
@@ -2325,7 +2321,7 @@ namespace TSun {
 
 	WString WString::operator +(const TS64 llRight)
 	{
-		WString result(L"", getMemAllocator());
+		WString result(L"");
 
 		if (m_szPtr.isNull() == TFALSE)
 		{
@@ -2333,7 +2329,7 @@ namespace TSun {
 			swprintf_s(szTmp2, 64, L"%lld", llRight);
 			TU32 n = (TU32)wcslen(szTmp2);
 
-			TWCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + m_nLength + 1);
+			TWCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + m_nLength + 1);
 			const TWCHAR* szTmp = m_szPtr.getPointer();
 			for (TU32 i = 0; i<m_nLength; i++)
 			{
@@ -2350,14 +2346,14 @@ namespace TSun {
 			szTmp = 0;
 			sz[n + m_nLength] = L'\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TWCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, sz);
 		}
 
 		return result;
 	}
 	WString WString::operator +(const TU64 ullRight)
 	{
-		WString result(L"", getMemAllocator());
+		WString result(L"");
 
 		if (m_szPtr.isNull() == TFALSE)
 		{
@@ -2365,7 +2361,7 @@ namespace TSun {
 			swprintf_s(szTmp2, 64, L"%llu", ullRight);
 			TU32 n = (TU32)wcslen(szTmp2);
 
-			TWCHAR* sz = T_NEW_ARRAY(getMemAllocator(), TWCHAR, n + m_nLength + 1);
+			TWCHAR* sz = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, n + m_nLength + 1);
 			const TWCHAR* szTmp = m_szPtr.getPointer();
 			for (TU32 i = 0; i<m_nLength; i++)
 			{
@@ -2382,7 +2378,7 @@ namespace TSun {
 			szTmp = 0;
 			sz[n + m_nLength] = L'\0';
 			result = sz;
-			T_DELETE_ARRAY(getMemAllocator(), TWCHAR, sz);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, sz);
 		}
 
 		return result;
@@ -2825,12 +2821,12 @@ namespace TSun {
 
 	WString WString::Mid(TU32 startPos, TU32 count) const
 	{
-		WString result(L"", getMemAllocator());
+		WString result(L"");
 
 		if (startPos<m_nLength && m_szPtr.isNull() == TFALSE && count>0 && startPos >= 0)
 		{
 			const TWCHAR* szThis = m_szPtr.getPointer();
-			TWCHAR* szTmp = T_NEW_ARRAY(getMemAllocator(), TWCHAR, count + 1);
+			TWCHAR* szTmp = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, count + 1);
 			TU32 i = 0;
 			for (; i<count; i++)
 			{
@@ -2839,7 +2835,7 @@ namespace TSun {
 			}
 			szTmp[i] = L'\0';
 			result = szTmp;
-			T_DELETE_ARRAY(getMemAllocator(), TWCHAR, szTmp);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, szTmp);
 		}
 
 		return result;
@@ -2847,13 +2843,13 @@ namespace TSun {
 
 	WString WString::Mid(TU32 startPos) const
 	{
-		WString result(L"", getMemAllocator());
+		WString result(L"");
 
 		if (startPos<m_nLength && m_szPtr.isNull() == TFALSE && startPos >= 0)
 		{
 			const TWCHAR* szThis = m_szPtr.getPointer();
 			TU32 count = m_nLength - startPos;
-			TWCHAR* szTmp = T_NEW_ARRAY(getMemAllocator(), TWCHAR, count + 1);
+			TWCHAR* szTmp = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, count + 1);
 			TU32 i = 0;
 			for (; i<count; i++)
 			{
@@ -2862,7 +2858,7 @@ namespace TSun {
 			}
 			szTmp[i] = L'\0';
 			result = szTmp;
-			T_DELETE_ARRAY(getMemAllocator(), TWCHAR, szTmp);
+			T_DELETE_ARRAY(getStringMemAllocator(), TWCHAR, szTmp);
 		}
 
 		return result;
@@ -2882,7 +2878,7 @@ namespace TSun {
 		len = _vscwprintf(format, args);
 		if (len >= 0)
 		{
-			m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getMemAllocator(), TWCHAR, len + 1), getMemAllocator(), TSun::SPFM_DELETE_T);
+			m_szPtr = SharedPtr<TWCHAR>(T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, len + 1), getStringMemAllocator(), TSun::SPFM_DELETE_T);
 			TWCHAR* szMyContent = m_szPtr.getPointer();
 			memset(szMyContent, 0, (len + 1) * sizeof(TWCHAR));
 			vswprintf(szMyContent, format, args);
@@ -2899,7 +2895,7 @@ namespace TSun {
 	{
 		if (m_szPtr.isNull() || startPos<0 || startPos >= m_nLength || !szFind) return -1;
 
-		WString strFind(szFind, getMemAllocator());
+		WString strFind(szFind);
 		WString strOrig(*this);
 		TU32 len = strFind.GetLength();
 		if (len <= 0) return -1;
@@ -2975,7 +2971,7 @@ namespace TSun {
 
 	List<WString> WString::Split(TWCHAR sz, TU32* pCount) const
 	{
-		List<WString> aResult(getMemAllocator());
+		List<WString> aResult;
 		if (m_szPtr.isNull() || !pCount)
 			return aResult;
 
@@ -3009,7 +3005,7 @@ namespace TSun {
 		return aResult;
 	}
 
-	TVOID WString::CutFilePath(TWCHAR* fullname, TWCHAR* filename, TWCHAR* pathname, MemAllocator* allocator)
+	TVOID WString::CutFilePath(TWCHAR* fullname, TWCHAR* filename, TWCHAR* pathname)
 	{
 		if (!fullname)
 			return;
@@ -3033,7 +3029,7 @@ namespace TSun {
 		{
 			if (pch)
 			{
-				WString strTmp(fullname, allocator);
+				WString strTmp(fullname);
 				TS32 pos = strTmp.Find(pch, 0, TTRUE);
 				WString path = strTmp.Mid(0, pos + 1);
 				wcscpy(pathname, path.GetWString());
@@ -3124,11 +3120,11 @@ namespace TSun {
 	{
 		if (m_szPtr.isNull() || m_nLength == 0)
 			return "";
-		TCHAR* szTmp = T_NEW_ARRAY(getMemAllocator(), TCHAR, m_nLength + 1);
+		TCHAR* szTmp = T_NEW_ARRAY(getStringMemAllocator(), TCHAR, m_nLength + 1);
 		TU32 converted = (TU32)wcstombs(szTmp, m_szPtr.getPointer(), m_nLength);
 		if (converted != m_nLength)
 		{
-			T_DELETE_ARRAY(getMemAllocator(), TCHAR, szTmp);
+			T_DELETE_ARRAY(getStringMemAllocator(), TCHAR, szTmp);
 			return "";
 		}
 		szTmp[m_nLength] = '\0';
@@ -3148,12 +3144,12 @@ namespace TSun {
 			return *this;
 		if (pos<0 || pos >= m_nLength)
 			return *this;
-		TWCHAR* szNew = T_NEW_ARRAY(getMemAllocator(), TWCHAR, m_nLength + 1);
+		TWCHAR* szNew = T_NEW_ARRAY(getStringMemAllocator(), TWCHAR, m_nLength + 1);
 		memcpy(szNew, m_szPtr.getPointer(), m_nLength);
 		szNew[pos] = value;
 		szNew[m_nLength] = L'\0';
 		m_szPtr.setNull();
-		m_szPtr.bind(szNew, getMemAllocator(), TSun::SPFM_DELETE_T);
+		m_szPtr.bind(szNew, getStringMemAllocator(), TSun::SPFM_DELETE_T);
 		return *this;
 	}
 

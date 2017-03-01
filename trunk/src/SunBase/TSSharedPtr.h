@@ -53,7 +53,7 @@ namespace TSun {
 	public:
 		Mutex mMutex;
 
-		SharedPtr(MemAllocator* allocator = getDefaultMemAllocator()) : 
+		SharedPtr(MemAllocator* allocator) : 
 			pRep(0), pUseCount(0), useFreeMethod(SPFM_DELETE), m_allocator(allocator)
         {
 			mMutex.SetNull();

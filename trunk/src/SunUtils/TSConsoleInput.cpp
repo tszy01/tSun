@@ -2,26 +2,23 @@
 
 namespace TSun
 {
-	ConsoleInput::ConsoleInput(MemAllocator* allocator) : _insertPos(0), _maxLineWidth(20),
-		_displayStartPos(0), _defaultCharWidth(5), m_allocator(allocator)
+	ConsoleInput::ConsoleInput() : _insertPos(0), _maxLineWidth(20), _displayStartPos(0), _defaultCharWidth(5)
 	{
-		_charList = List<Char>(getMemAllocator());
-		_listenerList = List<ConsoleInputListener*>(getMemAllocator());
+		_charList = List<Char>();
+		_listenerList = List<ConsoleInputListener*>();
 	}
 
-	ConsoleInput::ConsoleInput(TU32 maxLineWidth, TU32 defaultCharWidth, MemAllocator* allocator) :
-		_insertPos(0), _maxLineWidth(maxLineWidth), _displayStartPos(0), _defaultCharWidth(defaultCharWidth), 
-		m_allocator(allocator)
+	ConsoleInput::ConsoleInput(TU32 maxLineWidth, TU32 defaultCharWidth) :
+		_insertPos(0), _maxLineWidth(maxLineWidth), _displayStartPos(0), _defaultCharWidth(defaultCharWidth)
 	{
-		_charList = List<Char>(getMemAllocator());
-		_listenerList = List<ConsoleInputListener*>(getMemAllocator());
+		_charList = List<Char>();
+		_listenerList = List<ConsoleInputListener*>();
 	}
 
 	ConsoleInput::~ConsoleInput()
 	{
 		clearListener();
 		clear();
-		m_allocator = 0;
 	}
 
 	void ConsoleInput::insertChar(TCHAR ascii, TU32 charWidth)
@@ -147,7 +144,7 @@ namespace TSun
 
 	String ConsoleInput::getFinalStr()
 	{
-		String result(getMemAllocator());
+		String result;
 		List<Char>::Iterator itr = _charList.begin();
 		for (; itr != _charList.end(); ++itr)
 		{
@@ -227,7 +224,7 @@ namespace TSun
 
 	String ConsoleInput::getDisplayStr()
 	{
-		String result(getMemAllocator());
+		String result;
 		TU32 index = 0;
 		TU32 totalWidth = 0;
 		List<Char>::Iterator itr = _charList.begin();

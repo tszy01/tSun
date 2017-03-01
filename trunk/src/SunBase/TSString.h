@@ -17,25 +17,23 @@ namespace TSun {
 		//TCHAR* m_szContent;
 		SharedPtr<TCHAR> m_szPtr;
 		TU32 m_nLength;
-		// memory allocator
-		DEFINE_MEM_ALLOCATOR_MEMBER;
 	public:
-		String(MemAllocator* allocator = getDefaultMemAllocator());
+		String();
 		~String(TVOID);
 	public:
 		// 重载函数
-		String(const TCHAR* szContent, MemAllocator* allocator = getDefaultMemAllocator());
+		String(const TCHAR* szContent);
 		String(const String &strContent);
-		String(const TCHAR cContent, MemAllocator* allocator = getDefaultMemAllocator());
-		String(const TS32 iRight, MemAllocator* allocator = getDefaultMemAllocator());
-		String(const TU32 uiRight, MemAllocator* allocator = getDefaultMemAllocator());
-		String(const TF32 fRight, MemAllocator* allocator = getDefaultMemAllocator());
-		String(const TF64 dRight, MemAllocator* allocator = getDefaultMemAllocator());
-		String(const TBOOL bRight, MemAllocator* allocator = getDefaultMemAllocator());
-		String(const TS16 sRight, MemAllocator* allocator = getDefaultMemAllocator());
-		String(const TU16 usRight, MemAllocator* allocator = getDefaultMemAllocator());
-		String(const TS64 llRight, MemAllocator* allocator = getDefaultMemAllocator());
-		String(const TU64 ullRight, MemAllocator* allocator = getDefaultMemAllocator());
+		String(const TCHAR cContent);
+		String(const TS32 iRight);
+		String(const TU32 uiRight);
+		String(const TF32 fRight);
+		String(const TF64 dRight);
+		String(const TBOOL bRight);
+		String(const TS16 sRight);
+		String(const TU16 usRight);
+		String(const TS64 llRight);
+		String(const TU64 ullRight);
 		String& operator =(const TCHAR* szRight);
 		String& operator =(const String &strRight);
 		String& operator =(const TCHAR cRight);
@@ -128,7 +126,7 @@ namespace TSun {
 		//String& ConvertToANSI();
 	public:
 		// -------------- 一些和字符串有关的全局方法 --------
-		static TVOID CutFilePath(TCHAR* fullname,TCHAR* filename=0,TCHAR* pathname=0, MemAllocator* allocator = getDefaultMemAllocator());
+		static TVOID CutFilePath(TCHAR* fullname,TCHAR* filename=0,TCHAR* pathname=0);
 		// --------------------------------------------------
 	};
 
@@ -138,25 +136,23 @@ namespace TSun {
 		//TCHAR* m_szContent;
 		SharedPtr<TWCHAR> m_szPtr;
 		TU32 m_nLength;
-		// memory allocator
-		DEFINE_MEM_ALLOCATOR_MEMBER;
 	public:
-		WString(MemAllocator* allocator = getDefaultMemAllocator());
+		WString();
 		~WString(TVOID);
 	public:
 		// 重载函数
-		WString(const TWCHAR *szContent, MemAllocator* allocator = getDefaultMemAllocator());
+		WString(const TWCHAR *szContent);
 		WString(const WString &strContent);
-		WString(const TWCHAR cContent, MemAllocator* allocator = getDefaultMemAllocator());
-		WString(const TS32 iRight, MemAllocator* allocator = getDefaultMemAllocator());
-		WString(const TU32 uiRight, MemAllocator* allocator = getDefaultMemAllocator());
-		WString(const TF32 fRight, MemAllocator* allocator = getDefaultMemAllocator());
-		WString(const TF64 dRight, MemAllocator* allocator = getDefaultMemAllocator());
-		WString(const TBOOL bRight, MemAllocator* allocator = getDefaultMemAllocator());
-		WString(const TS16 sRight, MemAllocator* allocator = getDefaultMemAllocator());
-		WString(const TU16 usRight, MemAllocator* allocator = getDefaultMemAllocator());
-		WString(const TS64 llRight, MemAllocator* allocator = getDefaultMemAllocator());
-		WString(const TU64 ullRight, MemAllocator* allocator = getDefaultMemAllocator());
+		WString(const TWCHAR cContent);
+		WString(const TS32 iRight);
+		WString(const TU32 uiRight);
+		WString(const TF32 fRight);
+		WString(const TF64 dRight);
+		WString(const TBOOL bRight);
+		WString(const TS16 sRight);
+		WString(const TU16 usRight);
+		WString(const TS64 llRight);
+		WString(const TU64 ullRight);
 		WString& operator =(const TWCHAR *szRight);
 		WString& operator =(const WString &strRight);
 		WString& operator =(const TWCHAR cRight);
@@ -239,7 +235,7 @@ namespace TSun {
 		//WString& ConvertToANSI();
 	public:
 		// -------------- 一些和字符串有关的全局方法 --------
-		static TVOID CutFilePath(TWCHAR* fullname, TWCHAR* filename = 0, TWCHAR* pathname = 0, MemAllocator* allocator = getDefaultMemAllocator());
+		static TVOID CutFilePath(TWCHAR* fullname, TWCHAR* filename = 0, TWCHAR* pathname = 0);
 		// --------------------------------------------------
 	};
 

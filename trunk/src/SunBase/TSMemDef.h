@@ -11,7 +11,7 @@ namespace TSun {
 		{
 			return TSun::TNULL;
 		}
-		T* newPtr = new (allocator->allocateMem(sizeof(T), file, line)) T;
+		T* newPtr = new (allocator->allocateMem(sizeof(T), file, line))T;
 		return newPtr;
 	}
 
@@ -22,8 +22,18 @@ namespace TSun {
 		{
 			return TSun::TNULL;
 		}
-		T* newPtr = new (allocator->allocateMem(sizeof(T) * count + sizeof(TSIZE), file, line)) T[count];
-		return newPtr;
+		TSun::TUByte* allocPtr = (TSun::TUByte*)(allocator->allocateMem(sizeof(T) * count + sizeof(TSIZE), file, line));
+		//T* newPtr = new (allocPtr) T[count];
+		TSIZE c = count;
+		memcpy(allocPtr, &c, sizeof(TSIZE));
+		TSun::TUByte* itemPtr = allocPtr + sizeof(TSIZE);
+		T* retPtr = (T*)itemPtr;
+		for (TSIZE i = 0; i < count; ++i)
+		{
+			new (itemPtr)T;
+			itemPtr += sizeof(T);
+		}
+		return retPtr;
 	}
 
 	template<typename T>
@@ -38,18 +48,7 @@ namespace TSun {
 	}
 
 	template<typename T>
-	TSun::TVOID beforeDeleteArray(TSun::TVOID* p, TSun::TSIZE size)
-	{
-		T* tP = (T*)p;
-		TSun::TSIZE count = size / sizeof(T);
-		for (TSIZE i = 0; i < count; ++i)
-		{
-			tP[i].~T();
-		}
-	}
-
-	template<typename T>
-	TSun::TVOID delete_class_array(TSun::MemAllocator* allocator, T* p, TSun::TVOID(*beforeFree)(TSun::TVOID*, TSun::TSIZE), const char *file, int line)
+	TSun::TVOID delete_class_array(TSun::MemAllocator* allocator, T* p, const char *file, int line)
 	{
 		if (!allocator || !p)
 		{
@@ -66,13 +65,25 @@ namespace TSun {
 	}
 
 	// please rewrite this in app
+
+	// default mem allocator
 	TSun::MemAllocator* getDefaultMemAllocator();
+	// string mem allocator
+	TSun::MemAllocator* getStringMemAllocator();
+	// math mem allocator
+	TSun::MemAllocator* getMathMemAllocator();
+	// list mem allocator
+	TSun::MemAllocator* getListMemAllocator();
+	// structure mem allocator
+	TSun::MemAllocator* getStructMemAllocator();
 }
 
-#define T_NEW(A, T) (TSun::new_class<T>(A, __FILE__, __LINE__))
-#define T_NEW_ARRAY(A, T, C) (TSun::new_class_array<T>(A, C, __FILE__, __LINE__))
-#define T_DELETE(A, T, P) (TSun::delete_class<T>(A, P, __FILE__, __LINE__))
-#define T_DELETE_ARRAY(A, T, P) (TSun::delete_class_array<T>(A, P, &(TSun::beforeDeleteArray<T>), __FILE__, __LINE__))
+#define T_NEW(A, T) (TSun::new_class<T>((A), __FILE__, __LINE__))
+//#define T_NEW(A, T) new ((A)->allocateMem(sizeof(T), __FILE__, __LINE__))
+#define T_NEW_ARRAY(A, T, C) (TSun::new_class_array<T>((A), (C), __FILE__, __LINE__))
+//#define T_NEW_ARRAY(A, T, C) new ((A)->allocateMem(sizeof(T) * (C) + sizeof(TSun::TSIZE), __FILE__, __LINE__))
+#define T_DELETE(A, T, P) (TSun::delete_class<T>((A), (P), __FILE__, __LINE__))
+#define T_DELETE_ARRAY(A, T, P) (TSun::delete_class_array<T>((A), (P), __FILE__, __LINE__))
 
 #define T_SAFE_DELETE(A, T, P) \
 T_DELETE(A, T, P);\

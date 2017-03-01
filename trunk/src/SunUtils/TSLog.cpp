@@ -24,21 +24,21 @@ namespace TSun{
 	{
 	}
 
-	TBOOL Log::InitLogSystem(const TCHAR* configFile, const TCHAR* logPath, MemAllocator* allocator)
+	TBOOL Log::InitLogSystem(const TCHAR* configFile, const TCHAR* logPath)
 	{
 		if(!configFile || !logPath)
 			return TFALSE;
-		ConfigFile ConfigFile(allocator);
+		ConfigFile ConfigFile;
 		if(!ConfigFile.OpenFile(configFile,ConfigFile::OPEN_READ))
 			return TFALSE;
 		sprintf_s(m_logPath,256,"%s",logPath);
 		// 读取剔除列表
-		String strTmp(allocator);
+		String strTmp;
 		ConfigFile.GetParameter("FilterCount",&strTmp);
 		m_filterCount = atoi(strTmp.GetString());
 		if(m_filterCount > 0)
 		{
-			m_filterArray = T_NEW_ARRAY(allocator, String, m_filterCount);
+			m_filterArray = T_NEW_ARRAY(getStructMemAllocator(), String, m_filterCount);
 		}
 		for(TS32 i=0;i<m_filterCount;i++)
 		{
@@ -101,11 +101,11 @@ namespace TSun{
 		return TTRUE;
 	}
 
-	TVOID Log::DestroyLogSystem(MemAllocator* allocator)
+	TVOID Log::DestroyLogSystem()
 	{
 		if(m_filterArray)
 		{
-			T_DELETE_ARRAY(allocator, String, m_filterArray);
+			T_DELETE_ARRAY(getStructMemAllocator(), String, m_filterArray);
 			m_filterArray = 0;
 		}
 		m_filterCount = 0;
@@ -113,7 +113,7 @@ namespace TSun{
 			::FreeConsole();
 	}
 
-	TVOID Log::WriteFile(LOG_LEVEL level,TBOOL bTrue, const TWCHAR* content, const TCHAR* codeName, TS32 codeLine, MemAllocator* allocator)
+	TVOID Log::WriteFile(LOG_LEVEL level,TBOOL bTrue, const TWCHAR* content, const TCHAR* codeName, TS32 codeLine)
 	{
 		// check to file flag
 		if (!m_bToFile)
@@ -134,7 +134,7 @@ namespace TSun{
 		// 过滤文件名中的路径
 		if (codeName != TNULL)
 		{
-			String strCode(codeName, allocator);
+			String strCode(codeName);
 			for (TS32 i = 0;i<m_filterCount&&m_filterArray;i++)
 			{
 				if (strCode.Find(m_filterArray[i], 0, TFALSE) != -1)
@@ -144,11 +144,11 @@ namespace TSun{
 		// 得到现在时间的字符串
 		SYSTEMTIME sysTime;
 		::GetLocalTime(&sysTime);
-		String strTime(allocator);
+		String strTime;
 		strTime.Format("%d:%d:%d",sysTime.wHour,sysTime.wMinute,sysTime.wSecond);
 		// 最后写入的内容
 		// codeInfo date time content\n
-		WString strWrite(allocator);
+		WString strWrite;
 		if (codeName != TNULL)
 		{
 			if (content)
@@ -175,7 +175,7 @@ namespace TSun{
 		}
 		// 最后写入
 		// 合成文件名
-		String strLogFile(allocator);
+		String strLogFile;
 		strLogFile.Format("%s%d_%d_%d.log",m_logPath,sysTime.wYear,sysTime.wMonth,sysTime.wDay);
 		FILE* stream;
 		if( fopen_s(&stream, strLogFile.GetString(), "a+, ccs=UTF-8" )!=0 )
@@ -191,7 +191,7 @@ namespace TSun{
 		fclose(stream);
 	}
 
-	TVOID Log::WriteSysConsole(LOG_LEVEL level,TBOOL bTrue, const TWCHAR* content, MemAllocator* allocator)
+	TVOID Log::WriteSysConsole(LOG_LEVEL level,TBOOL bTrue, const TWCHAR* content)
 	{
 		if(!m_bToSysConsole)
 			return;
@@ -210,7 +210,7 @@ namespace TSun{
 			return;
 		// 最后写入的内容
 		// codeInfo date time content\n
-		WString strWrite(allocator);
+		WString strWrite;
 		if(content)
 		{
 			strWrite.Format(L"%s\n",content);
@@ -223,7 +223,7 @@ namespace TSun{
 		::WriteConsoleW(m_hConsole,strWrite.GetWString(),strWrite.GetLength(),&writtenNum,0);
 	}
 
-	TVOID Log::WriteEngineConsole(LOG_LEVEL level, TBOOL bTrue, const TWCHAR* content, MemAllocator* allocator)
+	TVOID Log::WriteEngineConsole(LOG_LEVEL level, TBOOL bTrue, const TWCHAR* content)
 	{
 		if (!m_bToConsole)
 			return;
@@ -238,7 +238,7 @@ namespace TSun{
 			return;
 		// 最后写入的内容
 		// codeInfo date time content\n
-		WString strWrite(allocator);
+		WString strWrite;
 		if (content)
 		{
 			strWrite.Format(L"%s\n", content);
@@ -250,10 +250,10 @@ namespace TSun{
 		Console::getSingletonPtr()->outputToConsole(strWrite);
 	}
 
-	TVOID Log::WriteLine(LOG_LEVEL level, TBOOL bTrue, const TWCHAR* content, const TCHAR* codeName, TS32 codeLine, MemAllocator* allocator)
+	TVOID Log::WriteLine(LOG_LEVEL level, TBOOL bTrue, const TWCHAR* content, const TCHAR* codeName, TS32 codeLine)
 	{
-		WriteFile(level, bTrue, content, codeName, codeLine, allocator);
-		WriteSysConsole(level, bTrue, content, allocator);
-		WriteEngineConsole(level, bTrue, content, allocator);
+		WriteFile(level, bTrue, content, codeName, codeLine);
+		WriteSysConsole(level, bTrue, content);
+		WriteEngineConsole(level, bTrue, content);
 	}
 }
